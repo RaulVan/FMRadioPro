@@ -58,7 +58,7 @@
             <Grid x:Name="ContentPanel" Grid.Column="0" Margin="12,0,12,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="120"/>
+                    <RowDefinition Height="210"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
@@ -66,19 +66,113 @@
                 </Grid.RowDefinitions>
                 <TextBlock HorizontalAlignment="Left" Height="48" Margin="33,47,0,0" TextWrapping="Wrap" Text="正在播放" VerticalAlignment="Top" Width="213"/>
                 <StackPanel Grid.Row="1" Orientation="Vertical" Grid.RowSpan="2">
-                    <Rectangle Fill="{StaticResource PhoneAccentBrush}" HorizontalAlignment="Left" Height="117"  Stroke="Black" VerticalAlignment="Center" Width="270"/>
+                    <Rectangle Fill="{StaticResource PhoneAccentBrush}" HorizontalAlignment="Left" Height="200"  Stroke="Black" VerticalAlignment="Center" Width="300"/>
                     <ProgressBar HorizontalAlignment="Left" Height="10"   VerticalAlignment="Top" Width="270"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Grid.Row="2">
-                    <Rectangle Fill="{StaticResource PhoneAccentBrush}"  HorizontalAlignment="Left" Height="58" Margin="10" Stroke="Black" VerticalAlignment="Top" Width="52"/>
-                    <Rectangle Fill="{StaticResource PhoneAccentBrush}" HorizontalAlignment="Left" Height="58" Margin="10" Stroke="Black" VerticalAlignment="Top" Width="52"/>
-                    <Rectangle Fill="{StaticResource PhoneAccentBrush}" HorizontalAlignment="Left" Height="58" Margin="10" Stroke="Black" VerticalAlignment="Top" Width="52"/>
+                  
+
+                    <Grid HorizontalAlignment="Left" Background="{StaticResource PhoneAccentBrush}"  Height="60" Margin="10" Width="55">
+                       
+                        <Path Data="M0,0L15.908,0 15.908,20.125872 28.130381,13.333224 52.118999,0 52.118999,26.66655 52.118999,53.333 28.130381,39.999775 15.908,33.20718 15.908,53.333 0,53.333z" Stretch="Uniform" Fill="#FFFFFFFF" Width="26" Height="26" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5">
+                            <Path.RenderTransform>
+                                <TransformGroup>
+                                    <TransformGroup.Children>
+                                        <RotateTransform Angle="0" />
+                                        <ScaleTransform ScaleX="1" ScaleY="1" />
+                                    </TransformGroup.Children>
+                                </TransformGroup>
+                            </Path.RenderTransform>
+                        </Path>
+                    </Grid>
+
+                    <Grid  Background="{StaticResource PhoneAccentBrush}"  Height="60" Margin="10" Width="55">
+                        <Path x:Name="pathPlay" Data="F1M1188.2,1715.23L1169.93,1728.57 1151.66,1741.9 1151.66,1715.23 1151.66,1688.57 1169.93,1701.9 1188.2,1715.23z" Stretch="Uniform" Fill="#FFFFFFFF" Width="26" Height="26" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5">
+                            <Path.RenderTransform>
+                                <TransformGroup>
+                                    <TransformGroup.Children>
+                                        <RotateTransform Angle="0" />
+                                        <ScaleTransform ScaleX="1" ScaleY="1" />
+                                    </TransformGroup.Children>
+                                </TransformGroup>
+                            </Path.RenderTransform>
+                        </Path>
+
+                        <Path x:Name="pathPause" Data="M27.270001,0L44.310001,0 44.310001,48.643002 27.270001,48.643002z M0,0L17.040001,0 17.040001,48.643002 0,48.643002z" Stretch="Uniform" Fill="#FFFFFFFF" Width="26" Height="26" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5">
+                            <Path.RenderTransform>
+                                <TransformGroup>
+                                    <TransformGroup.Children>
+                                        <RotateTransform Angle="0" />
+                                        <ScaleTransform ScaleX="1" ScaleY="1" />
+                                    </TransformGroup.Children>
+                                </TransformGroup>
+                            </Path.RenderTransform>
+                        </Path>
+                    </Grid>
+                    <Grid HorizontalAlignment="Left" Background="{StaticResource PhoneAccentBrush}"  Height="60" Margin="10" Width="55">
+                        <Path Data="M0,0L15.908,0 15.908,20.125872 28.130381,13.333224 52.118999,0 52.118999,26.66655 52.118999,53.333 28.130381,39.999775 15.908,33.20718 15.908,53.333 0,53.333z" Stretch="Uniform" Fill="#FFFFFFFF" Width="26" Height="26" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5">
+                            <Path.RenderTransform>
+                                <TransformGroup>
+                                    <TransformGroup.Children>
+                                        <RotateTransform Angle="0" />
+                                        <ScaleTransform ScaleX="-1" ScaleY="1" />
+                                    </TransformGroup.Children>
+                                </TransformGroup>
+                            </Path.RenderTransform>
+                        </Path>
+                    </Grid>
+                    <Grid Background="{StaticResource PhoneAccentBrush}" HorizontalAlignment="Left"   Height="60" Margin="10" Width="55">
+                        
+                        <Path Data="M0,0L64,0 64,64 0,64z" Stretch="Uniform" Fill="#FFFFFFFF" Width="26" Height="26" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5">
+                            <Path.RenderTransform>
+                                <TransformGroup>
+                                    <TransformGroup.Children>
+                                        <RotateTransform Angle="0" />
+                                        <ScaleTransform ScaleX="1" ScaleY="1" />
+                                    </TransformGroup.Children>
+                                </TransformGroup>
+                            </Path.RenderTransform>
+                        </Path>
+                    </Grid>
                 </StackPanel>
               
-                <StackPanel Grid.Row="4" Orientation="Horizontal">
+                <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="0,10,0,10">
 
-                    <Rectangle Fill="{StaticResource PhoneAccentBrush}" HorizontalAlignment="Left" Height="62" Margin="20,0,20,0" Stroke="Black" VerticalAlignment="Top" Width="83"/>
-                    <Rectangle Fill="{StaticResource PhoneAccentBrush}" HorizontalAlignment="Left" Height="62" Margin="20,0,20,0" Stroke="Black" VerticalAlignment="Top" Width="83"/>
+                  
+                    <Grid Background="{StaticResource PhoneAccentBrush}" HorizontalAlignment="Left"   Height="60" Width="100" Margin="30,10,20,10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="30"/>
+                        </Grid.RowDefinitions>
+                        <Path Data="M0,0L64,0 64,64 0,64z" Stretch="Uniform" Fill="#FFFFFFFF" Width="26" Height="26" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5">
+                            <Path.RenderTransform>
+                                <TransformGroup>
+                                    <TransformGroup.Children>
+                                        <RotateTransform Angle="0" />
+                                        <ScaleTransform ScaleX="1" ScaleY="1" />
+                                    </TransformGroup.Children>
+                                </TransformGroup>
+                            </Path.RenderTransform>
+                        </Path>
+                        <TextBlock Grid.Row="1" HorizontalAlignment="Center">本地FM</TextBlock>
+                    </Grid>
+                    <Grid Background="{StaticResource PhoneAccentBrush}" HorizontalAlignment="Left"   Height="60" Margin="20,10,20,10" Width="100">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="30"/>
+                        </Grid.RowDefinitions>
+                        <Path Data="M0,0L64,0 64,64 0,64z" Stretch="Uniform" Fill="#FFFFFFFF" Width="26" Height="26" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5">
+                            <Path.RenderTransform>
+                                <TransformGroup>
+                                    <TransformGroup.Children>
+                                        <RotateTransform Angle="0" />
+                                        <ScaleTransform ScaleX="1" ScaleY="1" />
+                                    </TransformGroup.Children>
+                                </TransformGroup>
+                            </Path.RenderTransform>
+                        </Path>
+                        <TextBlock HorizontalAlignment="Center" Grid.Row="1">网络FM</TextBlock>
+                    </Grid>
                 </StackPanel>
                
                     <ScrollViewer Grid.Row="5" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
