@@ -53,6 +53,8 @@ namespace FMRadioPro
                 //  注意: 仅在调试模式下使用此设置。禁用用户空闲检测的应用程序在用户不使用电话时将继续运行
                 // 并且消耗电池电量。
                 PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
+
+                MemoryDiagnosticsHelper.Start(TimeSpan.FromMilliseconds(500), true);
             }
 
         }
