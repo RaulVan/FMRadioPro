@@ -8,6 +8,8 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using FMRadioPro.Resources;
+using System.Threading.Tasks;
+using FMRadioPro.Data;
 
 namespace FMRadioPro
 {
@@ -22,17 +24,40 @@ namespace FMRadioPro
 
             // 用于本地化 ApplicationBar 的示例代码
             //BuildLocalizedApplicationBar();
-            List<string> data=new List<string> ();
-            for (int i = 0; i < 100; i++)
-			{
-                data.Add(i + "/Deanna 频道 test频道 test频道 test频道 test");
-			}
-            listRadioList.ItemsSource = data;
+            //List<string> data=new List<string> ();
+            //for (int i = 0; i < 100; i++)
+            //{
+            //    data.Add(i + "/Deanna 频道 test频道 test频道 test频道 test");
+            //}
+            //listRadioList.ItemsSource = data;
            // gridPanel.Width = Application.Current.Host.Content.ActualWidth * 2;
 
            
         }
 
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            await Task.Run(() =>
+                {
+                    this.listRadioList.Dispatcher.BeginInvoke(() =>
+                        {
+                            if (RadiosData.GetRadioData().Count <= 30)
+                            {
+                                listRadioList.IsGroupingEnabled = false;
+                                listRadioList.ItemsSource = RadiosData.GetRadioData();
+                            }
+                            else
+                            {
+                                listRadioList.IsGroupingEnabled = true;
+                                listRadioList.ItemsSource = RadiosData.GetData();
+                            }
+                           
+                            
+                        });
+                });
+
+            base.OnNavigatedTo(e);
+        }
       
 
         // 用于生成本地化 ApplicationBar 的示例代码

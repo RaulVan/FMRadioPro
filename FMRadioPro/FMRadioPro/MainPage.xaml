@@ -12,6 +12,50 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
     shell:SystemTray.IsVisible="True">
+	<phone:PhoneApplicationPage.Resources>
+		<!-- GroupHeader-->
+		<DataTemplate x:Key="GroupHeaderTemplate">
+            <Grid Margin="{StaticResource PhoneTouchTargetOverhang}" Background="Transparent">
+                <Border Background="{StaticResource PhoneAccentBrush}" Width="48" Height="30" HorizontalAlignment="Left">
+                    <TextBlock Text="{Binding Index}" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="20" Style="{StaticResource PhoneTextExtraLargeStyle}"/>
+                </Border>
+            </Grid>
+
+        </DataTemplate>
+        <!-- Item-->
+        <DataTemplate x:Name="ItemTemplate">
+            <Grid Margin="{StaticResource PhoneTouchTargetOverhang}" Background="Transparent">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding Name}" Style="{StaticResource PhoneTextLargeStyle}" />
+                    <TextBlock Text="{Binding NamePinyin}" Style="{StaticResource PhoneTextLargeStyle}" Margin="10 0 0 0" />
+                </StackPanel>
+            </Grid>
+
+        </DataTemplate>
+        <phone:JumpListItemBackgroundConverter x:Key="BackgroundConverter"/>
+        <phone:JumpListItemForegroundConverter x:Key="ForegroundConverter"/>
+
+        <!--
+            JumpList（弹出的索引窗口） 的 样式
+        -->
+        <Style x:Key="JumpListStyle" TargetType="phone:LongListSelector">
+            <Setter Property="GridCellSize"  Value="113,113"/>
+            <Setter Property="LayoutMode" Value="Grid" />
+            <Setter Property="ItemTemplate">
+                <Setter.Value >
+                    <DataTemplate >
+                        <Grid>
+                            <Border Background="{Binding Converter={StaticResource BackgroundConverter}}" Width="113" Height="113" Margin="6">
+                                <TextBlock Text="{Binding Index}"  Foreground="{Binding Converter={StaticResource ForegroundConverter}}" 
+                                           FontWeight="Bold" FontSize="48" Padding="6" VerticalAlignment="Center" />
+                            </Border>
+                        </Grid>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </phone:PhoneApplicationPage.Resources>
 
     <!--LayoutRoot 是包含所有页面内容的根网格-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
@@ -197,9 +241,11 @@
 
             </Grid>
             <Grid x:Name="gridRadioList" Grid.Column="1">
-                <phone:LongListSelector x:Name="listRadioList"   
-                                    IsGroupingEnabled="False" HideEmptyGroups="True"
-                                    LayoutMode="List" >
+                <phone:LongListSelector x:Name="listRadioList"    ItemsSource="{Binding}"
+                                     HideEmptyGroups="True"
+                                    LayoutMode="List" JumpListStyle="{StaticResource JumpListStyle}" 
+									GroupHeaderTemplate="{StaticResource GroupHeaderTemplate}"                                                                           
+                                ItemTemplate="{StaticResource ItemTemplate}">
 
                 </phone:LongListSelector>
             </Grid>
