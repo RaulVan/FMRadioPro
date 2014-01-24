@@ -12,9 +12,9 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
     shell:SystemTray.IsVisible="True">
-	<phone:PhoneApplicationPage.Resources>
-		<!-- GroupHeader-->
-		<DataTemplate x:Key="GroupHeaderTemplate">
+    <phone:PhoneApplicationPage.Resources>
+        <!-- GroupHeader-->
+        <DataTemplate x:Key="GroupHeaderTemplate">
             <Grid Margin="{StaticResource PhoneTouchTargetOverhang}" Background="Transparent">
                 <Border Background="{StaticResource PhoneAccentBrush}" Width="48" Height="30" HorizontalAlignment="Left">
                     <TextBlock Text="{Binding Index}" Foreground="{StaticResource PhoneForegroundBrush}" FontSize="20" Style="{StaticResource PhoneTextExtraLargeStyle}"/>
@@ -54,7 +54,357 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="btnBackStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="{StaticResource PhoneForegroundBrush}"/>
+            <Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}"/>
+            <Setter Property="BorderThickness" Value="{StaticResource PhoneBorderThickness}"/>
+            <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiBold}"/>
+            <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMedium}"/>
+            <Setter Property="Padding" Value="10,5,10,6"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid x:Name="grid" HorizontalAlignment="Left" Background="{StaticResource PhoneAccentBrush}"  Height="60" Margin="10" Width="55" RenderTransformOrigin="0.5,0.5">
+                            <Grid.RenderTransform>
+                                <CompositeTransform/>
+                            </Grid.RenderTransform>
 
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <DoubleAnimation Duration="0" To="0.805" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="grid" d:IsOptimized="True"/>
+                                            <DoubleAnimation Duration="0" To="4" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="grid" d:IsOptimized="True"/>
+                                            <DoubleAnimation Duration="0" To="3" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="grid" d:IsOptimized="True"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="Disabled"/>
+                                    <VisualState x:Name="MouseOver"/>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+
+                            <Path Data="M0,0L15.908,0 15.908,20.125872 28.130381,13.333224 52.118999,0 52.118999,26.66655 52.118999,53.333 28.130381,39.999775 15.908,33.20718 15.908,53.333 0,53.333z" Stretch="Uniform" Fill="#FFFFFFFF" Width="26" Height="26" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5">
+                                <Path.RenderTransform>
+                                    <TransformGroup>
+                                        <RotateTransform Angle="0" />
+                                        <ScaleTransform ScaleX="1" ScaleY="1" />
+                                    </TransformGroup>
+                                </Path.RenderTransform>
+                            </Path>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="btnPlayStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="{StaticResource PhoneForegroundBrush}"/>
+            <Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}"/>
+            <Setter Property="BorderThickness" Value="{StaticResource PhoneBorderThickness}"/>
+            <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiBold}"/>
+            <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMedium}"/>
+            <Setter Property="Padding" Value="10,5,10,6"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid x:Name="grid" HorizontalAlignment="Left" Background="{StaticResource PhoneAccentBrush}"  Height="60" Margin="10" Width="55" RenderTransformOrigin="0.5,0.5">
+                            <Grid.RenderTransform>
+                                <CompositeTransform/>
+                            </Grid.RenderTransform>
+
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <DoubleAnimation Duration="0" To="0.805" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="grid" d:IsOptimized="True"/>
+                                            <DoubleAnimation Duration="0" To="4" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="grid" d:IsOptimized="True"/>
+                                            <DoubleAnimation Duration="0" To="3" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="grid" d:IsOptimized="True"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="Disabled"/>
+                                    <VisualState x:Name="MouseOver"/>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+
+                            <Path x:Name="pathPlay" Data="F1M1188.2,1715.23L1169.93,1728.57 1151.66,1741.9 1151.66,1715.23 1151.66,1688.57 1169.93,1701.9 1188.2,1715.23z" Stretch="Uniform" Fill="#FFFFFFFF" Width="26" Height="26" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5">
+                                <Path.RenderTransform>
+                                    <TransformGroup>
+                                        <TransformGroup.Children>
+                                            <RotateTransform Angle="0" />
+                                            <ScaleTransform ScaleX="1" ScaleY="1" />
+                                        </TransformGroup.Children>
+                                    </TransformGroup>
+                                </Path.RenderTransform>
+                            </Path>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="btnPauseStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="{StaticResource PhoneForegroundBrush}"/>
+            <Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}"/>
+            <Setter Property="BorderThickness" Value="{StaticResource PhoneBorderThickness}"/>
+            <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiBold}"/>
+            <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMedium}"/>
+            <Setter Property="Padding" Value="10,5,10,6"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid x:Name="grid" HorizontalAlignment="Left" Background="{StaticResource PhoneAccentBrush}"  Height="60" Margin="10" Width="55" RenderTransformOrigin="0.5,0.5">
+                            <Grid.RenderTransform>
+                                <CompositeTransform/>
+                            </Grid.RenderTransform>
+
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <DoubleAnimation Duration="0" To="0.805" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="grid" d:IsOptimized="True"/>
+                                            <DoubleAnimation Duration="0" To="4" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="grid" d:IsOptimized="True"/>
+                                            <DoubleAnimation Duration="0" To="3" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="grid" d:IsOptimized="True"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="Disabled"/>
+                                    <VisualState x:Name="MouseOver"/>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+
+
+
+                            <Path x:Name="pathPause" Data="M27.270001,0L44.310001,0 44.310001,48.643002 27.270001,48.643002z M0,0L17.040001,0 17.040001,48.643002 0,48.643002z" Stretch="Uniform" Fill="#FFFFFFFF" Width="26" Height="26" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5">
+                                <Path.RenderTransform>
+                                    <TransformGroup>
+                                        <TransformGroup.Children>
+                                            <RotateTransform Angle="0" />
+                                            <ScaleTransform ScaleX="1" ScaleY="1" />
+                                        </TransformGroup.Children>
+                                    </TransformGroup>
+                                </Path.RenderTransform>
+                            </Path>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="btnNextStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="{StaticResource PhoneForegroundBrush}"/>
+            <Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}"/>
+            <Setter Property="BorderThickness" Value="{StaticResource PhoneBorderThickness}"/>
+            <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiBold}"/>
+            <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMedium}"/>
+            <Setter Property="Padding" Value="10,5,10,6"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid x:Name="grid" HorizontalAlignment="Left" Background="{StaticResource PhoneAccentBrush}"  Height="60" Margin="10" Width="55" RenderTransformOrigin="0.5,0.5">
+                            <Grid.RenderTransform>
+                                <CompositeTransform/>
+                            </Grid.RenderTransform>
+
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <DoubleAnimation Duration="0" To="0.805" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="grid" d:IsOptimized="True"/>
+                                            <DoubleAnimation Duration="0" To="4" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="grid" d:IsOptimized="True"/>
+                                            <DoubleAnimation Duration="0" To="3" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="grid" d:IsOptimized="True"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="Disabled"/>
+                                    <VisualState x:Name="MouseOver"/>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+
+                            <Path Data="M0,0L15.908,0 15.908,20.125872 28.130381,13.333224 52.118999,0 52.118999,26.66655 52.118999,53.333 28.130381,39.999775 15.908,33.20718 15.908,53.333 0,53.333z" Stretch="Uniform" Fill="#FFFFFFFF" Width="26" Height="26" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5">
+                                <Path.RenderTransform>
+                                    <TransformGroup>
+                                        <TransformGroup.Children>
+                                            <RotateTransform Angle="0" />
+                                            <ScaleTransform ScaleX="-1" ScaleY="1" />
+                                        </TransformGroup.Children>
+                                    </TransformGroup>
+                                </Path.RenderTransform>
+                            </Path>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="btnStopStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="{StaticResource PhoneForegroundBrush}"/>
+            <Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}"/>
+            <Setter Property="BorderThickness" Value="{StaticResource PhoneBorderThickness}"/>
+            <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiBold}"/>
+            <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMedium}"/>
+            <Setter Property="Padding" Value="10,5,10,6"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid x:Name="grid" HorizontalAlignment="Left" Background="{StaticResource PhoneAccentBrush}"  Height="60" Margin="10" Width="55" RenderTransformOrigin="0.5,0.5">
+                            <Grid.RenderTransform>
+                                <CompositeTransform/>
+                            </Grid.RenderTransform>
+
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <DoubleAnimation Duration="0" To="0.805" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="grid" d:IsOptimized="True"/>
+                                            <DoubleAnimation Duration="0" To="4" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="grid" d:IsOptimized="True"/>
+                                            <DoubleAnimation Duration="0" To="3" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="grid" d:IsOptimized="True"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="Disabled"/>
+                                    <VisualState x:Name="MouseOver"/>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+
+                            <Path Data="M0,0L64,0 64,64 0,64z" Stretch="Uniform" Fill="#FFFFFFFF" Width="26" Height="26" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5">
+                                <Path.RenderTransform>
+                                    <TransformGroup>
+                                        <TransformGroup.Children>
+                                            <RotateTransform Angle="0" />
+                                            <ScaleTransform ScaleX="1" ScaleY="1" />
+                                        </TransformGroup.Children>
+                                    </TransformGroup>
+                                </Path.RenderTransform>
+                            </Path>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="btnLocaFMStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="{StaticResource PhoneForegroundBrush}"/>
+            <Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}"/>
+            <Setter Property="BorderThickness" Value="{StaticResource PhoneBorderThickness}"/>
+            <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiBold}"/>
+            <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMedium}"/>
+            <Setter Property="Padding" Value="10,5,10,6"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid x:Name="grid" Background="{StaticResource PhoneAccentBrush}" HorizontalAlignment="Left"   Height="60" Width="100" Margin="30,10,20,10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="30"/>
+                            </Grid.RowDefinitions>
+                            <Grid.RenderTransform>
+                                <CompositeTransform/>
+                            </Grid.RenderTransform>
+
+
+
+
+
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <DoubleAnimation Duration="0" To="0.875" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="grid" d:IsOptimized="True"/>
+                                            <PointAnimation Duration="0" To="0.5,0.5" Storyboard.TargetProperty="(UIElement.RenderTransformOrigin)" Storyboard.TargetName="grid" d:IsOptimized="True"/>
+                                            <DoubleAnimation Duration="0" To="4" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="grid" d:IsOptimized="True"/>
+                                            <DoubleAnimation Duration="0" To="4" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="grid" d:IsOptimized="True"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="Disabled"/>
+                                    <VisualState x:Name="MouseOver"/>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+
+
+
+
+
+                            <Path Data="M8.7280464,52.596999L26.575315,52.596999C27.014007,52.596999,27.366999,52.94803,27.366999,53.380967L27.366999,54.109631C27.366999,54.542568,27.014007,54.893999,26.575315,54.893999L8.7280464,54.893999C8.2919579,54.893999,7.9389992,54.542568,7.9389992,54.109631L7.9389992,53.380967C7.9389992,52.94803,8.2919579,52.596999,8.7280464,52.596999z M8.7280464,46.140999L26.575315,46.140999C27.014007,46.140999,27.366999,46.491868,27.366999,46.92473L27.366999,47.652567C27.366999,48.085429,27.014007,48.436998,26.575315,48.436998L8.7280464,48.436998C8.2919579,48.436998,7.9389992,48.085429,7.9389992,47.652567L7.9389992,46.92473C7.9389992,46.491868,8.2919579,46.140999,8.7280464,46.140999z M8.7604599,40.194999L26.612575,40.194999C27.048688,40.194998,27.398998,40.546528,27.398998,40.97941L27.398998,41.707257C27.398998,42.140139,27.048688,42.490999,26.612575,42.490999L8.7604599,42.490999C8.3229465,42.490999,7.9699993,42.140139,7.9699993,41.707257L7.9699993,40.97941C7.9699993,40.546528,8.3229465,40.194998,8.7604599,40.194999z M43.542147,38.398998C46.065541,38.398998 48.109998,40.443672 48.109998,42.967162 48.109998,45.489854 46.065541,47.535998 43.542147,47.535998 41.018353,47.535998 38.973998,45.489854 38.973997,42.967162 38.973998,40.443672 41.018353,38.398998 43.542147,38.398998z M43.587499,36.179592C39.796027,36.179592 36.712731,39.265644 36.712732,43.057948 36.712731,46.849612 39.796027,49.935064 43.587499,49.935064 47.381571,49.935064 50.466166,46.849612 50.466166,43.057948 50.466166,39.265644 47.381571,36.179592 43.587499,36.179592z M43.587499,34.189996C48.479334,34.189998 52.456999,38.168585 52.456999,43.057948 52.456999,47.94733 48.479334,51.925998 43.587499,51.925998 38.698264,51.925998 34.721999,47.94733 34.721999,43.057948 34.721999,38.168585 38.698264,34.189998 43.587499,34.189996z M5.0950127,30.304925C4.4452934,30.304925,3.9193268,30.830923,3.9193268,31.47932L3.9193268,58.907518C3.9193268,59.555315,4.4452934,60.082113,5.0950127,60.082113L55.247314,60.082113C55.895613,60.082113,56.421711,59.555315,56.421711,58.907518L56.421711,31.47932C56.421711,30.830923,55.895613,30.304925,55.247314,30.304925z M25.283714,10.507999C27.143108,10.507999 28.662704,11.967693 28.755103,13.803587 28.765503,14.015886 28.908702,14.196785 29.105402,14.276985L52.658623,26.23644C52.898122,26.33544,53.156121,26.386839,53.412621,26.386839L57.988106,26.386839C59.286201,26.386839,60.340998,27.439535,60.340998,28.73713L60.340998,61.649708C60.340998,62.947302,59.286201,63.999998,57.988106,63.999998L2.352932,63.999998C1.0546837,63.999998,0,62.947302,0,61.649708L0,28.73713C0,27.439535,1.0546837,26.386839,2.352932,26.386839L43.334454,26.386839C43.424454,26.386839,43.450354,26.26384,43.368354,26.22674L27.775806,16.863474C27.548007,16.761175 27.285108,16.814674 27.072808,16.946175 26.550711,17.265173 25.941412,17.455372 25.283714,17.455372 23.367121,17.455372 21.812426,15.900478 21.812426,13.982685 21.812426,12.063993 23.367121,10.507999 25.283714,10.507999z M24.445761,5.4180069C25.139632,5.4156303 25.740388,5.9421387 25.812388,6.6483021 25.891689,7.4015503 25.342184,8.0786781 24.589677,8.1549091 24.157473,8.2010593 23.748569,8.2909012 23.364365,8.4191418 21.85405,8.923048 20.666538,10.034391 19.977633,11.419209 19.292826,12.803324 19.130123,14.428244 19.631229,15.919861 19.791531,16.404367 20.020632,16.874973 20.330635,17.332077 20.75634,17.958984 20.594837,18.812496 19.967232,19.239601 19.860531,19.311102 19.74593,19.367903 19.628729,19.406301 19.061024,19.597004 18.412617,19.395802 18.057114,18.876396 17.60911,18.211489 17.266706,17.509079 17.024603,16.790371 15.553089,12.315018 17.980312,7.3455791 22.494656,5.815712 23.066262,5.6235695 23.673068,5.4900894 24.305874,5.4256363 24.352831,5.4206734 24.399503,5.4181633 24.445761,5.4180069z M23.854011,2.6702881E-05C24.548635,-0.0042800903 25.147363,0.51931763 25.224337,1.2268715 25.303742,1.9807396 24.756905,2.6571465 24.003054,2.7366104 23.189097,2.8238335 22.411644,2.9963875 21.672094,3.242485 18.783796,4.2052803 16.47764,6.3246078 15.144249,8.9561367 13.810858,11.588938 13.464434,14.695221 14.4489,17.6355 14.600012,18.090511 14.784924,18.545624 15.004938,18.992935 15.338261,19.674555 15.057043,20.496876 14.374796,20.830885 14.319891,20.857487 14.261389,20.880287 14.205383,20.899286 13.560841,21.114693 12.84189,20.825584 12.537371,20.200569 12.262651,19.641953 12.032036,19.076939 11.843323,18.505823 9.3990765,11.122126 13.56214,3.0725594 20.803434,0.63694763 21.727999,0.32834625 22.700764,0.11551285 23.713934,0.0066833496L23.713934,0.008026123C23.760968,0.0029449463,23.807703,0.00031280518,23.854011,2.6702881E-05z" Stretch="Uniform" Fill="#FFFFFFFF" Width="26" Height="26" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5">
+                                <Path.RenderTransform>
+                                    <TransformGroup>
+                                        <RotateTransform Angle="0" />
+                                        <ScaleTransform ScaleX="1" ScaleY="1" />
+                                    </TransformGroup>
+                                </Path.RenderTransform>
+                            </Path>
+                            <TextBlock Grid.Row="1" HorizontalAlignment="Center">
+                    			<Run Text="本地FM"/>
+                            </TextBlock>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="btnInterFMStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="{StaticResource PhoneForegroundBrush}"/>
+            <Setter Property="Foreground" Value="{StaticResource PhoneForegroundBrush}"/>
+            <Setter Property="BorderThickness" Value="{StaticResource PhoneBorderThickness}"/>
+            <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiBold}"/>
+            <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMedium}"/>
+            <Setter Property="Padding" Value="10,5,10,6"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid x:Name="grid" Background="{StaticResource PhoneAccentBrush}" HorizontalAlignment="Left"   Height="60" Width="100" Margin="20,10,20,10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="30"/>
+                            </Grid.RowDefinitions>
+                            <Grid.RenderTransform>
+                                <CompositeTransform/>
+                            </Grid.RenderTransform>
+
+
+
+
+
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <DoubleAnimation Duration="0" To="0.875" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="grid" d:IsOptimized="True"/>
+                                            <PointAnimation Duration="0" To="0.5,0.5" Storyboard.TargetProperty="(UIElement.RenderTransformOrigin)" Storyboard.TargetName="grid" d:IsOptimized="True"/>
+                                            <DoubleAnimation Duration="0" To="4" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="grid" d:IsOptimized="True"/>
+                                            <DoubleAnimation Duration="0" To="4" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="grid" d:IsOptimized="True"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="Disabled"/>
+                                    <VisualState x:Name="MouseOver"/>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+
+
+
+
+
+                            <Path Data="M31.99995,28.902997C30.289188,28.902997 28.904,30.289975 28.904,32.000846 28.904,33.71042 30.289188,35.096998 31.99995,35.096998 33.710712,35.096998 35.096,33.71042 35.096,32.000846 35.096,30.289975 33.710712,28.902997 31.99995,28.902997z M32.000002,23.483998C36.703424,23.483998 40.516001,27.297689 40.516001,32.0011 40.516001,35.821321 37.999104,39.055507 34.532461,40.134022L34.323,40.193518 34.323,59.291998 29.677,59.291998 29.677,40.193507 29.467579,40.134022C26.000964,39.055507 23.484,35.821321 23.484001,32.0011 23.484,27.297689 27.29668,23.483998 32.000002,23.483998z M31.99985,11.806999C43.153733,11.806999 52.194,20.848473 52.194,32.000941 52.194,37.650625 49.871082,42.75481 46.131655,46.419999L42.283727,42.85641C45.164147,40.128518 46.968761,36.279529 46.968761,32.000941 46.968761,23.734064 40.265512,17.031984 31.99985,17.031984 23.734189,17.031984 17.031139,23.734064 17.031139,32.000941 17.031139,36.424028 18.963253,40.387417 22.012775,43.127209L17.825445,46.379799C14.111617,42.71701 11.807001,37.629825 11.807001,32.000941 11.807001,20.848473 20.846067,11.806999 31.99985,11.806999z M31.999851,0C49.67297,0 64.001001,14.32815 64.001001,32.001415 64.001001,40.750147 60.48542,48.674576 54.796545,54.451997L51.846159,51.717587C56.870737,46.660169 59.977522,39.694143 59.977522,32.001415 59.977522,16.549459 47.45158,4.0234528 31.999851,4.0234528 16.549323,4.0234528 4.0234222,16.549459 4.0234222,32.001415 4.0234222,39.427042 6.9218483,46.173367 11.643147,51.182285L8.4504604,53.661694C3.2056751,47.962473 0,40.356946 0,32.001415 0,14.32815 14.326734,0 31.999851,0z" Stretch="Uniform" Fill="#FFFFFFFF" Width="26" Height="26" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5">
+                                <Path.RenderTransform>
+                                    <TransformGroup>
+                                        <RotateTransform Angle="0" />
+                                        <ScaleTransform ScaleX="1" ScaleY="1" />
+                                    </TransformGroup>
+                                </Path.RenderTransform>
+                            </Path>
+                            <TextBlock HorizontalAlignment="Center" Grid.Row="1">
+                    			<Run Text="网络FM"/>
+                            </TextBlock>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </phone:PhoneApplicationPage.Resources>
 
     <!--LayoutRoot 是包含所有页面内容的根网格-->
@@ -106,121 +456,66 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <TextBlock HorizontalAlignment="Left" Height="48" Margin="33,47,0,0" TextWrapping="Wrap" Text="正在播放" VerticalAlignment="Top" Width="213"/>
                 <StackPanel Grid.Row="1" Orientation="Vertical" Grid.RowSpan="2">
                     <Rectangle Fill="{StaticResource PhoneAccentBrush}" HorizontalAlignment="Left" Height="200"  Stroke="Black" VerticalAlignment="Center" Width="300"/>
                     <ProgressBar HorizontalAlignment="Left" Height="10"   VerticalAlignment="Top" Width="270"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Grid.Row="2">
-                  
+                <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0,20,0,0">
 
-                    <Grid HorizontalAlignment="Left" Background="{StaticResource PhoneAccentBrush}"  Height="60" Margin="10" Width="55">
-                       
-                        <Path Data="M0,0L15.908,0 15.908,20.125872 28.130381,13.333224 52.118999,0 52.118999,26.66655 52.118999,53.333 28.130381,39.999775 15.908,33.20718 15.908,53.333 0,53.333z" Stretch="Uniform" Fill="#FFFFFFFF" Width="26" Height="26" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5">
-                            <Path.RenderTransform>
-                                <TransformGroup>
-                                    <TransformGroup.Children>
-                                        <RotateTransform Angle="0" />
-                                        <ScaleTransform ScaleX="1" ScaleY="1" />
-                                    </TransformGroup.Children>
-                                </TransformGroup>
-                            </Path.RenderTransform>
-                        </Path>
-                    </Grid>
+                    <Button x:Name="btnBack" Style="{StaticResource btnBackStyle}" >
 
-                    <Grid  Background="{StaticResource PhoneAccentBrush}"  Height="60" Margin="10" Width="55">
-                        <Path x:Name="pathPlay" Data="F1M1188.2,1715.23L1169.93,1728.57 1151.66,1741.9 1151.66,1715.23 1151.66,1688.57 1169.93,1701.9 1188.2,1715.23z" Stretch="Uniform" Fill="#FFFFFFFF" Width="26" Height="26" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5">
-                            <Path.RenderTransform>
-                                <TransformGroup>
-                                    <TransformGroup.Children>
-                                        <RotateTransform Angle="0" />
-                                        <ScaleTransform ScaleX="1" ScaleY="1" />
-                                    </TransformGroup.Children>
-                                </TransformGroup>
-                            </Path.RenderTransform>
-                        </Path>
+                    </Button>
+                    <Button x:Name="btnPlay" Style="{StaticResource btnPlayStyle}" >
 
-                        <Path x:Name="pathPause" Data="M27.270001,0L44.310001,0 44.310001,48.643002 27.270001,48.643002z M0,0L17.040001,0 17.040001,48.643002 0,48.643002z" Stretch="Uniform" Fill="#FFFFFFFF" Width="26" Height="26" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5">
-                            <Path.RenderTransform>
-                                <TransformGroup>
-                                    <TransformGroup.Children>
-                                        <RotateTransform Angle="0" />
-                                        <ScaleTransform ScaleX="1" ScaleY="1" />
-                                    </TransformGroup.Children>
-                                </TransformGroup>
-                            </Path.RenderTransform>
-                        </Path>
-                    </Grid>
-                    <Grid HorizontalAlignment="Left" Background="{StaticResource PhoneAccentBrush}"  Height="60" Margin="10" Width="55">
-                        <Path Data="M0,0L15.908,0 15.908,20.125872 28.130381,13.333224 52.118999,0 52.118999,26.66655 52.118999,53.333 28.130381,39.999775 15.908,33.20718 15.908,53.333 0,53.333z" Stretch="Uniform" Fill="#FFFFFFFF" Width="26" Height="26" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5">
-                            <Path.RenderTransform>
-                                <TransformGroup>
-                                    <TransformGroup.Children>
-                                        <RotateTransform Angle="0" />
-                                        <ScaleTransform ScaleX="-1" ScaleY="1" />
-                                    </TransformGroup.Children>
-                                </TransformGroup>
-                            </Path.RenderTransform>
-                        </Path>
-                    </Grid>
-                    <Grid Background="{StaticResource PhoneAccentBrush}" HorizontalAlignment="Left"   Height="60" Margin="10" Width="55">
-                        
-                        <Path Data="M0,0L64,0 64,64 0,64z" Stretch="Uniform" Fill="#FFFFFFFF" Width="26" Height="26" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5">
-                            <Path.RenderTransform>
-                                <TransformGroup>
-                                    <TransformGroup.Children>
-                                        <RotateTransform Angle="0" />
-                                        <ScaleTransform ScaleX="1" ScaleY="1" />
-                                    </TransformGroup.Children>
-                                </TransformGroup>
-                            </Path.RenderTransform>
-                        </Path>
-                    </Grid>
+                    </Button>
+                    <Button x:Name="btnPause" Style="{StaticResource btnPauseStyle}" Visibility="Collapsed" >
+
+                    </Button>
+                    <Button x:Name="btnNext" Style="{StaticResource btnNextStyle}" >
+
+                    </Button>
+                    <Button x:Name="btnStop" Style="{StaticResource btnStopStyle}" >
+
+                    </Button>
+
+
+
                 </StackPanel>
-              
-                <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="0,10,0,10">
+                <Border Grid.Row="4" Margin="0,50,0,10" BorderThickness="0,2,0,0" >
+                    <Border.BorderBrush>
+                        <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                            <LinearGradientBrush.RelativeTransform>
+                                <CompositeTransform CenterY="0.5" CenterX="0.5" Rotation="90"/>
+                            </LinearGradientBrush.RelativeTransform>
+                            <GradientStop Color="Black" Offset="0.145"/>
+                            <GradientStop Color="#FF085B63" Offset="0.979"/>
+                            <GradientStop Color="#FF0F707A" Offset="0.021"/>
+                            <GradientStop Color="#FF05A60C" Offset="0.809"/>
+                            <GradientStop Color="#FF025D06" Offset="0.408"/>
+                            <GradientStop Color="#FF3E0536" Offset="0.66"/>
+                        </LinearGradientBrush>
+                    </Border.BorderBrush>
 
-                  
-                    <Grid Background="{StaticResource PhoneAccentBrush}" HorizontalAlignment="Left"   Height="60" Width="100" Margin="30,10,20,10">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="30"/>
-                        </Grid.RowDefinitions>
-                        <Path Data="M0,0L64,0 64,64 0,64z" Stretch="Uniform" Fill="#FFFFFFFF" Width="26" Height="26" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5">
-                            <Path.RenderTransform>
-                                <TransformGroup>
-                                    <TransformGroup.Children>
-                                        <RotateTransform Angle="0" />
-                                        <ScaleTransform ScaleX="1" ScaleY="1" />
-                                    </TransformGroup.Children>
-                                </TransformGroup>
-                            </Path.RenderTransform>
-                        </Path>
-                        <TextBlock Grid.Row="1" HorizontalAlignment="Center">本地FM</TextBlock>
-                    </Grid>
-                    <Grid Background="{StaticResource PhoneAccentBrush}" HorizontalAlignment="Left"   Height="60" Margin="20,10,20,10" Width="100">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="30"/>
-                        </Grid.RowDefinitions>
-                        <Path Data="M0,0L64,0 64,64 0,64z" Stretch="Uniform" Fill="#FFFFFFFF" Width="26" Height="26" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5">
-                            <Path.RenderTransform>
-                                <TransformGroup>
-                                    <TransformGroup.Children>
-                                        <RotateTransform Angle="0" />
-                                        <ScaleTransform ScaleX="1" ScaleY="1" />
-                                    </TransformGroup.Children>
-                                </TransformGroup>
-                            </Path.RenderTransform>
-                        </Path>
-                        <TextBlock HorizontalAlignment="Center" Grid.Row="1">网络FM</TextBlock>
-                    </Grid>
-                </StackPanel>
-               
-                    <ScrollViewer Grid.Row="5" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-                        <TextBlock HorizontalAlignment="Left" Margin="0" TextWrapping="Wrap" 
+                    <StackPanel Orientation="Horizontal">
+
+                        <Button x:Name="btnLocaFM" Style="{StaticResource btnLocaFMStyle}" FontSize="18.667" />
+                        <Button x:Name="btnInterFM" Style="{StaticResource btnInterFMStyle}" FontSize="18.667" />
+                    </StackPanel>
+
+                </Border >
+                <Canvas Grid.Row="5">
+                    <Border x:Name="borderLeft" BorderThickness="1" HorizontalAlignment="Left" Height="96" VerticalAlignment="Top" Width="48" Background="{StaticResource PhoneAccentBrush}"/>
+                    <Border x:Name="borderRight" BorderThickness="1" HorizontalAlignment="Left" Height="96" VerticalAlignment="Top" Width="48" Background="{StaticResource PhoneAccentBrush}"/>
+                    <Border x:Name="borderTop" BorderThickness="1" HorizontalAlignment="Left" Height="48" VerticalAlignment="Top" Width="96" Background="{StaticResource PhoneAccentBrush}"/>
+                    <Border x:Name="borderBottom" BorderThickness="1" HorizontalAlignment="Left" Height="48" VerticalAlignment="Top" Width="96" Background="{StaticResource PhoneAccentBrush}"/>
+                    <Border x:Name="borderCenter" BorderThickness="1" HorizontalAlignment="Left" Height="48"  VerticalAlignment="Top" Width="48" Background="{StaticResource PhoneAccentBrush}"  />
+                </Canvas>
+
+                <!--<ScrollViewer Grid.Row="5" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Visibility="Collapsed">
+                    <TextBlock HorizontalAlignment="Left" Margin="0" TextWrapping="Wrap" 
                 			Text="TextBlock                   
                                    TextBlockTextBlockTex
                                    tBlockTextBlockTextBl        
@@ -235,9 +530,8 @@
                                    xtBlockTextBlockTextBl        
                                    
                                    ockTextBlockTextBlock" />
-                    </ScrollViewer>
+                </ScrollViewer>-->
 
-              
 
             </Grid>
             <Grid x:Name="gridRadioList" Grid.Column="1">

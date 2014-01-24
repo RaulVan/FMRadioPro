@@ -10,13 +10,16 @@ using Microsoft.Phone.Shell;
 using FMRadioPro.Resources;
 using System.Threading.Tasks;
 using FMRadioPro.Data;
+using Utility.Animations;
+using System.Windows.Threading;
+using System.Diagnostics;
 
 namespace FMRadioPro
 {
     public partial class MainPage : PhoneApplicationPage
     {
 
-       // AudioCategory 
+        // AudioCategory 
         // 构造函数
         public MainPage()
         {
@@ -30,13 +33,58 @@ namespace FMRadioPro
             //    data.Add(i + "/Deanna 频道 test频道 test频道 test频道 test");
             //}
             //listRadioList.ItemsSource = data;
-           // gridPanel.Width = Application.Current.Host.Content.ActualWidth * 2;
+            // gridPanel.Width = Application.Current.Host.Content.ActualWidth * 2;
+            this.Loaded += MainPage_Loaded;
 
-           
         }
+
+        void MainPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            //borderCenter.Margin = new Thickness(0, 0, 0, 0);
+            //MoveAnimation.MoveTo(borderCenter, 120, 120, TimeSpan.FromSeconds(1.5), null);
+
+        }
+
+
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
+            int index = 0;
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Tick += (a, w) =>
+                {
+                    if (index == 0)
+                    {
+                      
+                        MoveAnimation.MoveTo(borderBottom, 102, 150, TimeSpan.FromSeconds(0.5), null);
+                    }
+                    else if (index == 1)
+                    {
+                        MoveAnimation.MoveTo(borderLeft, 50, 102, TimeSpan.FromSeconds(0.5), null);
+                    }
+                    else if (index == 2)
+                    {
+                        MoveAnimation.MoveTo(borderRight, 150, 50, TimeSpan.FromSeconds(0.5), null);
+                    }
+
+                    else if (index == 3)
+                    {
+                        MoveAnimation.MoveTo(borderTop, 50, 50, TimeSpan.FromSeconds(0.5), null);
+                    }
+                    else if (index == 4)
+                    {
+                        MoveAnimation.MoveTo(borderCenter, 100, 100, TimeSpan.FromSeconds(0.5), null);
+                    }
+                    else
+                    {
+                        timer.Stop();
+                        Debug.WriteLine("Move over!");
+                    }
+                    index++;
+                };
+            timer.Interval = TimeSpan.FromSeconds(0.3);
+            timer.Start();
+
             await Task.Run(() =>
                 {
                     this.listRadioList.Dispatcher.BeginInvoke(() =>
@@ -51,14 +99,14 @@ namespace FMRadioPro
                                 listRadioList.IsGroupingEnabled = true;
                                 listRadioList.ItemsSource = RadiosData.GetData();
                             }
-                           
-                            
+
+
                         });
                 });
 
             base.OnNavigatedTo(e);
         }
-      
+
 
         // 用于生成本地化 ApplicationBar 的示例代码
         //private void BuildLocalizedApplicationBar()

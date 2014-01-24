@@ -90,6 +90,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Animations\AnimationBase.cs" />
+    <Compile Include="Animations\FadeAnimation.cs" />
+    <Compile Include="Animations\MoveAnimation.cs" />
+    <Compile Include="Animations\ScaleAnimation.cs" />
+    <Compile Include="Animations\VibrateAnimation.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
