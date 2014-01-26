@@ -13,6 +13,7 @@ using FMRadioPro.Data;
 using Utility.Animations;
 using System.Windows.Threading;
 using System.Diagnostics;
+using Microsoft.Phone.BackgroundAudio;
 
 namespace FMRadioPro
 {
@@ -24,7 +25,8 @@ namespace FMRadioPro
         public MainPage()
         {
             InitializeComponent();
-
+            BackgroundAudioPlayer.Instance.PlayStateChanged += Instance_PlayStateChanged;
+            
             // 用于本地化 ApplicationBar 的示例代码
             //BuildLocalizedApplicationBar();
             //List<string> data=new List<string> ();
@@ -35,20 +37,148 @@ namespace FMRadioPro
             //listRadioList.ItemsSource = data;
             // gridPanel.Width = Application.Current.Host.Content.ActualWidth * 2;
             this.Loaded += MainPage_Loaded;
+            this.btnBack.Click += btnBack_Click;
+            this.btnPlay.Click += btnPlay_Click;
+            this.btnPause.Click += btnPause_Click;
+            this.btnNext.Click += btnNext_Click;
+            this.btnStop.Click += btnStop_Click;
+            this.listRadioList.SelectionChanged += listRadioList_SelectionChanged;
 
+        }
+
+        void listRadioList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectenItem = listRadioList.SelectedItem;
+            listRadioList.ScrollTo(selectenItem);
+            //TODO:播放当前选择项
+        }
+
+        /// <summary>
+        /// 播放状态改变
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void Instance_PlayStateChanged(object sender, EventArgs e)
+        {
+            PlayStateChangedEventArgs newEventArgs = (PlayStateChangedEventArgs)e;
+            
+            switch (BackgroundAudioPlayer.Instance.PlayerState)
+            {
+                case PlayState.BufferingStarted:
+                    //TODO:缓存进度条
+                    Debug.WriteLine("11ing。。。。");
+                    break;
+                case PlayState.BufferingStopped:
+                    //TODO:停止缓充
+                    Debug.WriteLine("end。。。。。。。");
+                    break;
+                case PlayState.Error:
+                    break;
+                case PlayState.FastForwarding:
+                    break;
+                
+                case PlayState.Playing:
+                    btnPause.Visibility = Visibility.Visible;
+                    btnPlay.Visibility = Visibility.Collapsed;
+                    break;
+                case PlayState.Rewinding:
+                    break;
+                case PlayState.Shutdown:
+                    //TODO:应用退出提示是否继续后台播放，否，停止播放
+                    break;
+                case PlayState.Paused:
+                case PlayState.Stopped:
+                    btnPause.Visibility = Visibility.Collapsed;
+                    btnPlay.Visibility = Visibility.Visible;
+                    break;
+                case PlayState.TrackEnded:
+                    break;
+                case PlayState.TrackReady:
+                    break;
+                case PlayState.Unknown:
+                    break;
+                default:
+                    break;
+
+            }
+            if (BackgroundAudioPlayer.Instance.Track!=null)
+            {
+                //TODO:显示当前播放内容
+            }
+        }
+        /// <summary>
+        /// 停止
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void btnStop_Click(object sender, RoutedEventArgs e)
+        {
+            BackgroundAudioPlayer.Instance.Stop();
+        }
+        /// <summary>
+        /// 下一曲
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void btnNext_Click(object sender, RoutedEventArgs e)
+        {
+            BackgroundAudioPlayer.Instance.SkipNext();
+        }
+        /// <summary>
+        /// 暂停
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void btnPause_Click(object sender, RoutedEventArgs e)
+        {
+            BackgroundAudioPlayer.Instance.Pause();
+        }
+        /// <summary>
+        /// 播放
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void btnPlay_Click(object sender, RoutedEventArgs e)
+        {
+            BackgroundAudioPlayer.Instance.Play();
+        }
+
+        /// <summary>
+        /// 上一曲
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+            BackgroundAudioPlayer.Instance.SkipPrevious();
         }
 
         void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
             //borderCenter.Margin = new Thickness(0, 0, 0, 0);
             //MoveAnimation.MoveTo(borderCenter, 120, 120, TimeSpan.FromSeconds(1.5), null);
-
+           
         }
 
 
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
+
+            if (PlayState.Playing==BackgroundAudioPlayer.Instance.PlayerState)
+            {
+                btnPause.Visibility = Visibility.Visible;
+                btnPlay.Visibility = Visibility.Collapsed;
+                //TODO:显示当前播放内容
+            }
+            else
+            {
+                btnPause.Visibility = Visibility.Collapsed;
+                btnPlay.Visibility = Visibility.Visible;
+                //TODO:播放内容清空
+            }
+
+
             int index = 0;
             DispatcherTimer timer = new DispatcherTimer();
             timer.Tick += (a, w) =>
