@@ -19,6 +19,8 @@ namespace AudioPlaybackAgent
                  new AudioTrack(new Uri("mms://a1450.l11459845449.c114598.g.lm.akamaistream.net/D/1450/114598/v0001/reflector:45449", UriKind.Absolute),"Y.E.S 933FM","KissRadio","",null),
                   new AudioTrack(new Uri("mms://a1450.l11459845449.c114598.g.lm.akamaistream.net/D/1450/114598/v0001/reflector:45449", UriKind.Absolute),"Y.E.S 933FM","KissRadio","",null),
             };
+
+
         /// <remarks>
         /// AudioPlayer 实例可共享同一进程。
         /// 静态字段可用于 AudioPlayer 实例之间共享状态
@@ -116,6 +118,7 @@ namespace AudioPlaybackAgent
                     if (player.PlayerState != PlayState.Playing)
                     {
                         player.Track = fmPlayList[_currentTack];
+                        Debug.WriteLine( player.BufferingProgress);
                         player.Play();
                     }
                     break;

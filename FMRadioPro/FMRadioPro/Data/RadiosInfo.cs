@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 //代码参照 http://www.cnblogs.com/webabcd/archive/2013/11/26/3442599.html
 
@@ -27,13 +28,23 @@ namespace FMRadioPro.Data
 
        public static string GetNameFirstPinyinKey(RadiosInfo radioInfo)
        {
+           if (radioInfo.NamePinyin == null)
+           {
+               try
+               {
+                   radioInfo.NamePinyin = Pinyin.GetPinyin(radioInfo.Name);
+               }
+               catch (Exception ex)
+               {
+                   Debug.WriteLine("拼音转换移除："+ex);
+               }
+           }
            char index = char.ToUpper(radioInfo.NamePinyin[0]);
-           if (index<'A'||index>'Z')
+           if (index < 'A' || index > 'Z')
            {
                index = '#';
            }
            return index.ToString();
-
        }
 
     }

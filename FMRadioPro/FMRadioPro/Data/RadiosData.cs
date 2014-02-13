@@ -47,15 +47,28 @@ namespace FMRadioPro.Data
                 StreamResourceInfo resource = App.GetResourceStream(new Uri("Resources/RadioInfo.txt", UriKind.Relative));
                 StreamReader sr = new StreamReader(resource.Stream);
                 string line = sr.ReadLine();
-                while (line!=null)
+                while (!string.IsNullOrWhiteSpace(line))
                 {
                     var ary = line.Split('=');
-                    var radioInfo=new RadiosInfo{ Name=ary[0],URL=ary[1],NamePinyin=ary[2]};
+                    var radioInfo = new RadiosInfo { Name = ary[0], URL = ary[1], NamePinyin = ary[2] };
                     _radios.Add(radioInfo);
                     groups[RadiosInfo.GetNameFirstPinyinKey(radioInfo)].Add(radioInfo);
                     line = sr.ReadLine();
 
                 }
+
+                   resource = App.GetResourceStream(new Uri("Resources/Text1.txt", UriKind.Relative));
+                 sr = new StreamReader(resource.Stream);
+                 line = sr.ReadLine();
+                 while (!string.IsNullOrWhiteSpace(line))
+                 {
+                     var ary = line.Split('=');
+                     var radioInfo = new RadiosInfo { Name = ary[0], URL = ary[1] };
+                     _radios.Add(radioInfo);
+                     groups[RadiosInfo.GetNameFirstPinyinKey(radioInfo)].Add(radioInfo);
+                     line = sr.ReadLine();
+
+                 }
             }
             return _data;
         }
