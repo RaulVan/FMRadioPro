@@ -14,6 +14,8 @@ using Utility.Animations;
 using System.Windows.Threading;
 using System.Diagnostics;
 using Microsoft.Phone.BackgroundAudio;
+using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace FMRadioPro
 {
@@ -43,8 +45,31 @@ namespace FMRadioPro
             this.btnNext.Click += btnNext_Click;
             this.btnStop.Click += btnStop_Click;
             this.listRadioList.SelectionChanged += listRadioList_SelectionChanged;
+            this.topMenBar.ManipulationDelta += topMenBar_ManipulationDelta;
+            this.topMenBar.ManipulationCompleted += topMenBar_ManipulationCompleted;
 
         }
+
+        void topMenBar_ManipulationCompleted(object sender, System.Windows.Input.ManipulationCompletedEventArgs e)
+        {
+            
+        }
+
+        void topMenBar_ManipulationDelta(object sender, System.Windows.Input.ManipulationDeltaEventArgs e)
+        {
+
+            Rectangle rg = sender as Rectangle;
+            TranslateTransform tf = new TranslateTransform();
+            tf.X = e.DeltaManipulation.Translation.X;
+            tf.Y = e.DeltaManipulation.Translation.Y;
+
+            rg.RenderTransform = tf;
+
+            e.Handled = true;
+
+        }
+
+       
 
         void listRadioList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

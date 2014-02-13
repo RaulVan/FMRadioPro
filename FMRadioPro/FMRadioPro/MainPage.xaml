@@ -442,14 +442,16 @@
 
         <!--ContentPanel - 在此处放置其他内容-->
         <!--<ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" >-->
+        <!--<ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" >-->
 
         <Grid x:Name="gridPanel" Margin="0" >
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="7"/>
                 <ColumnDefinition Width="70*"/>
                 <ColumnDefinition Width="30*"/>
             </Grid.ColumnDefinitions>
-
-            <Grid x:Name="ContentPanel" Grid.Column="0" Margin="12,0,12,0">
+            
+            <Grid x:Name="ContentPanel" Grid.Column="1" Margin="12,0,12,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="210"/>
@@ -465,21 +467,11 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0,20,0,0">
 
-                    <Button x:Name="btnBack" Style="{StaticResource btnBackStyle}" >
-
-                    </Button>
-                    <Button x:Name="btnPlay" Style="{StaticResource btnPlayStyle}" >
-
-                    </Button>
-                    <Button x:Name="btnPause" Style="{StaticResource btnPauseStyle}" Visibility="Collapsed" >
-
-                    </Button>
-                    <Button x:Name="btnNext" Style="{StaticResource btnNextStyle}" >
-
-                    </Button>
-                    <Button x:Name="btnStop" Style="{StaticResource btnStopStyle}" >
-
-                    </Button>
+                    <Button x:Name="btnBack" Style="{StaticResource btnBackStyle}" />
+                    <Button x:Name="btnPlay" Style="{StaticResource btnPlayStyle}" />
+                    <Button x:Name="btnPause" Style="{StaticResource btnPauseStyle}" Visibility="Collapsed" />
+                    <Button x:Name="btnNext" Style="{StaticResource btnNextStyle}" />
+                    <Button x:Name="btnStop" Style="{StaticResource btnStopStyle}" />
 
 
 
@@ -505,7 +497,7 @@
                         <Button x:Name="btnInterFM" Style="{StaticResource btnInterFMStyle}" FontSize="18.667" />
                     </StackPanel>
 
-                </Border >
+                </Border>
                 <Canvas Grid.Row="5">
                     <Border x:Name="borderLeft" BorderThickness="1" HorizontalAlignment="Left" Height="96" VerticalAlignment="Top" Width="48" Background="{StaticResource PhoneAccentBrush}"/>
                     <Border x:Name="borderRight" BorderThickness="1" HorizontalAlignment="Left" Height="96" VerticalAlignment="Top" Width="48" Background="{StaticResource PhoneAccentBrush}"/>
@@ -534,16 +526,19 @@
 
 
             </Grid>
-            <Grid x:Name="gridRadioList" Grid.Column="1">
+            <Grid x:Name="gridRadioList" Grid.Column="2">
                 <phone:LongListSelector x:Name="listRadioList"    ItemsSource="{Binding}"
-                                     HideEmptyGroups="True"
-                                    LayoutMode="List" JumpListStyle="{StaticResource JumpListStyle}" 
-									GroupHeaderTemplate="{StaticResource GroupHeaderTemplate}"                                                                           
-                                ItemTemplate="{StaticResource ItemTemplate}">
-
-                </phone:LongListSelector>
+    				HideEmptyGroups="True"
+    				LayoutMode="List" JumpListStyle="{StaticResource JumpListStyle}" 
+    				GroupHeaderTemplate="{StaticResource GroupHeaderTemplate}"                                                                           
+    				ItemTemplate="{StaticResource ItemTemplate}"/>
             </Grid>
         </Grid>
+        <Rectangle x:Name="topMenBar"  Canvas.ZIndex="100" Canvas.Left="-239" Fill="Beige" Opacity="0.5"  Height="768" Width="240" >
+            
+        </Rectangle>
+
+        <!--<ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" >-->
         <!--</ScrollViewer>-->
         <!--取消注释，以显示对齐网格，从而帮助确保
             控件在公用边界上对齐。图像在系统栏中显示时的
