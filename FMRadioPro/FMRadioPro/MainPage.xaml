@@ -501,8 +501,8 @@
 
                     <StackPanel Orientation="Horizontal">
 
-                        <Button x:Name="btnLocaFM" Style="{StaticResource btnLocaFMStyle}" FontSize="18.667" />
-                        <Button x:Name="btnInterFM" Style="{StaticResource btnInterFMStyle}" FontSize="18.667" />
+                        <Button x:Name="btnLocaFM" Style="{StaticResource btnLocaFMStyle}" FontSize="18.667" Click="btnLocaFM_Click" />
+                        <Button x:Name="btnInterFM" Style="{StaticResource btnInterFMStyle}" FontSize="18.667" Click="btnInterFM_Click" />
                     </StackPanel>
 
                 </Border >

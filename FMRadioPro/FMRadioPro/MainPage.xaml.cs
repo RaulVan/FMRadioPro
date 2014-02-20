@@ -14,11 +14,13 @@ using Utility.Animations;
 using System.Windows.Threading;
 using System.Diagnostics;
 using Microsoft.Phone.BackgroundAudio;
+using Microsoft.Devices.Radio;
 
 namespace FMRadioPro
 {
     public partial class MainPage : PhoneApplicationPage
     {
+        FMRadio radio;
 
         // AudioCategory 
         // 构造函数
@@ -42,15 +44,19 @@ namespace FMRadioPro
             this.btnPause.Click += btnPause_Click;
             this.btnNext.Click += btnNext_Click;
             this.btnStop.Click += btnStop_Click;
+            listRadioList.Visibility = Visibility.Collapsed;
+
             this.listRadioList.SelectionChanged += listRadioList_SelectionChanged;
 
         }
 
         void listRadioList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var selectenItem = listRadioList.SelectedItem;
+            var selectenItem = listRadioList.SelectedItem as RadiosInfo;
             listRadioList.ScrollTo(selectenItem);
-            //TODO:播放当前选择项
+            //TODO:播放当前本地电台
+
+          //  radio.Frequency=
         }
 
         /// <summary>
@@ -215,26 +221,52 @@ namespace FMRadioPro
             timer.Interval = TimeSpan.FromSeconds(0.3);
             timer.Start();
 
-            await Task.Run(() =>
-                {
-                    this.listRadioList.Dispatcher.BeginInvoke(() =>
-                        {
-                            if (RadiosData.GetRadioData().Count <= 30)
-                            {
-                                listRadioList.IsGroupingEnabled = false;
-                                listRadioList.ItemsSource = RadiosData.GetRadioData();
-                            }
-                            else
-                            {
-                                listRadioList.IsGroupingEnabled = true;
-                                listRadioList.ItemsSource = RadiosData.GetData();
-                            }
-
-
-                        });
-                });
+           
 
             base.OnNavigatedTo(e);
+        }
+
+        /// <summary>
+        /// 本地电台
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void btnLocaFM_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO:加载本地电台数据
+            //结束网络电台播放
+            await Task.Run(() =>
+            {
+                this.listRadioList.Dispatcher.BeginInvoke(() =>
+                {
+                    if (RadiosData.GetRadioData().Count <= 30)
+                    {
+                        listRadioList.IsGroupingEnabled = false;
+                        listRadioList.ItemsSource = RadiosData.GetRadioData();
+                    }
+                    else
+                    {
+                        listRadioList.IsGroupingEnabled = true;
+                        listRadioList.ItemsSource = RadiosData.GetData();
+                    }
+                });
+            });
+            listRadioList.Visibility = Visibility.Visible;
+            
+            radio = FMRadio.Instance;
+            radio.CurrentRegion = RadioRegion.Europe;//除美国和日本外
+            
+        }
+
+        /// <summary>
+        /// 网络电台
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnInterFM_Click(object sender, RoutedEventArgs e)
+        {
+            listRadioList.Visibility = Visibility.Collapsed;
+           
         }
 
 
