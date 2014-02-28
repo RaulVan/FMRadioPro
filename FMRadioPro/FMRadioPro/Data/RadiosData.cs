@@ -19,18 +19,23 @@ namespace FMRadioPro.Data
         private static List<RadiosInfoInGroup> _data;
         private static List<RadiosInfo> _radios;
 
+        /// <summary>
+        /// 获取List不显示分组时的数据
+        /// </summary>
+        /// <returns></returns>
         public static List<RadiosInfo> GetRadioData()
         {
             GetData();
             return _radios;
         }
         /// <summary>
-        /// 获取全部电台数据
+        /// 获取全部电台数据，显示分组数据
         /// </summary>
         /// <returns></returns>
         public static List<RadiosInfoInGroup> GetData()
         {
-            if (_data==null)
+            #region 读取内容资源的电台数据
+            if (_data == null)
             {
                 _data = new List<RadiosInfoInGroup>();
                 _radios = new List<RadiosInfo>();
@@ -57,19 +62,20 @@ namespace FMRadioPro.Data
 
                 }
 
-                   resource = App.GetResourceStream(new Uri("Resources/Text1.txt", UriKind.Relative));
-                 sr = new StreamReader(resource.Stream);
-                 line = sr.ReadLine();
-                 while (!string.IsNullOrWhiteSpace(line))
-                 {
-                     var ary = line.Split('=');
-                     var radioInfo = new RadiosInfo { Name = ary[0], URL = ary[1] };
-                     _radios.Add(radioInfo);
-                     groups[RadiosInfo.GetNameFirstPinyinKey(radioInfo)].Add(radioInfo);
-                     line = sr.ReadLine();
+                resource = App.GetResourceStream(new Uri("Resources/Text1.txt", UriKind.Relative));
+                sr = new StreamReader(resource.Stream);
+                line = sr.ReadLine();
+                while (!string.IsNullOrWhiteSpace(line))
+                {
+                    var ary = line.Split('=');
+                    var radioInfo = new RadiosInfo { Name = ary[0], URL = ary[1] };
+                    _radios.Add(radioInfo);
+                    groups[RadiosInfo.GetNameFirstPinyinKey(radioInfo)].Add(radioInfo);
+                    line = sr.ReadLine();
 
-                 }
-            }
+                }
+            } 
+            #endregion
             return _data;
         }
 
@@ -84,7 +90,7 @@ namespace FMRadioPro.Data
         {
             searchKey = searchKey.ToUpper();
             List<RadiosInfoInGroup> result = new List<RadiosInfoInGroup>();
-            List<RadiosInfoInGroup> data = GetData();
+            List<RadiosInfoInGroup> data = GetData();//获取全部数据
             foreach (RadiosInfoInGroup rig in data)
             {
                 List<RadiosInfo> radioData = rig.Where(p => p.Name.Contains(searchKey) || p.NamePinyin.Contains(searchKey)).ToList();
