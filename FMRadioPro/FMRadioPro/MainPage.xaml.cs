@@ -48,11 +48,20 @@ namespace FMRadioPro
             this.topMenBar.ManipulationDelta += topMenBar_ManipulationDelta;
             this.topMenBar.ManipulationCompleted += topMenBar_ManipulationCompleted;
 
+            topMenBar.Visibility = Visibility.Collapsed;
+
+           
         }
+
+        private void UpdateButton()
+        {
+ 
+        }
+
 
         void topMenBar_ManipulationCompleted(object sender, System.Windows.Input.ManipulationCompletedEventArgs e)
         {
-            
+             
         }
 
         void topMenBar_ManipulationDelta(object sender, System.Windows.Input.ManipulationDeltaEventArgs e)
@@ -73,9 +82,13 @@ namespace FMRadioPro
 
         void listRadioList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var selectenItem = listRadioList.SelectedItem;
+            var selectenItem =(RadiosInfo) listRadioList.SelectedItem;
             listRadioList.ScrollTo(selectenItem);
             //TODO:播放当前选择项
+            Debug.WriteLine(selectenItem.URL);
+            BackgroundAudioPlayer.Instance.Track = new AudioTrack(new Uri(selectenItem.URL, UriKind.Absolute), selectenItem.Name, null, null, null, "fd", EnabledPlayerControls.Pause);
+            BackgroundAudioPlayer.Instance.Volume = 1.0d;
+
         }
 
         /// <summary>
@@ -85,36 +98,36 @@ namespace FMRadioPro
         /// <param name="e"></param>
         void Instance_PlayStateChanged(object sender, EventArgs e)
         {
-            PlayStateChangedEventArgs newEventArgs = (PlayStateChangedEventArgs)e;
-            
-            switch (BackgroundAudioPlayer.Instance.PlayerState)
+            PlayState playState = PlayState.Unknown;
+            try
+            {
+                playState = BackgroundAudioPlayer.Instance.PlayerState;
+            }
+            catch (InvalidOperationException)
+            {
+                playState = PlayState.Stopped;
+            }
+
+            switch (playState)
             {
                 case PlayState.BufferingStarted:
-                    //TODO:缓存进度条
-                    Debug.WriteLine("11ing。。。。");
                     break;
                 case PlayState.BufferingStopped:
-                    //TODO:停止缓充
-                    Debug.WriteLine("end。。。。。。。");
                     break;
                 case PlayState.Error:
                     break;
                 case PlayState.FastForwarding:
                     break;
-                
+                case PlayState.Paused:
+                    break;
                 case PlayState.Playing:
-                    btnPause.Visibility = Visibility.Visible;
-                    btnPlay.Visibility = Visibility.Collapsed;
+                   
                     break;
                 case PlayState.Rewinding:
                     break;
                 case PlayState.Shutdown:
-                    //TODO:应用退出提示是否继续后台播放，否，停止播放
                     break;
-                case PlayState.Paused:
                 case PlayState.Stopped:
-                    btnPause.Visibility = Visibility.Collapsed;
-                    btnPlay.Visibility = Visibility.Visible;
                     break;
                 case PlayState.TrackEnded:
                     break;
@@ -124,12 +137,55 @@ namespace FMRadioPro
                     break;
                 default:
                     break;
+            }
 
-            }
-            if (BackgroundAudioPlayer.Instance.Track!=null)
-            {
-                //TODO:显示当前播放内容
-            }
+            #region MyRegion
+            //PlayStateChangedEventArgs newEventArgs = (PlayStateChangedEventArgs)e;
+
+            //switch (BackgroundAudioPlayer.Instance.PlayerState)
+            //{
+            //    case PlayState.BufferingStarted:
+            //        //TODO:缓存进度条
+            //        Debug.WriteLine("11ing。。。。");
+            //        break;
+            //    case PlayState.BufferingStopped:
+            //        //TODO:停止缓充
+            //        Debug.WriteLine("end。。。。。。。");
+            //        break;
+            //    case PlayState.Error:
+            //        break;
+            //    case PlayState.FastForwarding:
+            //        break;
+
+            //    case PlayState.Playing:
+            //        btnPause.Visibility = Visibility.Visible;
+            //        btnPlay.Visibility = Visibility.Collapsed;
+            //        break;
+            //    case PlayState.Rewinding:
+            //        break;
+            //    case PlayState.Shutdown:
+            //        //TODO:应用退出提示是否继续后台播放，否，停止播放
+            //        break;
+            //    case PlayState.Paused:
+            //    case PlayState.Stopped:
+            //        btnPause.Visibility = Visibility.Collapsed;
+            //        btnPlay.Visibility = Visibility.Visible;
+            //        break;
+            //    case PlayState.TrackEnded:
+            //        break;
+            //    case PlayState.TrackReady:
+            //        break;
+            //    case PlayState.Unknown:
+            //        break;
+            //    default:
+            //        break;
+
+            //}
+            //if (BackgroundAudioPlayer.Instance.Track!=null)
+            //{
+            //    //TODO:显示当前播放内容
+            //} 
+            #endregion
         }
         /// <summary>
         /// 停止
@@ -147,7 +203,7 @@ namespace FMRadioPro
         /// <param name="e"></param>
         void btnNext_Click(object sender, RoutedEventArgs e)
         {
-            BackgroundAudioPlayer.Instance.SkipNext();
+            //BackgroundAudioPlayer.Instance.SkipNext();
         }
         /// <summary>
         /// 暂停
@@ -165,7 +221,10 @@ namespace FMRadioPro
         /// <param name="e"></param>
         void btnPlay_Click(object sender, RoutedEventArgs e)
         {
-            BackgroundAudioPlayer.Instance.Play();
+            //BackgroundAudioPlayer.Instance.Play();
+
+            BackgroundAudioPlayer.Instance.Track = new AudioTrack(new Uri("mms://a1450.l11459845449.c114598.g.lm.akamaistream.net/D/1450/114598/v0001/reflector:45449", UriKind.Absolute), "SKY.FM", null, null, null, "fd", EnabledPlayerControls.Pause);
+            BackgroundAudioPlayer.Instance.Volume = 1.0d;
         }
 
         /// <summary>
@@ -175,7 +234,7 @@ namespace FMRadioPro
         /// <param name="e"></param>
         void btnBack_Click(object sender, RoutedEventArgs e)
         {
-            BackgroundAudioPlayer.Instance.SkipPrevious();
+           // BackgroundAudioPlayer.Instance.SkipPrevious();
         }
 
         void MainPage_Loaded(object sender, RoutedEventArgs e)

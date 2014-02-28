@@ -85,7 +85,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AudioPlayer.cs" />
+    <Compile Include="AudioTrackStreamer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Silverlight.Media.Shoutcast\Silverlight.Media.Shoutcast.Phone.csproj">
+      <Project>{05CC4102-451C-4EB5-8FEA-614F5B49AB2D}</Project>
+      <Name>Silverlight.Media.Shoutcast.Phone</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
