@@ -22,6 +22,11 @@ namespace FMRadioPro
     public partial class MainPage : PhoneApplicationPage
     {
 
+        /// <summary>
+        ///更新UI计时器
+        /// </summary>
+        private DispatcherTimer timerr;
+
         // AudioCategory 
         // 构造函数
         public MainPage()
@@ -58,6 +63,28 @@ namespace FMRadioPro
  
         }
 
+        void UpdateState(object sender, EventArgs e)
+        {
+            AudioTrack audioTrack=BackgroundAudioPlayer.Instance.Track;
+
+            if (audioTrack!=null)
+	{
+        txtPlayName.Text = audioTrack.Title;
+        if (PlayState.Playing == BackgroundAudioPlayer.Instance.PlayerState)
+        {
+            btnPause.Visibility = Visibility.Visible;
+            btnPlay.Visibility = Visibility.Collapsed;
+            //TODO:显示当前播放内容
+        }
+        else
+        {
+            btnPause.Visibility = Visibility.Collapsed;
+            btnPlay.Visibility = Visibility.Visible;
+            //TODO:播放内容清空
+        }
+	}
+           
+        }
 
         void topMenBar_ManipulationCompleted(object sender, System.Windows.Input.ManipulationCompletedEventArgs e)
         {
@@ -110,30 +137,19 @@ namespace FMRadioPro
 
             switch (playState)
             {
-                case PlayState.BufferingStarted:
-                    break;
-                case PlayState.BufferingStopped:
-                    break;
-                case PlayState.Error:
-                    break;
-                case PlayState.FastForwarding:
-                    break;
                 case PlayState.Paused:
+                    this.UpdateState(null, null);
+                    this.timerr.Stop();
                     break;
                 case PlayState.Playing:
-                   
+                    this.UpdateState(null, null);
+
+                    this.timerr.Start();
                     break;
-                case PlayState.Rewinding:
-                    break;
-                case PlayState.Shutdown:
-                    break;
+                
                 case PlayState.Stopped:
-                    break;
-                case PlayState.TrackEnded:
-                    break;
-                case PlayState.TrackReady:
-                    break;
-                case PlayState.Unknown:
+                    this.timerr.Stop();
+                    this.UpdateState(null, null);
                     break;
                 default:
                     break;
@@ -194,7 +210,9 @@ namespace FMRadioPro
         /// <param name="e"></param>
         void btnStop_Click(object sender, RoutedEventArgs e)
         {
+            this.timerr.Stop();
             BackgroundAudioPlayer.Instance.Stop();
+            this.UpdateState(null, null);
         }
         /// <summary>
         /// 下一曲
@@ -241,8 +259,12 @@ namespace FMRadioPro
         {
             //borderCenter.Margin = new Thickness(0, 0, 0, 0);
             //MoveAnimation.MoveTo(borderCenter, 120, 120, TimeSpan.FromSeconds(1.5), null);
-           
+            this.timerr = new DispatcherTimer();
+            this.timerr.Interval = TimeSpan.FromSeconds(.5);
+            this.timerr.Tick += UpdateState;
         }
+
+       
 
 
 
@@ -262,43 +284,46 @@ namespace FMRadioPro
                 //TODO:播放内容清空
             }
 
+            this.UpdateState(null, null);
 
-            int index = 0;
-            DispatcherTimer timer = new DispatcherTimer();
-            timer.Tick += (a, w) =>
-                {
-                    if (index == 0)
-                    {
-                      
-                        MoveAnimation.MoveTo(borderBottom, 102, 150, TimeSpan.FromSeconds(0.5), null);
-                    }
-                    else if (index == 1)
-                    {
-                        MoveAnimation.MoveTo(borderLeft, 50, 102, TimeSpan.FromSeconds(0.5), null);
-                    }
-                    else if (index == 2)
-                    {
-                        MoveAnimation.MoveTo(borderRight, 150, 50, TimeSpan.FromSeconds(0.5), null);
-                    }
+            #region 动画
+            //int index = 0;
+            //DispatcherTimer timer = new DispatcherTimer();
+            //timer.Tick += (a, w) =>
+            //    {
+            //        if (index == 0)
+            //        {
 
-                    else if (index == 3)
-                    {
-                        MoveAnimation.MoveTo(borderTop, 50, 50, TimeSpan.FromSeconds(0.5), null);
-                    }
-                    else if (index == 4)
-                    {
-                        MoveAnimation.MoveTo(borderCenter, 100, 100, TimeSpan.FromSeconds(0.5), null);
-                    }
-                    else
-                    {
-                        timer.Stop();
-                        Debug.WriteLine("Move over!");
-                    }
-                    index++;
-                };
-            timer.Interval = TimeSpan.FromSeconds(0.3);
-            timer.Start();
+            //            MoveAnimation.MoveTo(borderBottom, 102, 150, TimeSpan.FromSeconds(0.5), null);
+            //        }
+            //        else if (index == 1)
+            //        {
+            //            MoveAnimation.MoveTo(borderLeft, 50, 102, TimeSpan.FromSeconds(0.5), null);
+            //        }
+            //        else if (index == 2)
+            //        {
+            //            MoveAnimation.MoveTo(borderRight, 150, 50, TimeSpan.FromSeconds(0.5), null);
+            //        }
 
+            //        else if (index == 3)
+            //        {
+            //            MoveAnimation.MoveTo(borderTop, 50, 50, TimeSpan.FromSeconds(0.5), null);
+            //        }
+            //        else if (index == 4)
+            //        {
+            //            MoveAnimation.MoveTo(borderCenter, 100, 100, TimeSpan.FromSeconds(0.5), null);
+            //        }
+            //        else
+            //        {
+            //            timer.Stop();
+            //            Debug.WriteLine("Move over!");
+            //        }
+            //        index++;
+            //    };
+            //timer.Interval = TimeSpan.FromSeconds(0.3);
+            //timer.Start();
+            
+            #endregion
             await Task.Run(() =>
                 {
                     this.listRadioList.Dispatcher.BeginInvoke(() =>
@@ -319,6 +344,16 @@ namespace FMRadioPro
                 });
 
             base.OnNavigatedTo(e);
+        }
+
+        private void btnLocaFM_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnInterFM_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
 

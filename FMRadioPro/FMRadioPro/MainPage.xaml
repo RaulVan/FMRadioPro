@@ -462,7 +462,9 @@
                 </Grid.RowDefinitions>
                 <TextBlock HorizontalAlignment="Left" Height="48" Margin="33,47,0,0" TextWrapping="Wrap" Text="正在播放" VerticalAlignment="Top" Width="213"/>
                 <StackPanel Grid.Row="1" Orientation="Vertical" Grid.RowSpan="2">
-                    <Rectangle Fill="{StaticResource PhoneAccentBrush}" HorizontalAlignment="Left" Height="200"  Stroke="Black" VerticalAlignment="Center" Width="300"/>
+                    <Grid Background="{StaticResource PhoneAccentBrush}" HorizontalAlignment="Left" Height="200"   VerticalAlignment="Center" Width="300">
+                        <TextBlock x:Name="txtPlayName" FontSize="20"/>
+                    </Grid>
                     <ProgressBar HorizontalAlignment="Left" Height="10"   VerticalAlignment="Top" Width="270"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0,20,0,0">
@@ -534,7 +536,7 @@
     				ItemTemplate="{StaticResource ItemTemplate}"/>
             </Grid>
         </Grid>
-        <Rectangle x:Name="topMenBar"  Canvas.ZIndex="100" Canvas.Left="-239" Fill="Beige" Opacity="0.5"  Height="768" Width="240" >
+        <Rectangle Visibility="Collapsed" x:Name="topMenBar"  Canvas.ZIndex="100" Canvas.Left="-239" Fill="Beige" Opacity="0.5"  Height="768" Width="240" >
             
         </Rectangle>
 
