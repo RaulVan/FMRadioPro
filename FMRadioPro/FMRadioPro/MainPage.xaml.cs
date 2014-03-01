@@ -27,6 +27,16 @@ namespace FMRadioPro
         /// </summary>
         private DispatcherTimer timerr;
 
+        /// <summary>
+        /// 播放列表
+        /// </summary>
+        private List<AudioTrack> _playList;
+
+        /// <summary>
+        /// 当前播放
+        /// </summary>
+        public static int gCurrentTrack = 0;
+
         // AudioCategory 
         // 构造函数
         public MainPage()
@@ -111,12 +121,42 @@ namespace FMRadioPro
         {
             var selectenItem =(RadiosInfo) listRadioList.SelectedItem;
             listRadioList.ScrollTo(selectenItem);
+
+            AudioTrack selectAudioTrack=new AudioTrack(new Uri (selectenItem.URL,UriKind.Absolute),selectenItem.Name,selectenItem.NamePinyin,"",null,"",EnabledPlayerControls.Pause);
+            //TODO：查找当前Select项在_PlayList中的index，然后给 isoCurrentTrack
+          // var index=  _playList.BinarySearch(selectAudioTrack);
+          //  _playList.Where(p => p.Source == selectAudioTrack.Source).ToList();
+
+            //var a = from p in _playList
+            //        where p.Source == selectAudioTrack.Source 
+            //        select new AudioTrack(
+            //            p.Source,
+            //            p.Title,
+            //            p.Artist,p.Album,p.AlbumArt,p.Tag,p.PlayerControls
+                   
+            //            );
+
+            foreach (var item in _playList)
+            {
+                if (item.Source==selectAudioTrack.Source)
+                {
+                    selectAudioTrack = item;
+                }
+            }
+
+            int index=_playList.IndexOf(selectAudioTrack, 0);
+
+            AppConfig.isoCurrentTrack = index;
+
             //TODO:播放当前选择项
-            Debug.WriteLine(selectenItem.URL);
-            BackgroundAudioPlayer.Instance.Track = new AudioTrack(new Uri(selectenItem.URL, UriKind.Absolute), selectenItem.Name, null, null, null, "fd", EnabledPlayerControls.Pause);
-            BackgroundAudioPlayer.Instance.Volume = 1.0d;
+            Debug.WriteLine("SelectItem Radio URL:"+selectenItem.URL);
+            Debug.WriteLine("SelectenItem Radio Index:"+index);
+            BackgroundAudioPlayer.Instance.Track = _playList[AppConfig.isoCurrentTrack];// new AudioTrack(new Uri(selectenItem.URL, UriKind.Absolute), selectenItem.Name, null, null, null, "fd", EnabledPlayerControls.Pause);
+            //BackgroundAudioPlayer.Instance.Volume = 1.0d;
 
         }
+
+       
 
         /// <summary>
         /// 播放状态改变
@@ -126,6 +166,7 @@ namespace FMRadioPro
         void Instance_PlayStateChanged(object sender, EventArgs e)
         {
             PlayState playState = PlayState.Unknown;
+            System.Diagnostics.Debug.WriteLine(System.Threading.Thread.CurrentThread.ManagedThreadId.ToString() + ":  Instance_PlayStateChanged- {0}", playState);
             try
             {
                 playState = BackgroundAudioPlayer.Instance.PlayerState;
@@ -137,11 +178,13 @@ namespace FMRadioPro
 
             switch (playState)
             {
+                
                 case PlayState.Paused:
                     this.UpdateState(null, null);
                     this.timerr.Stop();
                     break;
                 case PlayState.Playing:
+
                     this.UpdateState(null, null);
 
                     this.timerr.Start();
@@ -213,6 +256,7 @@ namespace FMRadioPro
             this.timerr.Stop();
             BackgroundAudioPlayer.Instance.Stop();
             this.UpdateState(null, null);
+            Debug.WriteLine("Stop_Click Play:" + AppConfig.isoCurrentTrack);
         }
         /// <summary>
         /// 下一曲
@@ -222,6 +266,15 @@ namespace FMRadioPro
         void btnNext_Click(object sender, RoutedEventArgs e)
         {
             //BackgroundAudioPlayer.Instance.SkipNext();
+            if (++AppConfig.isoCurrentTrack >= _playList.Count)
+            {
+                AppConfig.isoCurrentTrack = 0;
+            }
+            BackgroundAudioPlayer.Instance.Track = _playList[AppConfig.isoCurrentTrack];
+            //BackgroundAudioPlayer.Instance.Play();
+            this.UpdateState(null, null);
+
+            Debug.WriteLine("Next_Click Play:" + AppConfig.isoCurrentTrack);
         }
         /// <summary>
         /// 暂停
@@ -231,6 +284,7 @@ namespace FMRadioPro
         void btnPause_Click(object sender, RoutedEventArgs e)
         {
             BackgroundAudioPlayer.Instance.Pause();
+            Debug.WriteLine("Pause_Click Play:" + AppConfig.isoCurrentTrack);
         }
         /// <summary>
         /// 播放
@@ -241,8 +295,13 @@ namespace FMRadioPro
         {
             //BackgroundAudioPlayer.Instance.Play();
 
-            BackgroundAudioPlayer.Instance.Track = new AudioTrack(new Uri("mms://a1450.l11459845449.c114598.g.lm.akamaistream.net/D/1450/114598/v0001/reflector:45449", UriKind.Absolute), "SKY.FM", null, null, null, "fd", EnabledPlayerControls.Pause);
+            //BackgroundAudioPlayer.Instance.Track = new AudioTrack(new Uri("mms://a1450.l11459845449.c114598.g.lm.akamaistream.net/D/1450/114598/v0001/reflector:45449", UriKind.Absolute), "SKY.FM", null, null, null, "fd", EnabledPlayerControls.Pause);
+
+            BackgroundAudioPlayer.Instance.Track = _playList[AppConfig.isoCurrentTrack];
+            //BackgroundAudioPlayer.Instance.Play();
             BackgroundAudioPlayer.Instance.Volume = 1.0d;
+
+            Debug.WriteLine("Play_Click Play:" + AppConfig.isoCurrentTrack);
         }
 
         /// <summary>
@@ -253,6 +312,13 @@ namespace FMRadioPro
         void btnBack_Click(object sender, RoutedEventArgs e)
         {
            // BackgroundAudioPlayer.Instance.SkipPrevious();
+            if (--AppConfig.isoCurrentTrack < 0)
+            {
+                AppConfig.isoCurrentTrack = _playList.Count - 1;
+            }
+            BackgroundAudioPlayer.Instance.Track = _playList[AppConfig.isoCurrentTrack];
+            this.UpdateState(null, null);
+            Debug.WriteLine("Back_Click Play:" + AppConfig.isoCurrentTrack);
         }
 
         void MainPage_Loaded(object sender, RoutedEventArgs e)
@@ -270,6 +336,8 @@ namespace FMRadioPro
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
+            Debug.WriteLine(AppConfig.isoCurrentTrack);
+            gCurrentTrack = AppConfig.isoCurrentTrack;
 
             if (PlayState.Playing==BackgroundAudioPlayer.Instance.PlayerState)
             {
@@ -339,6 +407,18 @@ namespace FMRadioPro
                                 listRadioList.ItemsSource = RadiosData.GetData();
                             }
 
+                            _playList = new List<AudioTrack>();
+                            if (listRadioList.ItemsSource!=null)
+                            {
+                                List<RadiosInfo> radios = RadiosData.GetRadioData();
+
+                                foreach (var item in radios)
+                                {
+                                    _playList.Add(new AudioTrack(new Uri (item.URL,UriKind.Absolute),item.Name,item.NamePinyin,"",null,"",EnabledPlayerControls.Pause));
+                                }
+                            }
+		 
+                            
 
                         });
                 });

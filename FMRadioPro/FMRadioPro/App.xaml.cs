@@ -75,12 +75,14 @@ namespace FMRadioPro
         // 此代码在应用程序关闭时不执行
         private void Application_Deactivated(object sender, DeactivatedEventArgs e)
         {
+            //AppConfig.isoCurrentTrack = MainPage.gCurrentTrack;
         }
 
         // 应用程序关闭(例如，用户点击“后退”)时执行的代码
         // 此代码在停用应用程序时不执行
         private void Application_Closing(object sender, ClosingEventArgs e)
         {
+            //AppConfig.isoCurrentTrack = MainPage.gCurrentTrack;
         }
 
         // 导航失败时执行的代码
