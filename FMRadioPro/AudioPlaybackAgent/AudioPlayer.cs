@@ -3,6 +3,8 @@ using System.Diagnostics;
 using System.Windows;
 using Microsoft.Phone.BackgroundAudio;
 using System.Collections.Generic;
+using Windows.Foundation;
+using System.IO.IsolatedStorage;
 
 namespace AudioPlaybackAgent
 {
@@ -11,6 +13,25 @@ namespace AudioPlaybackAgent
     /// </summary>
     public class AudioPlayer : AudioPlayerAgent
     {
+        public event EventHandler< PlayStateEventArgs> PlayStateChangedEA;
+
+
+        /// <summary>
+        /// 当前播放状态
+        /// </summary>
+        public static PlayState isoPlayState
+        {
+            get
+            {
+                return IsolatedStorageSettings.ApplicationSettings.Contains("isoPlayState") ? (PlayState)IsolatedStorageSettings.ApplicationSettings["isoPlayState"] : PlayState.Unknown;
+            }
+            set
+            {
+                IsolatedStorageSettings.ApplicationSettings["isoPlayState"] = value;
+                IsolatedStorageSettings.ApplicationSettings.Save();
+            }
+        }
+
         /// <summary>
         /// Static field that denotes if this class has been initialized.
         /// </summary>
@@ -61,6 +82,13 @@ namespace AudioPlaybackAgent
         protected override void OnPlayStateChanged(BackgroundAudioPlayer player, AudioTrack track, PlayState playState)
         {
             System.Diagnostics.Debug.WriteLine(System.Threading.Thread.CurrentThread.ManagedThreadId.ToString() + ":  OnPlayStateChanged() - {0}", playState);
+            if (PlayStateChangedEA!=null)
+            {
+                PlayStateChangedEA(this,new PlayStateEventArgs() { playState = playState });
+            }
+
+            isoPlayState = playState;
+
             switch (playState)
             {
                 case PlayState.TrackEnded:

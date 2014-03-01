@@ -16,6 +16,9 @@ using System.Diagnostics;
 using Microsoft.Phone.BackgroundAudio;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using AudioPlaybackAgent;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Media;
 
 namespace FMRadioPro
 {
@@ -37,13 +40,14 @@ namespace FMRadioPro
         /// </summary>
         public static int gCurrentTrack = 0;
 
+        AudioPlayer audioPlayer = new AudioPlayer();
         // AudioCategory 
         // 构造函数
         public MainPage()
         {
             InitializeComponent();
             BackgroundAudioPlayer.Instance.PlayStateChanged += Instance_PlayStateChanged;
-            
+            audioPlayer.PlayStateChangedEA += audioPlayer_PlayStateChangedEA;
             // 用于本地化 ApplicationBar 的示例代码
             //BuildLocalizedApplicationBar();
             //List<string> data=new List<string> ();
@@ -60,12 +64,23 @@ namespace FMRadioPro
             this.btnNext.Click += btnNext_Click;
             this.btnStop.Click += btnStop_Click;
             this.listRadioList.SelectionChanged += listRadioList_SelectionChanged;
-            this.topMenBar.ManipulationDelta += topMenBar_ManipulationDelta;
-            this.topMenBar.ManipulationCompleted += topMenBar_ManipulationCompleted;
+            //this.topMenBar.ManipulationDelta += topMenBar_ManipulationDelta;
+            //this.topMenBar.ManipulationCompleted += topMenBar_ManipulationCompleted;
 
-            topMenBar.Visibility = Visibility.Collapsed;
+            //topMenBar.Visibility = Visibility.Collapsed;
 
+            //Application.Current.UnhandledException += (a, b) =>
+            //    {
+            //        Debug.WriteLine("Exit--------------------------------");
+            //    };
            
+        }
+
+        void audioPlayer_PlayStateChangedEA(object sender, PlayStateEventArgs e)
+        {
+            txtPlayState.Text =""+ e.playState;
+            Debug.WriteLine("-----------------------"+e.playState);
+            
         }
 
         private void UpdateButton()
@@ -77,22 +92,24 @@ namespace FMRadioPro
         {
             AudioTrack audioTrack=BackgroundAudioPlayer.Instance.Track;
 
-            if (audioTrack!=null)
-	{
-        txtPlayName.Text = audioTrack.Title;
-        if (PlayState.Playing == BackgroundAudioPlayer.Instance.PlayerState)
-        {
-            btnPause.Visibility = Visibility.Visible;
-            btnPlay.Visibility = Visibility.Collapsed;
-            //TODO:显示当前播放内容
-        }
-        else
-        {
-            btnPause.Visibility = Visibility.Collapsed;
-            btnPlay.Visibility = Visibility.Visible;
-            //TODO:播放内容清空
-        }
-	}
+            if (audioTrack != null)
+            {
+                txtPlayName.Text = audioTrack.Title;
+                if (PlayState.Playing == BackgroundAudioPlayer.Instance.PlayerState)
+                {
+                    btnPause.Visibility = Visibility.Visible;
+                    btnPlay.Visibility = Visibility.Collapsed;
+                    //TODO:显示当前播放内容
+                }
+                else
+                {
+                    btnPause.Visibility = Visibility.Collapsed;
+                    btnPlay.Visibility = Visibility.Visible;
+                    //TODO:播放内容清空
+                }
+            }
+
+          //  Debug.WriteLine("AudioPlayer.isoPlayState);" + AudioPlayer.isoPlayState);
            
         }
 
@@ -104,14 +121,14 @@ namespace FMRadioPro
         void topMenBar_ManipulationDelta(object sender, System.Windows.Input.ManipulationDeltaEventArgs e)
         {
 
-            Rectangle rg = sender as Rectangle;
-            TranslateTransform tf = new TranslateTransform();
-            tf.X = e.DeltaManipulation.Translation.X;
-            tf.Y = e.DeltaManipulation.Translation.Y;
+            //System.Windows.Shapes.Rectangle rg = sender as Rectangle;
+            //TranslateTransform tf = new TranslateTransform();
+            //tf.X = e.DeltaManipulation.Translation.X;
+            //tf.Y = e.DeltaManipulation.Translation.Y;
 
-            rg.RenderTransform = tf;
+            //rg.RenderTransform = tf;
 
-            e.Handled = true;
+            //e.Handled = true;
 
         }
 
@@ -166,7 +183,7 @@ namespace FMRadioPro
         void Instance_PlayStateChanged(object sender, EventArgs e)
         {
             PlayState playState = PlayState.Unknown;
-            System.Diagnostics.Debug.WriteLine(System.Threading.Thread.CurrentThread.ManagedThreadId.ToString() + ":  Instance_PlayStateChanged- {0}", playState);
+            //System.Diagnostics.Debug.WriteLine(System.Threading.Thread.CurrentThread.ManagedThreadId.ToString() + ":  Instance_PlayStateChanged- {0}", playState);
             try
             {
                 playState = BackgroundAudioPlayer.Instance.PlayerState;
@@ -257,6 +274,21 @@ namespace FMRadioPro
             BackgroundAudioPlayer.Instance.Stop();
             this.UpdateState(null, null);
             Debug.WriteLine("Stop_Click Play:" + AppConfig.isoCurrentTrack);
+
+            FrameworkDispatcher.Update();
+            MediaPlayer.Stop();
+            FrameworkDispatcher.Update();
+            MediaPlayer.Play(Song.FromUri("Snooze It!", new Uri("Audio/Void.wav", UriKind.Relative)));
+            FrameworkDispatcher.Update();
+            //if (DataCommunication.Read().ClearZunePlaylist)
+            //{
+            //    MediaPlayer.Play(Song.FromUri("Snooze It!", new Uri("Audio/Void.wav", UriKind.Relative)));
+            //    FrameworkDispatcher.Update();
+            //}
+            MediaPlayer.Stop();
+            FrameworkDispatcher.Update();
+
+            Application.Current.Terminate();//退出应用程序
         }
         /// <summary>
         /// 下一曲
@@ -283,6 +315,10 @@ namespace FMRadioPro
         /// <param name="e"></param>
         void btnPause_Click(object sender, RoutedEventArgs e)
         {
+            if (!BackgroundAudioPlayer.Instance.CanPause)
+            {
+                return;
+            }
             BackgroundAudioPlayer.Instance.Pause();
             Debug.WriteLine("Pause_Click Play:" + AppConfig.isoCurrentTrack);
         }
@@ -317,6 +353,9 @@ namespace FMRadioPro
                 AppConfig.isoCurrentTrack = _playList.Count - 1;
             }
             BackgroundAudioPlayer.Instance.Track = _playList[AppConfig.isoCurrentTrack];
+
+            
+            //listRadioList.ScrollTo(selectenItem);
             this.UpdateState(null, null);
             Debug.WriteLine("Back_Click Play:" + AppConfig.isoCurrentTrack);
         }
@@ -326,7 +365,7 @@ namespace FMRadioPro
             //borderCenter.Margin = new Thickness(0, 0, 0, 0);
             //MoveAnimation.MoveTo(borderCenter, 120, 120, TimeSpan.FromSeconds(1.5), null);
             this.timerr = new DispatcherTimer();
-            this.timerr.Interval = TimeSpan.FromSeconds(.5);
+            this.timerr.Interval = TimeSpan.FromSeconds(.05);
             this.timerr.Tick += UpdateState;
         }
 
@@ -422,7 +461,7 @@ namespace FMRadioPro
 
                         });
                 });
-
+            SunshineStory.Begin();
             base.OnNavigatedTo(e);
         }
 

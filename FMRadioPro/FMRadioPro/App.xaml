@@ -58,17 +58,18 @@
                                     <Image.RenderTransform>
                                         <CompositeTransform/>
                                     </Image.RenderTransform>
-                                    <Image.Clip>
+                                    
+                                    <!--<Image.Clip>
                                         <EllipseGeometry Center="40,40" RadiusY="40" RadiusX="40"/>
-                                    </Image.Clip>
+                                    </Image.Clip>-->
                                 </Image>
                                 <Image x:Name="ImageFront" RenderTransformOrigin="0.5,0.5" Source="{TemplateBinding ImageSource}">
                                     <Image.RenderTransform>
                                         <CompositeTransform/>
                                     </Image.RenderTransform>
-                                    <Image.Clip>
+                                    <!--<Image.Clip>
                                         <EllipseGeometry Center="40,40" RadiusY="40" RadiusX="40"/>
-                                    </Image.Clip>
+                                    </Image.Clip>-->
                                 </Image>
                                 <!--<Border x:Name="boeder"  Width=" 80" Height="80" BorderBrush="#FF243E13"  BorderThickness="1" CornerRadius="80" Opacity="0.5" Margin="3,0,-3,0">
         							<Border BorderBrush="#FF1C340D" BorderThickness="3"  CornerRadius="80" Margin="0" />

@@ -145,8 +145,12 @@
     <Content Include="Assets\ApplicationIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\Media-Back.png" />
+    <Content Include="Assets\Media-Next.png" />
+    <Content Include="Assets\Media-Next1.png" />
     <Content Include="Assets\Media-Pause.png" />
     <Content Include="Assets\Media-Play.png" />
+    <Content Include="Assets\SunShine.png" />
     <Content Include="Assets\Tiles\FlipCycleTileLarge.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -161,6 +165,9 @@
     </Content>
     <Content Include="Assets\Tiles\IconicTileSmall.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Audio\Void.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Text1.txt" />
     <EmbeddedResource Include="Resources\RadioInfo.txt">

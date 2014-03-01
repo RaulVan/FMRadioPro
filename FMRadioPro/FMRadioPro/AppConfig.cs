@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Phone.BackgroundAudio;
+using System;
 using System.Collections.Generic;
 using System.IO.IsolatedStorage;
 using System.Linq;
@@ -24,6 +25,8 @@ namespace FMRadioPro
                IsolatedStorageSettings.ApplicationSettings.Save();
            }
        }
+
+      
 
     }
 }
