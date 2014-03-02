@@ -19,6 +19,7 @@ using System.Windows.Shapes;
 using AudioPlaybackAgent;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Media;
+using AwesomeMenuForWindowsPhone;
 
 namespace FMRadioPro
 {
@@ -46,6 +47,8 @@ namespace FMRadioPro
         public MainPage()
         {
             InitializeComponent();
+           // InitPathMenu();
+
             BackgroundAudioPlayer.Instance.PlayStateChanged += Instance_PlayStateChanged;
             audioPlayer.PlayStateChangedEA += audioPlayer_PlayStateChangedEA;
             // 用于本地化 ApplicationBar 的示例代码
@@ -62,8 +65,9 @@ namespace FMRadioPro
             this.btnPlay.Click += btnPlay_Click;
             this.btnPause.Click += btnPause_Click;
             this.btnNext.Click += btnNext_Click;
-            this.btnStop.Click += btnStop_Click;
+            //this.btnStop.Click += btnStop_Click;
             this.listRadioList.SelectionChanged += listRadioList_SelectionChanged;
+            btnOption.Click += btnOption_Click;
             //this.topMenBar.ManipulationDelta += topMenBar_ManipulationDelta;
             //this.topMenBar.ManipulationCompleted += topMenBar_ManipulationCompleted;
 
@@ -76,9 +80,76 @@ namespace FMRadioPro
            
         }
 
+        void btnOption_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO:Aobut.xaml
+            NavigationService.Navigate(new Uri("/AboutPage.xaml", UriKind.Relative));
+        }
+
+        //private void InitPathMenu()
+        //{
+        //    double width = Application.Current.Host.Content.ActualWidth;
+        //    double height = Application.Current.Host.Content.ActualHeight;
+        //    Rect rc = new Rect { Width = 280, Height = 600 };
+        //    var items = new List<AwesomMenuItem>();
+
+        //    items.Add(new AwesomMenuItem("Images/icon-star.png", "Images/bg-menuitem.png"));
+        //    items.Add(new AwesomMenuItem("Images/icon-star.png", "Images/bg-menuitem.png"));
+        //    items.Add(new AwesomMenuItem("Images/icon-star.png", "Images/bg-menuitem.png"));
+        //    items.Add(new AwesomMenuItem("Images/icon-star.png", "Images/bg-menuitem.png"));
+        //    //items.Add(new AwesomMenuItem("Images/icon-star.png", "Images/bg-menuitem.png"));
+        //    //items.Add(new AwesomMenuItem("Images/icon-star.png", "Images/bg-menuitem.png"));
+        //    //items.Add(new AwesomMenuItem("Images/icon-star.png", "Images/bg-menuitem.png"));
+
+        //    //构造的时候可以设置指定方法也可以通过方法来设置，都可以
+        //    //var menu = new AwesomeMenu(rc, items, "Images/icon-plus.png", "Images/bg-addbutton.png", AwesomeMenuType.AwesomeMenuTypeDownAndRight);
+        //    var menu = new AwesomeMenu(rc, items, "Images/icon-plus.png", "Images/bg-addbutton.png", new System.Windows.Point(width-50, height-50));
+        //    //menu.Background = new SolidColorBrush(Colors.Cyan);
+        //    //menu.SetType(AwesomeMenuType.AwesomeMenuTypeUpAndLeft);
+        //    //menu.SetStartPoint(new Point(0, 150));
+
+        //    menu.TapToDissmissItem = true;
+        //    menu.AwesomeMenuRadianType = AwesomeMenuRadianType.AwesomeMenuRadianNone;
+        //    menu.MenuItemSpacing = 0;
+        //    this.gridPanel.Children.Add(menu);
+        //    //ContentPanel.Children.Add(menu);
+        //    menu.ActionClosed += (item) =>
+        //    {
+        //        Dispatcher.BeginInvoke(delegate
+        //        {
+        //            ProcessItem(item);
+        //        });
+        //    };
+        //}
+
+        //private void ProcessItem(AwesomMenuItem item)
+        //{
+        //    if (item != null)
+        //    {
+
+        //        if (item != null && !item.Tag.Equals(999))
+        //        {
+        //            int index = Convert.ToInt32(item.Tag);
+        //            MessageBox.Show(string.Format("Item {0} Clicked!", index));
+        //            //switch (index)
+        //            //{
+        //            //    case 0:
+        //            //        MessageBox.Show(string.Format("Item {0} Clicked!", index));
+        //            //        break;
+        //            //    case 1:
+        //            //        MessageBox.Show(string.Format("Item {0} Clicked!", index));
+        //            //        break;
+        //            //    case 2:
+        //            //        break;
+        //            //}
+        //        }
+        //    }
+
+        //}
+
         void audioPlayer_PlayStateChangedEA(object sender, PlayStateEventArgs e)
         {
-            txtPlayState.Text =""+ e.playState;
+            //txtPlayState.Text =""+ e.playState;
             Debug.WriteLine("-----------------------"+e.playState);
             
         }
@@ -461,7 +532,10 @@ namespace FMRadioPro
 
                         });
                 });
-            SunshineStory.Begin();
+
+            //SunshineStory.Begin();
+
+
             base.OnNavigatedTo(e);
         }
 
