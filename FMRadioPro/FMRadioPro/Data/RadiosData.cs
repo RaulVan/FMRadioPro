@@ -90,16 +90,23 @@ namespace FMRadioPro.Data
         {
             searchKey = searchKey.ToUpper();
             List<RadiosInfoInGroup> result = new List<RadiosInfoInGroup>();
-            List<RadiosInfoInGroup> data = GetData();//获取全部数据
-            foreach (RadiosInfoInGroup rig in data)
+            try
             {
-                List<RadiosInfo> radioData = rig.Where(p => p.Name.Contains(searchKey) || p.NamePinyin.Contains(searchKey)).ToList();
-                if (radioData!=null)
+                List<RadiosInfoInGroup> data = GetData();//获取全部数据
+                foreach (RadiosInfoInGroup rig in data)
                 {
-                    RadiosInfoInGroup resultRadio = new RadiosInfoInGroup(rig.Index);
-                    resultRadio.AddRange(radioData);
-                    result.Add(resultRadio);
+                    List<RadiosInfo> radioData = rig.Where(p => p.Name.Contains(searchKey) || p.NamePinyin.Contains(searchKey)).ToList();
+                    if (radioData != null)
+                    {
+                        RadiosInfoInGroup resultRadio = new RadiosInfoInGroup(rig.Index);
+                        resultRadio.AddRange(radioData);
+                        result.Add(resultRadio);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                UmengSDK.UmengAnalytics.TrackException(ex);
             }
             return result;
         }

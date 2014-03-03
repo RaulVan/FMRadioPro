@@ -7,6 +7,7 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using FMRadioPro.Resources;
+using UmengSDK;
 
 namespace FMRadioPro
 {
@@ -34,6 +35,9 @@ namespace FMRadioPro
 
             // 语言显示初始化
             InitializeLanguage();
+
+            UmengAnalytics.Init(AppConfig.AppKey, "Marketplace");
+         
 
             // 调试时显示图形分析信息。
             if (Debugger.IsAttached)

@@ -196,6 +196,7 @@
     <Content Include="Images\icon-plus-highlighted.png" />
     <Content Include="Images\icon-plus.png" />
     <Content Include="Images\icon-star.png" />
+    <Content Include="Lib\UmengAnalyticsWP8.dll" />
     <Content Include="Resources\Text1.txt" />
     <EmbeddedResource Include="Resources\RadioInfo.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -212,6 +213,9 @@
       <Project>{CA88661C-D860-4845-81D5-917F32C08C07}</Project>
       <Name>AudioPlaybackAgent</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="UmengAnalyticsWP8, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />

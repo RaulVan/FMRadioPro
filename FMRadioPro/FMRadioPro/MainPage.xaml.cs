@@ -1,31 +1,22 @@
-﻿using System;
+﻿using AudioPlaybackAgent;
+using FMRadioPro.Data;
+using Microsoft.Phone.BackgroundAudio;
+using Microsoft.Phone.Controls;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Media;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
-using Microsoft.Phone.Controls;
-using Microsoft.Phone.Shell;
-using FMRadioPro.Resources;
-using System.Threading.Tasks;
-using FMRadioPro.Data;
-using Utility.Animations;
 using System.Windows.Threading;
-using System.Diagnostics;
-using Microsoft.Phone.BackgroundAudio;
-using System.Windows.Media;
-using System.Windows.Shapes;
-using AudioPlaybackAgent;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Media;
-using AwesomeMenuForWindowsPhone;
 
 namespace FMRadioPro
 {
     public partial class MainPage : PhoneApplicationPage
     {
-
         /// <summary>
         ///更新UI计时器
         /// </summary>
@@ -41,13 +32,14 @@ namespace FMRadioPro
         /// </summary>
         public static int gCurrentTrack = 0;
 
-        AudioPlayer audioPlayer = new AudioPlayer();
-        // AudioCategory 
+        private AudioPlayer audioPlayer = new AudioPlayer();
+
+        // AudioCategory
         // 构造函数
         public MainPage()
         {
             InitializeComponent();
-           // InitPathMenu();
+            // InitPathMenu();
 
             BackgroundAudioPlayer.Instance.PlayStateChanged += Instance_PlayStateChanged;
             audioPlayer.PlayStateChangedEA += audioPlayer_PlayStateChangedEA;
@@ -77,10 +69,9 @@ namespace FMRadioPro
             //    {
             //        Debug.WriteLine("Exit--------------------------------");
             //    };
-           
         }
 
-        void btnOption_Click(object sender, RoutedEventArgs e)
+        private void btnOption_Click(object sender, RoutedEventArgs e)
         {
             //TODO:Aobut.xaml
             NavigationService.Navigate(new Uri("/AboutPage.xaml", UriKind.Relative));
@@ -126,7 +117,6 @@ namespace FMRadioPro
         //{
         //    if (item != null)
         //    {
-
         //        if (item != null && !item.Tag.Equals(999))
         //        {
         //            int index = Convert.ToInt32(item.Tag);
@@ -147,21 +137,19 @@ namespace FMRadioPro
 
         //}
 
-        void audioPlayer_PlayStateChangedEA(object sender, PlayStateEventArgs e)
+        private void audioPlayer_PlayStateChangedEA(object sender, PlayStateEventArgs e)
         {
             //txtPlayState.Text =""+ e.playState;
-            Debug.WriteLine("-----------------------"+e.playState);
-            
+            Debug.WriteLine("-----------------------" + e.playState);
         }
 
         private void UpdateButton()
         {
- 
         }
 
-        void UpdateState(object sender, EventArgs e)
+        private void UpdateState(object sender, EventArgs e)
         {
-            AudioTrack audioTrack=BackgroundAudioPlayer.Instance.Track;
+            AudioTrack audioTrack = BackgroundAudioPlayer.Instance.Track;
 
             if (audioTrack != null)
             {
@@ -180,18 +168,15 @@ namespace FMRadioPro
                 }
             }
 
-          //  Debug.WriteLine("AudioPlayer.isoPlayState);" + AudioPlayer.isoPlayState);
-           
+            //  Debug.WriteLine("AudioPlayer.isoPlayState);" + AudioPlayer.isoPlayState);
         }
 
-        void topMenBar_ManipulationCompleted(object sender, System.Windows.Input.ManipulationCompletedEventArgs e)
+        private void topMenBar_ManipulationCompleted(object sender, System.Windows.Input.ManipulationCompletedEventArgs e)
         {
-             
         }
 
-        void topMenBar_ManipulationDelta(object sender, System.Windows.Input.ManipulationDeltaEventArgs e)
+        private void topMenBar_ManipulationDelta(object sender, System.Windows.Input.ManipulationDeltaEventArgs e)
         {
-
             //System.Windows.Shapes.Rectangle rg = sender as Rectangle;
             //TranslateTransform tf = new TranslateTransform();
             //tf.X = e.DeltaManipulation.Translation.X;
@@ -200,58 +185,52 @@ namespace FMRadioPro
             //rg.RenderTransform = tf;
 
             //e.Handled = true;
-
         }
 
-       
-
-        void listRadioList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void listRadioList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var selectenItem =(RadiosInfo) listRadioList.SelectedItem;
+            var selectenItem = (RadiosInfo)listRadioList.SelectedItem;
             listRadioList.ScrollTo(selectenItem);
 
-            AudioTrack selectAudioTrack=new AudioTrack(new Uri (selectenItem.URL,UriKind.Absolute),selectenItem.Name,selectenItem.NamePinyin,"",null,"",EnabledPlayerControls.Pause);
+            AudioTrack selectAudioTrack = new AudioTrack(new Uri(selectenItem.URL, UriKind.Absolute), selectenItem.Name, selectenItem.NamePinyin, "", null, "", EnabledPlayerControls.Pause);
             //TODO：查找当前Select项在_PlayList中的index，然后给 isoCurrentTrack
-          // var index=  _playList.BinarySearch(selectAudioTrack);
-          //  _playList.Where(p => p.Source == selectAudioTrack.Source).ToList();
+            // var index=  _playList.BinarySearch(selectAudioTrack);
+            //  _playList.Where(p => p.Source == selectAudioTrack.Source).ToList();
 
             //var a = from p in _playList
-            //        where p.Source == selectAudioTrack.Source 
+            //        where p.Source == selectAudioTrack.Source
             //        select new AudioTrack(
             //            p.Source,
             //            p.Title,
             //            p.Artist,p.Album,p.AlbumArt,p.Tag,p.PlayerControls
-                   
+
             //            );
 
             foreach (var item in _playList)
             {
-                if (item.Source==selectAudioTrack.Source)
+                if (item.Source == selectAudioTrack.Source)
                 {
                     selectAudioTrack = item;
                 }
             }
 
-            int index=_playList.IndexOf(selectAudioTrack, 0);
+            int index = _playList.IndexOf(selectAudioTrack, 0);
 
             AppConfig.isoCurrentTrack = index;
 
             //TODO:播放当前选择项
-            Debug.WriteLine("SelectItem Radio URL:"+selectenItem.URL);
-            Debug.WriteLine("SelectenItem Radio Index:"+index);
+            Debug.WriteLine("SelectItem Radio URL:" + selectenItem.URL);
+            Debug.WriteLine("SelectenItem Radio Index:" + index);
             BackgroundAudioPlayer.Instance.Track = _playList[AppConfig.isoCurrentTrack];// new AudioTrack(new Uri(selectenItem.URL, UriKind.Absolute), selectenItem.Name, null, null, null, "fd", EnabledPlayerControls.Pause);
             //BackgroundAudioPlayer.Instance.Volume = 1.0d;
-
         }
-
-       
 
         /// <summary>
         /// 播放状态改变
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void Instance_PlayStateChanged(object sender, EventArgs e)
+        private void Instance_PlayStateChanged(object sender, EventArgs e)
         {
             PlayState playState = PlayState.Unknown;
             //System.Diagnostics.Debug.WriteLine(System.Threading.Thread.CurrentThread.ManagedThreadId.ToString() + ":  Instance_PlayStateChanged- {0}", playState);
@@ -259,34 +238,37 @@ namespace FMRadioPro
             {
                 playState = BackgroundAudioPlayer.Instance.PlayerState;
             }
-            catch (InvalidOperationException)
+            catch (InvalidOperationException ex)
             {
                 playState = PlayState.Stopped;
+                UmengSDK.UmengAnalytics.TrackException(ex);
             }
 
             switch (playState)
             {
-                
                 case PlayState.Paused:
                     this.UpdateState(null, null);
                     this.timerr.Stop();
                     break;
+
                 case PlayState.Playing:
 
                     this.UpdateState(null, null);
 
                     this.timerr.Start();
                     break;
-                
+
                 case PlayState.Stopped:
                     this.timerr.Stop();
                     this.UpdateState(null, null);
                     break;
+
                 default:
                     break;
             }
 
             #region MyRegion
+
             //PlayStateChangedEventArgs newEventArgs = (PlayStateChangedEventArgs)e;
 
             //switch (BackgroundAudioPlayer.Instance.PlayerState)
@@ -331,15 +313,17 @@ namespace FMRadioPro
             //if (BackgroundAudioPlayer.Instance.Track!=null)
             //{
             //    //TODO:显示当前播放内容
-            //} 
-            #endregion
+            //}
+
+            #endregion MyRegion
         }
+
         /// <summary>
         /// 停止
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void btnStop_Click(object sender, RoutedEventArgs e)
+        private void btnStop_Click(object sender, RoutedEventArgs e)
         {
             this.timerr.Stop();
             BackgroundAudioPlayer.Instance.Stop();
@@ -361,54 +345,78 @@ namespace FMRadioPro
 
             Application.Current.Terminate();//退出应用程序
         }
+
         /// <summary>
         /// 下一曲
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void btnNext_Click(object sender, RoutedEventArgs e)
+        private void btnNext_Click(object sender, RoutedEventArgs e)
         {
-            //BackgroundAudioPlayer.Instance.SkipNext();
-            if (++AppConfig.isoCurrentTrack >= _playList.Count)
+            try
             {
-                AppConfig.isoCurrentTrack = 0;
-            }
-            BackgroundAudioPlayer.Instance.Track = _playList[AppConfig.isoCurrentTrack];
-            //BackgroundAudioPlayer.Instance.Play();
-            this.UpdateState(null, null);
+                //BackgroundAudioPlayer.Instance.SkipNext();
+                if (++AppConfig.isoCurrentTrack >= _playList.Count)
+                {
+                    AppConfig.isoCurrentTrack = 0;
+                }
+                BackgroundAudioPlayer.Instance.Track = _playList[AppConfig.isoCurrentTrack];
+                //BackgroundAudioPlayer.Instance.Play();
+                this.UpdateState(null, null);
 
-            Debug.WriteLine("Next_Click Play:" + AppConfig.isoCurrentTrack);
+                Debug.WriteLine("Next_Click Play:" + AppConfig.isoCurrentTrack);
+            }
+            catch (Exception ex)
+            {
+                UmengSDK.UmengAnalytics.TrackException(ex);
+            }
         }
+
         /// <summary>
         /// 暂停
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void btnPause_Click(object sender, RoutedEventArgs e)
+        private void btnPause_Click(object sender, RoutedEventArgs e)
         {
-            if (!BackgroundAudioPlayer.Instance.CanPause)
+            try
             {
-                return;
+                if (!BackgroundAudioPlayer.Instance.CanPause)
+                {
+                    return;
+                }
+                BackgroundAudioPlayer.Instance.Pause();
+                Debug.WriteLine("Pause_Click Play:" + AppConfig.isoCurrentTrack);
             }
-            BackgroundAudioPlayer.Instance.Pause();
-            Debug.WriteLine("Pause_Click Play:" + AppConfig.isoCurrentTrack);
+            catch (Exception ex)
+            {
+                UmengSDK.UmengAnalytics.TrackException(ex);
+            }
         }
+
         /// <summary>
         /// 播放
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void btnPlay_Click(object sender, RoutedEventArgs e)
+        private void btnPlay_Click(object sender, RoutedEventArgs e)
         {
-            //BackgroundAudioPlayer.Instance.Play();
+            try
+            {
+                //BackgroundAudioPlayer.Instance.Play();
 
-            //BackgroundAudioPlayer.Instance.Track = new AudioTrack(new Uri("mms://a1450.l11459845449.c114598.g.lm.akamaistream.net/D/1450/114598/v0001/reflector:45449", UriKind.Absolute), "SKY.FM", null, null, null, "fd", EnabledPlayerControls.Pause);
+                //BackgroundAudioPlayer.Instance.Track = new AudioTrack(new Uri("mms://a1450.l11459845449.c114598.g.lm.akamaistream.net/D/1450/114598/v0001/reflector:45449", UriKind.Absolute), "SKY.FM", null, null, null, "fd", EnabledPlayerControls.Pause);
 
-            BackgroundAudioPlayer.Instance.Track = _playList[AppConfig.isoCurrentTrack];
-            //BackgroundAudioPlayer.Instance.Play();
-            BackgroundAudioPlayer.Instance.Volume = 1.0d;
+                BackgroundAudioPlayer.Instance.Track = _playList[AppConfig.isoCurrentTrack];
+                //BackgroundAudioPlayer.Instance.Play();
+                BackgroundAudioPlayer.Instance.Volume = 1.0d;
 
-            Debug.WriteLine("Play_Click Play:" + AppConfig.isoCurrentTrack);
+                Debug.WriteLine("Play_Click Play:" + AppConfig.isoCurrentTrack);
+            }
+            catch (Exception ex)
+            {
+                UmengSDK.UmengAnalytics.TrackException(ex);
+            }
         }
 
         /// <summary>
@@ -416,139 +424,149 @@ namespace FMRadioPro
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void btnBack_Click(object sender, RoutedEventArgs e)
+        private void btnBack_Click(object sender, RoutedEventArgs e)
         {
-           // BackgroundAudioPlayer.Instance.SkipPrevious();
-            if (--AppConfig.isoCurrentTrack < 0)
+            try
             {
-                AppConfig.isoCurrentTrack = _playList.Count - 1;
+                // BackgroundAudioPlayer.Instance.SkipPrevious();
+                if (--AppConfig.isoCurrentTrack < 0)
+                {
+                    AppConfig.isoCurrentTrack = _playList.Count - 1;
+                }
+                BackgroundAudioPlayer.Instance.Track = _playList[AppConfig.isoCurrentTrack];
+
+                //listRadioList.ScrollTo(selectenItem);
+                this.UpdateState(null, null);
+                Debug.WriteLine("Back_Click Play:" + AppConfig.isoCurrentTrack);
             }
-            BackgroundAudioPlayer.Instance.Track = _playList[AppConfig.isoCurrentTrack];
-
-            
-            //listRadioList.ScrollTo(selectenItem);
-            this.UpdateState(null, null);
-            Debug.WriteLine("Back_Click Play:" + AppConfig.isoCurrentTrack);
+            catch (Exception ex)
+            {
+                UmengSDK.UmengAnalytics.TrackException(ex);
+            }
         }
 
-        void MainPage_Loaded(object sender, RoutedEventArgs e)
+        private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
-            //borderCenter.Margin = new Thickness(0, 0, 0, 0);
-            //MoveAnimation.MoveTo(borderCenter, 120, 120, TimeSpan.FromSeconds(1.5), null);
-            this.timerr = new DispatcherTimer();
-            this.timerr.Interval = TimeSpan.FromSeconds(.05);
-            this.timerr.Tick += UpdateState;
+            try
+            {
+                //borderCenter.Margin = new Thickness(0, 0, 0, 0);
+                //MoveAnimation.MoveTo(borderCenter, 120, 120, TimeSpan.FromSeconds(1.5), null);
+                this.timerr = new DispatcherTimer();
+                this.timerr.Interval = TimeSpan.FromSeconds(.05);
+                this.timerr.Tick += UpdateState;
+            }
+            catch (Exception ex)
+            {
+                UmengSDK.UmengAnalytics.TrackException(ex);
+            }
         }
-
-       
-
-
 
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
-            Debug.WriteLine(AppConfig.isoCurrentTrack);
-            gCurrentTrack = AppConfig.isoCurrentTrack;
-
-            if (PlayState.Playing==BackgroundAudioPlayer.Instance.PlayerState)
+            try
             {
-                btnPause.Visibility = Visibility.Visible;
-                btnPlay.Visibility = Visibility.Collapsed;
-                //TODO:显示当前播放内容
-            }
-            else
-            {
-                btnPause.Visibility = Visibility.Collapsed;
-                btnPlay.Visibility = Visibility.Visible;
-                //TODO:播放内容清空
-            }
+                Debug.WriteLine(AppConfig.isoCurrentTrack);
+                gCurrentTrack = AppConfig.isoCurrentTrack;
 
-            this.UpdateState(null, null);
-
-            #region 动画
-            //int index = 0;
-            //DispatcherTimer timer = new DispatcherTimer();
-            //timer.Tick += (a, w) =>
-            //    {
-            //        if (index == 0)
-            //        {
-
-            //            MoveAnimation.MoveTo(borderBottom, 102, 150, TimeSpan.FromSeconds(0.5), null);
-            //        }
-            //        else if (index == 1)
-            //        {
-            //            MoveAnimation.MoveTo(borderLeft, 50, 102, TimeSpan.FromSeconds(0.5), null);
-            //        }
-            //        else if (index == 2)
-            //        {
-            //            MoveAnimation.MoveTo(borderRight, 150, 50, TimeSpan.FromSeconds(0.5), null);
-            //        }
-
-            //        else if (index == 3)
-            //        {
-            //            MoveAnimation.MoveTo(borderTop, 50, 50, TimeSpan.FromSeconds(0.5), null);
-            //        }
-            //        else if (index == 4)
-            //        {
-            //            MoveAnimation.MoveTo(borderCenter, 100, 100, TimeSpan.FromSeconds(0.5), null);
-            //        }
-            //        else
-            //        {
-            //            timer.Stop();
-            //            Debug.WriteLine("Move over!");
-            //        }
-            //        index++;
-            //    };
-            //timer.Interval = TimeSpan.FromSeconds(0.3);
-            //timer.Start();
-            
-            #endregion
-            await Task.Run(() =>
+                if (PlayState.Playing == BackgroundAudioPlayer.Instance.PlayerState)
                 {
-                    this.listRadioList.Dispatcher.BeginInvoke(() =>
-                        {
-                            if (RadiosData.GetRadioData().Count <= 30)
-                            {
-                                listRadioList.IsGroupingEnabled = false;
-                                listRadioList.ItemsSource = RadiosData.GetRadioData();
-                            }
-                            else
-                            {
-                                listRadioList.IsGroupingEnabled = true;
-                                listRadioList.ItemsSource = RadiosData.GetData();
-                            }
+                    btnPause.Visibility = Visibility.Visible;
+                    btnPlay.Visibility = Visibility.Collapsed;
+                    //TODO:显示当前播放内容
+                }
+                else
+                {
+                    btnPause.Visibility = Visibility.Collapsed;
+                    btnPlay.Visibility = Visibility.Visible;
+                    //TODO:播放内容清空
+                }
 
-                            _playList = new List<AudioTrack>();
-                            if (listRadioList.ItemsSource!=null)
-                            {
-                                List<RadiosInfo> radios = RadiosData.GetRadioData();
+                this.UpdateState(null, null);
 
-                                foreach (var item in radios)
+                #region 动画
+
+                //int index = 0;
+                //DispatcherTimer timer = new DispatcherTimer();
+                //timer.Tick += (a, w) =>
+                //    {
+                //        if (index == 0)
+                //        {
+                //            MoveAnimation.MoveTo(borderBottom, 102, 150, TimeSpan.FromSeconds(0.5), null);
+                //        }
+                //        else if (index == 1)
+                //        {
+                //            MoveAnimation.MoveTo(borderLeft, 50, 102, TimeSpan.FromSeconds(0.5), null);
+                //        }
+                //        else if (index == 2)
+                //        {
+                //            MoveAnimation.MoveTo(borderRight, 150, 50, TimeSpan.FromSeconds(0.5), null);
+                //        }
+
+                //        else if (index == 3)
+                //        {
+                //            MoveAnimation.MoveTo(borderTop, 50, 50, TimeSpan.FromSeconds(0.5), null);
+                //        }
+                //        else if (index == 4)
+                //        {
+                //            MoveAnimation.MoveTo(borderCenter, 100, 100, TimeSpan.FromSeconds(0.5), null);
+                //        }
+                //        else
+                //        {
+                //            timer.Stop();
+                //            Debug.WriteLine("Move over!");
+                //        }
+                //        index++;
+                //    };
+                //timer.Interval = TimeSpan.FromSeconds(0.3);
+                //timer.Start();
+
+                #endregion 动画
+
+                await Task.Run(() =>
+                    {
+                        this.listRadioList.Dispatcher.BeginInvoke(() =>
+                            {
+                                if (RadiosData.GetRadioData().Count <= 30)
                                 {
-                                    _playList.Add(new AudioTrack(new Uri (item.URL,UriKind.Absolute),item.Name,item.NamePinyin,"",null,"",EnabledPlayerControls.Pause));
+                                    listRadioList.IsGroupingEnabled = false;
+                                    listRadioList.ItemsSource = RadiosData.GetRadioData();
                                 }
-                            }
-		 
-                            
+                                else
+                                {
+                                    listRadioList.IsGroupingEnabled = true;
+                                    listRadioList.ItemsSource = RadiosData.GetData();
+                                }
 
-                        });
-                });
+                                _playList = new List<AudioTrack>();
+                                if (listRadioList.ItemsSource != null)
+                                {
+                                    List<RadiosInfo> radios = RadiosData.GetRadioData();
 
-            //SunshineStory.Begin();
+                                    foreach (var item in radios)
+                                    {
+                                        _playList.Add(new AudioTrack(new Uri(item.URL, UriKind.Absolute), item.Name, item.NamePinyin, "", null, "", EnabledPlayerControls.Pause));
+                                    }
+                                }
+                            });
+                    });
 
+                //SunshineStory.Begin();
 
-            base.OnNavigatedTo(e);
+                base.OnNavigatedTo(e);
+            }
+            catch (Exception ex)
+            {
+                UmengSDK.UmengAnalytics.TrackException(ex);
+            }
         }
 
         private void btnLocaFM_Click(object sender, RoutedEventArgs e)
         {
-
         }
 
         private void btnInterFM_Click(object sender, RoutedEventArgs e)
         {
-
         }
-
 
         // 用于生成本地化 ApplicationBar 的示例代码
         //private void BuildLocalizedApplicationBar()

@@ -36,6 +36,7 @@ namespace FMRadioPro.Data
                }
                catch (Exception ex)
                {
+                   UmengSDK.UmengAnalytics.TrackException(ex);
                    Debug.WriteLine("拼音转换移除："+ex);
                }
            }
