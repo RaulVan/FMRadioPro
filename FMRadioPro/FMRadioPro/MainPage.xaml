@@ -425,6 +425,105 @@
             <Grid.Background>
                 <ImageBrush Stretch="None" ImageSource="/Assets/www_emojpg_ru-239.jpg"/>
             </Grid.Background>
+            <Grid x:Name="gridPanel" Margin="0" >
+                <!--<Grid.ColumnDefinitions>
+                <ColumnDefinition Width="7"/>
+                <ColumnDefinition Width="70*"/>
+                <ColumnDefinition Width="25*"/>
+            </Grid.ColumnDefinitions>-->
+
+                <Grid x:Name="ContentPanel"  Margin="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="90*"/>
+                        <!--<RowDefinition Height="Auto"/>-->
+                        <RowDefinition Height="130"/>
+                    </Grid.RowDefinitions>
+                    <!--<Canvas Visibility="Collapsed" Grid.Row="5">
+                    <Border x:Name="borderLeft" BorderThickness="1" HorizontalAlignment="Left" Height="96" VerticalAlignment="Top" Width="48" Background="{StaticResource PhoneAccentBrush}"/>
+                    <Border x:Name="borderRight" BorderThickness="1" HorizontalAlignment="Left" Height="96" VerticalAlignment="Top" Width="48" Background="{StaticResource PhoneAccentBrush}"/>
+                    <Border x:Name="borderTop" BorderThickness="1" HorizontalAlignment="Left" Height="48" VerticalAlignment="Top" Width="96" Background="{StaticResource PhoneAccentBrush}"/>
+                    <Border x:Name="borderBottom" BorderThickness="1" HorizontalAlignment="Left" Height="48" VerticalAlignment="Top" Width="96" Background="{StaticResource PhoneAccentBrush}"/>
+                    <Border x:Name="borderCenter" BorderThickness="1" HorizontalAlignment="Left" Height="48"  VerticalAlignment="Top" Width="48" Background="{StaticResource PhoneAccentBrush}"  />
+                </Canvas>-->
+
+                    <!--<ScrollViewer Grid.Row="5" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Visibility="Collapsed">
+                    <TextBlock HorizontalAlignment="Left" Margin="0" TextWrapping="Wrap" 
+                			Text="TextBlock                   
+                                   TextBlockTextBlockTex
+                                   tBlockTextBlockTextBl        
+                                   ockTextBlockText
+                                   BlockTextBlockTe
+                                   xtBlockTextBlockTextBlock
+                                   TextBlockT                 
+                                   extBlockText
+                                   BlockTextBlock             
+                                   TextBlockTextBlockTextB
+                                   lockTextBlockTe
+                                   xtBlockTextBlockTextBl        
+                                   
+                                   ockTextBlockTextBlock" />
+                </ScrollViewer>-->
+                    <!--</Grid>-->
+
+                    <!--<TextBlock Visibility="Collapsed" x:Name="txtPlayState" HorizontalAlignment="Left" Height="48" Margin="33,47,0,0" TextWrapping="Wrap" Text="正在播放" VerticalAlignment="Top" Width="213"/>-->
+                    <TextBlock   HorizontalAlignment="Left" Height="48" TextWrapping="Wrap"  VerticalAlignment="Top"   Foreground="White" FontFamily="Segoe WP">
+            			<Run Text="FM" />
+            			<Run FontSize="30" Text="Radio"/>
+            			<Run FontFamily="Segoe WP" FontWeight="Light" Text="Pro"/>
+                    </TextBlock>
+                    <Grid Opacity="83" Grid.Row="1" >
+                        <TextBlock x:Name="txtPlayName"   FontSize="40" Foreground="White" Opacity="0.85" />
+                    </Grid>
+
+
+
+                    <Border Grid.Row="2" Margin="0,0,0,0" Opacity="83" BorderThickness="0,2,0,0" >
+                        <Border.BorderBrush>
+                            <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                                <LinearGradientBrush.RelativeTransform>
+                                    <CompositeTransform CenterY="0.5" CenterX="0.5" Rotation="90"/>
+                                </LinearGradientBrush.RelativeTransform>
+                                <GradientStop Color="Black" Offset="0.145"/>
+                                <GradientStop Color="#FF085B63" Offset="0.979"/>
+                                <GradientStop Color="#FF0F707A" Offset="0.021"/>
+                                <GradientStop Color="#FF05A60C" Offset="0.809"/>
+                                <GradientStop Color="#FF025D06" Offset="0.408"/>
+                                <GradientStop Color="#FF3E0536" Offset="0.66"/>
+                            </LinearGradientBrush>
+                        </Border.BorderBrush>
+
+                        <StackPanel Visibility="Collapsed"  Orientation="Horizontal">
+
+                            <Button x:Name="btnLocaFM"  Style="{StaticResource btnLocaFMStyle}" FontSize="18.667" Click="btnLocaFM_Click" />
+                            <Button x:Name="btnInterFM" Style="{StaticResource btnInterFMStyle}" FontSize="18.667" Click="btnInterFM_Click" />
+                        </StackPanel>
+
+                    </Border>
+                    <!--<Grid x:Name="gridRadioList" >-->
+                    <phone:LongListSelector Grid.Row="3" x:Name="listRadioList"    ItemsSource="{Binding}"
+            			HideEmptyGroups="True"
+            			LayoutMode="List" JumpListStyle="{StaticResource JumpListStyle}" 
+            			GroupHeaderTemplate="{StaticResource GroupHeaderTemplate}"                                                                           
+            			ItemTemplate="{StaticResource ItemTemplate}"/>
+                    <StackPanel x:Name="spPlayControl" Orientation="Horizontal" Grid.Row="4" Margin="0" Height="120" Opacity="0.83" VerticalAlignment="Bottom">
+                        <!--<Button x:Name="btnPause" Style="{StaticResource btnPauseStyle}" Visibility="Collapsed" />-->
+                        <!--<Button x:Name="btnStop" Style="{StaticResource btnStopStyle}" Margin="0,0,0,0" HorizontalAlignment="Right" />-->
+                        <!--<Button x:Name="btnBack" Style="{StaticResource btnBackStyle}" />-->
+                        <FMRadioPro:ImageButton  x:Name="btnBack" Content="ImageButton" HorizontalAlignment="Left"  Height="100" ImageSource="/Assets/Media-Back.png" VerticalAlignment="Bottom" Width="100"/>
+                        <!--<Button x:Name="btnPlay" Style="{StaticResource btnPlayStyle}" />-->
+                        <FMRadioPro:ImageButton x:Name="btnPlay" Content="ImageButton" HorizontalAlignment="Left" Height="120" ImageSource="/Assets/Media-Play.png" VerticalAlignment="Top" Width="120"/>
+                        <FMRadioPro:ImageButton  x:Name="btnPause" Content="ImageButton" HorizontalAlignment="Left" Visibility="Collapsed" Height="120" ImageSource="/Assets/Media-Pause.png" VerticalAlignment="Top" Width="120"/>
+                        <!--<Button x:Name="btnNext" Style="{StaticResource btnNextStyle}" />-->
+                        <FMRadioPro:ImageButton  x:Name="btnNext" Content="ImageButton" HorizontalAlignment="Left"  Height="100" ImageSource="/Assets/Media-Next.png" Width="100" VerticalAlignment="Bottom"/>
+                        <FMRadioPro:ImageButton  x:Name="btnOption" Content="ImageButton"  Height="80" ImageSource="/Assets/Data-Files.png" Width="80" Margin="6,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                        <FMRadioPro:ImageButton  x:Name="btnShare" Content="ImageButton"  Height="75" ImageSource="/Assets/Share-01.png" Width="75" Margin="0" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+                    </StackPanel>
+                </Grid>
+
+            </Grid>
             <!--<Image x:Name="sunshine"  Source="/Assets/SunShine.png" Margin="0" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" >
             <Image.RenderTransform>
                 <CompositeTransform ScaleX="2" ScaleY="2" TranslateY="200"/>
@@ -464,107 +563,6 @@
             <!--ContentPanel - 在此处放置其他内容-->
             <!--<ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" >-->
             <!--<ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" >-->
-
-            <Grid x:Name="gridPanel" Margin="0" >
-                <!--<Grid.ColumnDefinitions>
-                <ColumnDefinition Width="7"/>
-                <ColumnDefinition Width="70*"/>
-                <ColumnDefinition Width="25*"/>
-            </Grid.ColumnDefinitions>-->
-
-                <Grid x:Name="ContentPanel"  Margin="0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="3.3*"/>
-                        <!--<RowDefinition Height="Auto"/>-->
-                        <RowDefinition Height="1*"/>
-                    </Grid.RowDefinitions>
-                    <!--<TextBlock Visibility="Collapsed" x:Name="txtPlayState" HorizontalAlignment="Left" Height="48" Margin="33,47,0,0" TextWrapping="Wrap" Text="正在播放" VerticalAlignment="Top" Width="213"/>-->
-                    <TextBlock   HorizontalAlignment="Left" Height="48" TextWrapping="Wrap"  VerticalAlignment="Top"   Foreground="White" FontFamily="Segoe WP">
-                <Run >FM </Run>
-                <Run FontSize="30"> Radio</Run>
-                <Run FontFamily="Segoe WP" FontWeight="Light"> Pro</Run>
-                    </TextBlock>
-                    <Grid Opacity="83" Grid.Row="1" >
-                        <TextBlock x:Name="txtPlayName"   FontSize="40" Foreground="White" Opacity="0.85" />
-                    </Grid>
-
-                    <StackPanel x:Name="spPlayControl" Orientation="Horizontal" Grid.Row="4" Margin="0" Height="120" Opacity="0.83" VerticalAlignment="Bottom">
-                        <!--<Button x:Name="btnBack" Style="{StaticResource btnBackStyle}" />-->
-                        <FMRadioPro:ImageButton  x:Name="btnBack" Content="ImageButton" HorizontalAlignment="Left"  Height="100" ImageSource="/Assets/Media-Back.png" VerticalAlignment="Bottom" Width="100"/>
-                        <!--<Button x:Name="btnPlay" Style="{StaticResource btnPlayStyle}" />-->
-                        <FMRadioPro:ImageButton x:Name="btnPlay" Content="ImageButton" HorizontalAlignment="Left" Height="120" ImageSource="/Assets/Media-Play.png" VerticalAlignment="Top" Width="120"/>
-                        <FMRadioPro:ImageButton  x:Name="btnPause" Content="ImageButton" HorizontalAlignment="Left" Visibility="Collapsed" Height="120" ImageSource="/Assets/Media-Pause.png" VerticalAlignment="Top" Width="120"/>
-                        <!--<Button x:Name="btnPause" Style="{StaticResource btnPauseStyle}" Visibility="Collapsed" />-->
-                        <!--<Button x:Name="btnNext" Style="{StaticResource btnNextStyle}" />-->
-                        <FMRadioPro:ImageButton  x:Name="btnNext" Content="ImageButton" HorizontalAlignment="Left"  Height="100" ImageSource="/Assets/Media-Next.png" Width="100" VerticalAlignment="Bottom"/>
-                        <FMRadioPro:ImageButton  x:Name="btnOption" Content="ImageButton" HorizontalAlignment="Right"  Height="80" ImageSource="/Assets/aobut.png" Width="80" VerticalAlignment="Top" Margin="40,0,0,0"/>
-                        <!--<Button x:Name="btnStop" Style="{StaticResource btnStopStyle}" Margin="0,0,0,0" HorizontalAlignment="Right" />-->
-
-
-
-                    </StackPanel>
-
-                    <Border Grid.Row="2" Margin="0,0,0,0" Opacity="83" BorderThickness="0,2,0,0" >
-                        <Border.BorderBrush>
-                            <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-                                <LinearGradientBrush.RelativeTransform>
-                                    <CompositeTransform CenterY="0.5" CenterX="0.5" Rotation="90"/>
-                                </LinearGradientBrush.RelativeTransform>
-                                <GradientStop Color="Black" Offset="0.145"/>
-                                <GradientStop Color="#FF085B63" Offset="0.979"/>
-                                <GradientStop Color="#FF0F707A" Offset="0.021"/>
-                                <GradientStop Color="#FF05A60C" Offset="0.809"/>
-                                <GradientStop Color="#FF025D06" Offset="0.408"/>
-                                <GradientStop Color="#FF3E0536" Offset="0.66"/>
-                            </LinearGradientBrush>
-                        </Border.BorderBrush>
-
-                        <StackPanel Visibility="Collapsed"  Orientation="Horizontal">
-
-                            <Button x:Name="btnLocaFM"  Style="{StaticResource btnLocaFMStyle}" FontSize="18.667" Click="btnLocaFM_Click" />
-                            <Button x:Name="btnInterFM" Style="{StaticResource btnInterFMStyle}" FontSize="18.667" Click="btnInterFM_Click" />
-                        </StackPanel>
-
-                    </Border>
-                    <!--<Canvas Visibility="Collapsed" Grid.Row="5">
-                    <Border x:Name="borderLeft" BorderThickness="1" HorizontalAlignment="Left" Height="96" VerticalAlignment="Top" Width="48" Background="{StaticResource PhoneAccentBrush}"/>
-                    <Border x:Name="borderRight" BorderThickness="1" HorizontalAlignment="Left" Height="96" VerticalAlignment="Top" Width="48" Background="{StaticResource PhoneAccentBrush}"/>
-                    <Border x:Name="borderTop" BorderThickness="1" HorizontalAlignment="Left" Height="48" VerticalAlignment="Top" Width="96" Background="{StaticResource PhoneAccentBrush}"/>
-                    <Border x:Name="borderBottom" BorderThickness="1" HorizontalAlignment="Left" Height="48" VerticalAlignment="Top" Width="96" Background="{StaticResource PhoneAccentBrush}"/>
-                    <Border x:Name="borderCenter" BorderThickness="1" HorizontalAlignment="Left" Height="48"  VerticalAlignment="Top" Width="48" Background="{StaticResource PhoneAccentBrush}"  />
-                </Canvas>-->
-
-                    <!--<ScrollViewer Grid.Row="5" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Visibility="Collapsed">
-                    <TextBlock HorizontalAlignment="Left" Margin="0" TextWrapping="Wrap" 
-                			Text="TextBlock                   
-                                   TextBlockTextBlockTex
-                                   tBlockTextBlockTextBl        
-                                   ockTextBlockText
-                                   BlockTextBlockTe
-                                   xtBlockTextBlockTextBlock
-                                   TextBlockT                 
-                                   extBlockText
-                                   BlockTextBlock             
-                                   TextBlockTextBlockTextB
-                                   lockTextBlockTe
-                                   xtBlockTextBlockTextBl        
-                                   
-                                   ockTextBlockTextBlock" />
-                </ScrollViewer>-->
-                    <!--<Grid x:Name="gridRadioList" >-->
-                    <phone:LongListSelector Grid.Row="3" x:Name="listRadioList"    ItemsSource="{Binding}"
-						HideEmptyGroups="True"
-						LayoutMode="List" JumpListStyle="{StaticResource JumpListStyle}" 
-						GroupHeaderTemplate="{StaticResource GroupHeaderTemplate}"                                                                           
-						ItemTemplate="{StaticResource ItemTemplate}"/>
-                    <!--</Grid>-->
-
-                </Grid>
-
-            </Grid>
             <!--<Rectangle Visibility="Collapsed" x:Name="topMenBar"  Canvas.ZIndex="100" Canvas.Left="-239" Fill="Beige" Opacity="0.5"  Height="768" Width="240" >
 
         </Rectangle>-->

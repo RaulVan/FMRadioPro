@@ -10,8 +10,14 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Threading;
+using UmengSDK;
+using UmengSocialSDK;
+using UmengSocialSDK.Net.Request;
+using System.IO;
 
 namespace FMRadioPro
 {
@@ -60,6 +66,7 @@ namespace FMRadioPro
             //this.btnStop.Click += btnStop_Click;
             this.listRadioList.SelectionChanged += listRadioList_SelectionChanged;
             btnOption.Click += btnOption_Click;
+            btnShare.Click += btnShare_Click;
             //this.topMenBar.ManipulationDelta += topMenBar_ManipulationDelta;
             //this.topMenBar.ManipulationCompleted += topMenBar_ManipulationCompleted;
 
@@ -71,6 +78,99 @@ namespace FMRadioPro
             //    };
         }
 
+        /// <summary>
+        /// 分享按钮
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void btnShare_Click(object sender, RoutedEventArgs e)
+        {
+            SharePlatform platform = SharePlatform.Sina;
+            //if (!UmengSocial.CheckAuthorized(platform))
+            //{
+            //    //MessageBox.Show("该平台未授权，请先进行授权！");
+            //    //return;
+
+            //    UmengSocial.Authorize(AppConfig.AppKey, platform, this, args =>
+            //        {
+            //            if (args.StatusCode==UmengSocialSDK.UmEventArgs.Status.Successed)
+            //            {
+            //                BitmapImage bitmapImage = new BitmapImage();
+            //                bitmapImage.UriSource = new Uri("/Assets/qcode.png", UriKind.Relative);
+
+
+            //                ShareData shareData = new ShareData();
+
+            //                shareData.Content = "分享一个好APP，支持CodeMonkey 写代码赚钱娶媳妇。WP商场： http://www.windowsphone.com/s?appid=3e6b465b-e8fc-4c06-a64a-b4bec05e60cf ";
+            //                //shareData.Url.Link = @"http://www.windowsphone.com/s?appid=3e6b465b-e8fc-4c06-a64a-b4bec05e60cf";
+            //                //shareData.Url.Type = UrlType.Picture;
+            //                //shareData.Url.Author = "FMRadioPro";
+            //                //shareData.Url.Title = "情书";
+
+            //                // WriteableBitmap ShareImage =
+            //                shareData.Picture = bitmapImage;
+
+            //                ShareOption option = new ShareOption();
+            //                option.ShareCompleted = argss =>
+            //                {
+            //                    if (argss.StatusCode == UmengSocialSDK.UmEventArgs.Status.Successed)
+            //                    {
+            //                        //分享成功
+            //                       // MessageBox.Show("分享成功");
+            //                    }
+            //                    else
+            //                    {
+            //                        //分享失败          
+            //                        MessageBox.Show("分享失败");
+            //                    }
+            //                };
+
+            //                UmengSocial.Share(AppConfig.AppKey, shareData, null, this, option);
+            //            }
+            //        });
+            //}
+            //else
+            //{
+                BitmapImage bitmapImage = new BitmapImage();
+                bitmapImage.UriSource = new Uri("/Assets/qcode.png", UriKind.Relative);
+
+
+                ShareData shareData = new ShareData();
+
+                shareData.Content = "分享一个好APP，支持CodeMonkey 写代码赚钱娶媳妇。WP商场： http://www.windowsphone.com/s?appid=3e6b465b-e8fc-4c06-a64a-b4bec05e60cf ";
+                //shareData.Url.Link = @"http://www.windowsphone.com/s?appid=3e6b465b-e8fc-4c06-a64a-b4bec05e60cf";
+                //shareData.Url.Type = UrlType.Picture;
+                //shareData.Url.Author = "FMRadioPro";
+                //shareData.Url.Title = "情书";
+
+                // WriteableBitmap ShareImage =
+                shareData.Picture = bitmapImage;
+
+                ShareOption option = new ShareOption();
+                option.ShareCompleted = args =>
+                {
+                    if (args.StatusCode == UmengSocialSDK.UmEventArgs.Status.Successed)
+                    {
+                        //分享成功
+                       // MessageBox.Show("分享成功");
+                    }
+                    else
+                    {
+                        //分享失败          
+                        MessageBox.Show("分享失败");
+                    }
+                };
+
+                UmengSocial.Share(AppConfig.AppKey, shareData, null, this, option);
+            }
+
+         
+           
+            
+
+        //}
+
+       
         private void btnOption_Click(object sender, RoutedEventArgs e)
         {
             //TODO:Aobut.xaml
@@ -553,11 +653,18 @@ namespace FMRadioPro
                 //SunshineStory.Begin();
 
                 base.OnNavigatedTo(e);
+                UmengAnalytics.TrackPageStart("MainPage");
             }
             catch (Exception ex)
             {
                 UmengSDK.UmengAnalytics.TrackException(ex);
             }
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            UmengAnalytics.TrackPageEnd("MainPage");
         }
 
         private void btnLocaFM_Click(object sender, RoutedEventArgs e)

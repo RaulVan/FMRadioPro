@@ -159,16 +159,20 @@
     <Content Include="Assets\300x300.png" />
     <Content Include="Assets\336x336.png" />
     <Content Include="Assets\AlignmentGrid.png" />
+    <Content Include="Assets\alipay.png" />
     <Content Include="Assets\aobut.png" />
     <Content Include="Assets\ApplicationIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\Data-Files.png" />
     <Content Include="Assets\Heart.png" />
     <Content Include="Assets\Media-Back.png" />
     <Content Include="Assets\Media-Next.png" />
     <Content Include="Assets\Media-Next1.png" />
     <Content Include="Assets\Media-Pause.png" />
     <Content Include="Assets\Media-Play.png" />
+    <Content Include="Assets\qcode.png" />
+    <Content Include="Assets\Share-01.png" />
     <Content Include="Assets\SunShine.png" />
     <Content Include="Assets\Tiles\FlipCycleTileLarge.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -196,8 +200,20 @@
     <Content Include="Images\icon-plus-highlighted.png" />
     <Content Include="Images\icon-plus.png" />
     <Content Include="Images\icon-star.png" />
+    <Content Include="Lib\Com.MSN.Ads.WindowsPhone.dll" />
     <Content Include="Lib\UmengAnalyticsWP8.dll" />
+    <Content Include="Lib\UmengSocialWP.dll" />
     <Content Include="Resources\Text1.txt" />
+    <Content Include="UmImages\location.png" />
+    <Content Include="UmImages\share.png" />
+    <Content Include="UmImages\sns\douban.png" />
+    <Content Include="UmImages\sns\qzone.png" />
+    <Content Include="UmImages\sns\renren.png" />
+    <Content Include="UmImages\sns\sina.png" />
+    <Content Include="UmImages\sns\tencent.png" />
+    <Content Include="UmImages\sns\wechat.png" />
+    <Content Include="UmImages\sns\wxcircle.png" />
+    <Content Include="UmImages\sns\sms.png" />
     <EmbeddedResource Include="Resources\RadioInfo.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -215,7 +231,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Com.MSN.Ads.WindowsPhone, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="UmengAnalyticsWP8, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="UmengSocialWP, Version=0.9.0.0, Culture=neutral, processorArchitecture=MSIL" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />

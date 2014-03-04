@@ -9,6 +9,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;
 using Microsoft.Phone.Marketplace;
+using UmengSDK;
 
 namespace FMRadioPro
 {
@@ -18,6 +19,14 @@ namespace FMRadioPro
         {
             InitializeComponent();
             emailLink.Click += emailLink_Click;
+            btnOpenAliPay.Click += btnOpenAliPay_Click;
+        }
+
+        void btnOpenAliPay_Click(object sender, RoutedEventArgs e)
+        {
+            WebBrowserTask task = new WebBrowserTask();
+            task.Uri = new Uri("http://me.alipay.com/rauls", UriKind.Absolute);
+            task.Show();
         }
 
         void emailLink_Click(object sender, RoutedEventArgs e)
@@ -32,6 +41,17 @@ namespace FMRadioPro
         {
             MarketplaceReviewTask task = new MarketplaceReviewTask();
             task.Show();
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            UmengAnalytics.TrackPageEnd("AboutPage");
+        }
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            UmengAnalytics.TrackPageStart("AboutPage");
         }
     }
 }
