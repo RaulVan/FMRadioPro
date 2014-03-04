@@ -85,7 +85,7 @@ namespace FMRadioPro
         /// <param name="e"></param>
         void btnShare_Click(object sender, RoutedEventArgs e)
         {
-            SharePlatform platform = SharePlatform.Sina;
+            //SharePlatform platform = SharePlatform.Sina;
             //if (!UmengSocial.CheckAuthorized(platform))
             //{
             //    //MessageBox.Show("该平台未授权，请先进行授权！");
@@ -131,17 +131,29 @@ namespace FMRadioPro
             //}
             //else
             //{
+
+            try
+            {
                 BitmapImage bitmapImage = new BitmapImage();
                 bitmapImage.UriSource = new Uri("/Assets/qcode.png", UriKind.Relative);
 
 
                 ShareData shareData = new ShareData();
-
-                shareData.Content = "分享一个好APP，支持CodeMonkey 写代码赚钱娶媳妇。WP商场： http://www.windowsphone.com/s?appid=3e6b465b-e8fc-4c06-a64a-b4bec05e60cf ";
+                string content = "";
+                if (string.IsNullOrWhiteSpace(txtPlayName.Text))
+                {
+                    content = "我正在使用FMRadioPro收听广播，分享一个好APP，支持CodeMonkey @十一_x 写APP赚钱娶媳妇。WP商场戳右边-> http://www.windowsphone.com/s?appid=3e6b465b-e8fc-4c06-a64a-b4bec05e60cf ";
+                }
+                else
+                {
+                    content = string.Format("我正在使用FMRadioPro收听{0}，分享一个好APP，支持CodeMonkey @十一_x 写APP赚钱娶媳妇。WP商场戳右边-> http://www.windowsphone.com/s?appid=3e6b465b-e8fc-4c06-a64a-b4bec05e60cf ", txtPlayName.Text);
+                }
+                shareData.Content = content;
                 //shareData.Url.Link = @"http://www.windowsphone.com/s?appid=3e6b465b-e8fc-4c06-a64a-b4bec05e60cf";
                 //shareData.Url.Type = UrlType.Picture;
                 //shareData.Url.Author = "FMRadioPro";
                 //shareData.Url.Title = "情书";
+
 
                 // WriteableBitmap ShareImage =
                 shareData.Picture = bitmapImage;
@@ -152,7 +164,7 @@ namespace FMRadioPro
                     if (args.StatusCode == UmengSocialSDK.UmEventArgs.Status.Successed)
                     {
                         //分享成功
-                       // MessageBox.Show("分享成功");
+                        // MessageBox.Show("分享成功");
                     }
                     else
                     {
@@ -163,14 +175,19 @@ namespace FMRadioPro
 
                 UmengSocial.Share(AppConfig.AppKey, shareData, null, this, option);
             }
+            catch (Exception ex)
+            {
+                UmengSDK.UmengAnalytics.TrackException(ex);
+            }
+        }
 
-         
-           
-            
+
+
+
 
         //}
 
-       
+
         private void btnOption_Click(object sender, RoutedEventArgs e)
         {
             //TODO:Aobut.xaml
@@ -289,40 +306,47 @@ namespace FMRadioPro
 
         private void listRadioList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var selectenItem = (RadiosInfo)listRadioList.SelectedItem;
-            listRadioList.ScrollTo(selectenItem);
-
-            AudioTrack selectAudioTrack = new AudioTrack(new Uri(selectenItem.URL, UriKind.Absolute), selectenItem.Name, selectenItem.NamePinyin, "", null, "", EnabledPlayerControls.Pause);
-            //TODO：查找当前Select项在_PlayList中的index，然后给 isoCurrentTrack
-            // var index=  _playList.BinarySearch(selectAudioTrack);
-            //  _playList.Where(p => p.Source == selectAudioTrack.Source).ToList();
-
-            //var a = from p in _playList
-            //        where p.Source == selectAudioTrack.Source
-            //        select new AudioTrack(
-            //            p.Source,
-            //            p.Title,
-            //            p.Artist,p.Album,p.AlbumArt,p.Tag,p.PlayerControls
-
-            //            );
-
-            foreach (var item in _playList)
+            try
             {
-                if (item.Source == selectAudioTrack.Source)
+                var selectenItem = (RadiosInfo)listRadioList.SelectedItem;
+                listRadioList.ScrollTo(selectenItem);
+
+                AudioTrack selectAudioTrack = new AudioTrack(new Uri(selectenItem.URL, UriKind.Absolute), selectenItem.Name, selectenItem.NamePinyin, "", null, "", EnabledPlayerControls.Pause);
+                //TODO：查找当前Select项在_PlayList中的index，然后给 isoCurrentTrack
+                // var index=  _playList.BinarySearch(selectAudioTrack);
+                //  _playList.Where(p => p.Source == selectAudioTrack.Source).ToList();
+
+                //var a = from p in _playList
+                //        where p.Source == selectAudioTrack.Source
+                //        select new AudioTrack(
+                //            p.Source,
+                //            p.Title,
+                //            p.Artist,p.Album,p.AlbumArt,p.Tag,p.PlayerControls
+
+                //            );
+
+                foreach (var item in _playList)
                 {
-                    selectAudioTrack = item;
+                    if (item.Source == selectAudioTrack.Source)
+                    {
+                        selectAudioTrack = item;
+                    }
                 }
+
+                int index = _playList.IndexOf(selectAudioTrack, 0);
+
+                AppConfig.isoCurrentTrack = index;
+
+                //TODO:播放当前选择项
+                Debug.WriteLine("SelectItem Radio URL:" + selectenItem.URL);
+                Debug.WriteLine("SelectenItem Radio Index:" + index);
+                BackgroundAudioPlayer.Instance.Track = _playList[AppConfig.isoCurrentTrack];// new AudioTrack(new Uri(selectenItem.URL, UriKind.Absolute), selectenItem.Name, null, null, null, "fd", EnabledPlayerControls.Pause);
+                //BackgroundAudioPlayer.Instance.Volume = 1.0d;
             }
-
-            int index = _playList.IndexOf(selectAudioTrack, 0);
-
-            AppConfig.isoCurrentTrack = index;
-
-            //TODO:播放当前选择项
-            Debug.WriteLine("SelectItem Radio URL:" + selectenItem.URL);
-            Debug.WriteLine("SelectenItem Radio Index:" + index);
-            BackgroundAudioPlayer.Instance.Track = _playList[AppConfig.isoCurrentTrack];// new AudioTrack(new Uri(selectenItem.URL, UriKind.Absolute), selectenItem.Name, null, null, null, "fd", EnabledPlayerControls.Pause);
-            //BackgroundAudioPlayer.Instance.Volume = 1.0d;
+            catch (Exception ex)
+            {
+                UmengSDK.UmengAnalytics.TrackException(ex);
+            }
         }
 
         /// <summary>
@@ -332,39 +356,46 @@ namespace FMRadioPro
         /// <param name="e"></param>
         private void Instance_PlayStateChanged(object sender, EventArgs e)
         {
-            PlayState playState = PlayState.Unknown;
-            //System.Diagnostics.Debug.WriteLine(System.Threading.Thread.CurrentThread.ManagedThreadId.ToString() + ":  Instance_PlayStateChanged- {0}", playState);
             try
             {
-                playState = BackgroundAudioPlayer.Instance.PlayerState;
+                PlayState playState = PlayState.Unknown;
+                //System.Diagnostics.Debug.WriteLine(System.Threading.Thread.CurrentThread.ManagedThreadId.ToString() + ":  Instance_PlayStateChanged- {0}", playState);
+                try
+                {
+                    playState = BackgroundAudioPlayer.Instance.PlayerState;
+                }
+                catch (InvalidOperationException ex)
+                {
+                    playState = PlayState.Stopped;
+                    UmengSDK.UmengAnalytics.TrackException(ex);
+                }
+
+                switch (playState)
+                {
+                    case PlayState.Paused:
+                        this.UpdateState(null, null);
+                        this.timerr.Stop();
+                        break;
+
+                    case PlayState.Playing:
+
+                        this.UpdateState(null, null);
+
+                        this.timerr.Start();
+                        break;
+
+                    case PlayState.Stopped:
+                        this.timerr.Stop();
+                        this.UpdateState(null, null);
+                        break;
+
+                    default:
+                        break;
+                }
             }
-            catch (InvalidOperationException ex)
+            catch (Exception ex)
             {
-                playState = PlayState.Stopped;
                 UmengSDK.UmengAnalytics.TrackException(ex);
-            }
-
-            switch (playState)
-            {
-                case PlayState.Paused:
-                    this.UpdateState(null, null);
-                    this.timerr.Stop();
-                    break;
-
-                case PlayState.Playing:
-
-                    this.UpdateState(null, null);
-
-                    this.timerr.Start();
-                    break;
-
-                case PlayState.Stopped:
-                    this.timerr.Stop();
-                    this.UpdateState(null, null);
-                    break;
-
-                default:
-                    break;
             }
 
             #region MyRegion
@@ -425,25 +456,32 @@ namespace FMRadioPro
         /// <param name="e"></param>
         private void btnStop_Click(object sender, RoutedEventArgs e)
         {
-            this.timerr.Stop();
-            BackgroundAudioPlayer.Instance.Stop();
-            this.UpdateState(null, null);
-            Debug.WriteLine("Stop_Click Play:" + AppConfig.isoCurrentTrack);
+            try
+            {
+                this.timerr.Stop();
+                BackgroundAudioPlayer.Instance.Stop();
+                this.UpdateState(null, null);
+                Debug.WriteLine("Stop_Click Play:" + AppConfig.isoCurrentTrack);
 
-            FrameworkDispatcher.Update();
-            MediaPlayer.Stop();
-            FrameworkDispatcher.Update();
-            MediaPlayer.Play(Song.FromUri("Snooze It!", new Uri("Audio/Void.wav", UriKind.Relative)));
-            FrameworkDispatcher.Update();
-            //if (DataCommunication.Read().ClearZunePlaylist)
-            //{
-            //    MediaPlayer.Play(Song.FromUri("Snooze It!", new Uri("Audio/Void.wav", UriKind.Relative)));
-            //    FrameworkDispatcher.Update();
-            //}
-            MediaPlayer.Stop();
-            FrameworkDispatcher.Update();
+                FrameworkDispatcher.Update();
+                MediaPlayer.Stop();
+                FrameworkDispatcher.Update();
+                MediaPlayer.Play(Song.FromUri("Snooze It!", new Uri("Audio/Void.wav", UriKind.Relative)));
+                FrameworkDispatcher.Update();
+                //if (DataCommunication.Read().ClearZunePlaylist)
+                //{
+                //    MediaPlayer.Play(Song.FromUri("Snooze It!", new Uri("Audio/Void.wav", UriKind.Relative)));
+                //    FrameworkDispatcher.Update();
+                //}
+                MediaPlayer.Stop();
+                FrameworkDispatcher.Update();
 
-            Application.Current.Terminate();//退出应用程序
+                Application.Current.Terminate();//退出应用程序
+            }
+            catch (Exception ez)
+            {
+                UmengSDK.UmengAnalytics.TrackException(ex);
+            }
         }
 
         /// <summary>
