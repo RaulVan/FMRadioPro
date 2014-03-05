@@ -169,7 +169,7 @@ namespace FMRadioPro
                     else
                     {
                         //分享失败          
-                        MessageBox.Show("分享失败");
+                        //MessageBox.Show("分享失败");
                     }
                 };
 
