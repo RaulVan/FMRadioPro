@@ -284,7 +284,8 @@ namespace FMRadioPro
                     //TODO:播放内容清空
                 }
             }
-
+           // var selectenItem = (RadiosInfo)listRadioList.ItemsSource.SelectedItem;
+           // listRadioList.ScrollTo(selectenItem);
             //  Debug.WriteLine("AudioPlayer.isoPlayState);" + AudioPlayer.isoPlayState);
         }
 
@@ -478,7 +479,7 @@ namespace FMRadioPro
 
                 Application.Current.Terminate();//退出应用程序
             }
-            catch (Exception ez)
+            catch (Exception ex)
             {
                 UmengSDK.UmengAnalytics.TrackException(ex);
             }
