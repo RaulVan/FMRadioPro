@@ -142,11 +142,11 @@ namespace FMRadioPro
                 string content = "";
                 if (string.IsNullOrWhiteSpace(txtPlayName.Text))
                 {
-                    content = "我正在使用FMRadioPro收听广播，分享一个好APP，支持CodeMonkey @十一_x 写APP赚钱娶媳妇。WP商场戳右边-> http://www.windowsphone.com/s?appid=3e6b465b-e8fc-4c06-a64a-b4bec05e60cf ";
+                    content = "我正在使用FMRadioPro收听广播，分享一个好APP，支持CodeMonkey @十一_x 写APP赚钱娶媳妇。 ";
                 }
                 else
                 {
-                    content = string.Format("我正在使用FMRadioPro收听{0}，分享一个好APP，支持CodeMonkey @十一_x 写APP赚钱娶媳妇。WP商场戳右边-> http://www.windowsphone.com/s?appid=3e6b465b-e8fc-4c06-a64a-b4bec05e60cf ", txtPlayName.Text);
+                    content = string.Format("我正在使用FMRadioPro收听{0}，分享一个好APP，支持CodeMonkey @十一_x 写APP赚钱娶媳妇。", txtPlayName.Text);
                 }
                 shareData.Content = content;
                 //shareData.Url.Link = @"http://www.windowsphone.com/s?appid=3e6b465b-e8fc-4c06-a64a-b4bec05e60cf";
