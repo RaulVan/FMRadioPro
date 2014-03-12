@@ -8,11 +8,22 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using FMRadioPro.Resources;
 using UmengSDK;
+using Microsoft.Phone.Marketplace;
 
 namespace FMRadioPro
 {
     public partial class App : Application
     {
+//        private static LicenseInformation _licenseInfo = new LicenseInformation();
+
+//        private void CheckTrialMode()
+//        {
+//#if DEBUG
+         
+            
+//#endif
+        //}
+
         /// <summary>
         ///提供对电话应用程序的根框架的轻松访问。
         /// </summary>
@@ -36,7 +47,12 @@ namespace FMRadioPro
             // 语言显示初始化
             InitializeLanguage();
 
+#if DEBUG
+             UmengAnalytics.Init("5313e59056240b7a8a1ab50e", "Debug");
+#else
+
             UmengAnalytics.Init(AppConfig.AppKey, "Marketplace");
+#endif
          
 
             // 调试时显示图形分析信息。

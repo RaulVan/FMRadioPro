@@ -19,6 +19,9 @@ using UmengSocialSDK;
 using UmengSocialSDK.Net.Request;
 using System.IO;
 
+using Microsoft.Phone.Marketplace;
+
+
 namespace FMRadioPro
 {
     public partial class MainPage : PhoneApplicationPage
@@ -85,53 +88,6 @@ namespace FMRadioPro
         /// <param name="e"></param>
         void btnShare_Click(object sender, RoutedEventArgs e)
         {
-            //SharePlatform platform = SharePlatform.Sina;
-            //if (!UmengSocial.CheckAuthorized(platform))
-            //{
-            //    //MessageBox.Show("该平台未授权，请先进行授权！");
-            //    //return;
-
-            //    UmengSocial.Authorize(AppConfig.AppKey, platform, this, args =>
-            //        {
-            //            if (args.StatusCode==UmengSocialSDK.UmEventArgs.Status.Successed)
-            //            {
-            //                BitmapImage bitmapImage = new BitmapImage();
-            //                bitmapImage.UriSource = new Uri("/Assets/qcode.png", UriKind.Relative);
-
-
-            //                ShareData shareData = new ShareData();
-
-            //                shareData.Content = "分享一个好APP，支持CodeMonkey 写代码赚钱娶媳妇。WP商场： http://www.windowsphone.com/s?appid=3e6b465b-e8fc-4c06-a64a-b4bec05e60cf ";
-            //                //shareData.Url.Link = @"http://www.windowsphone.com/s?appid=3e6b465b-e8fc-4c06-a64a-b4bec05e60cf";
-            //                //shareData.Url.Type = UrlType.Picture;
-            //                //shareData.Url.Author = "FMRadioPro";
-            //                //shareData.Url.Title = "情书";
-
-            //                // WriteableBitmap ShareImage =
-            //                shareData.Picture = bitmapImage;
-
-            //                ShareOption option = new ShareOption();
-            //                option.ShareCompleted = argss =>
-            //                {
-            //                    if (argss.StatusCode == UmengSocialSDK.UmEventArgs.Status.Successed)
-            //                    {
-            //                        //分享成功
-            //                       // MessageBox.Show("分享成功");
-            //                    }
-            //                    else
-            //                    {
-            //                        //分享失败          
-            //                        MessageBox.Show("分享失败");
-            //                    }
-            //                };
-
-            //                UmengSocial.Share(AppConfig.AppKey, shareData, null, this, option);
-            //            }
-            //        });
-            //}
-            //else
-            //{
-
             try
             {
                 BitmapImage bitmapImage = new BitmapImage();
@@ -343,9 +299,11 @@ namespace FMRadioPro
                 Debug.WriteLine("SelectenItem Radio Index:" + index);
                 BackgroundAudioPlayer.Instance.Track = _playList[AppConfig.isoCurrentTrack];// new AudioTrack(new Uri(selectenItem.URL, UriKind.Absolute), selectenItem.Name, null, null, null, "fd", EnabledPlayerControls.Pause);
                 //BackgroundAudioPlayer.Instance.Volume = 1.0d;
+                this.UpdateState(null, null);
             }
             catch (Exception ex)
             {
+                Debug.WriteLine("listRadioList_SelectionChanged" + ex.ToString());
                 UmengSDK.UmengAnalytics.TrackException(ex);
             }
         }
@@ -359,6 +317,28 @@ namespace FMRadioPro
         {
             try
             {
+                //BackgroundAudioPlayer play = sender as BackgroundAudioPlayer;
+                //if (play.Error!=null)
+                //{
+                //    //FrameworkDispatcher.Update();
+                //    //MediaPlayer.Stop();
+                //    //FrameworkDispatcher.Update();
+                //    //MediaPlayer.Play(Song.FromUri("Snooze It!", new Uri("Audio/Void.wav", UriKind.Relative)));
+                //    //FrameworkDispatcher.Update();
+                //    ////if (DataCommunication.Read().ClearZunePlaylist)
+                //    ////{
+                //    ////    MediaPlayer.Play(Song.FromUri("Snooze It!", new Uri("Audio/Void.wav", UriKind.Relative)));
+                //    ////    FrameworkDispatcher.Update();
+                //    ////}
+                //    //MediaPlayer.Stop();
+                //    //FrameworkDispatcher.Update();
+                //    BackgroundAudioPlayer.Instance.Close();
+                //    BackgroundAudioPlayer.Instance.Play();
+                //}
+                //if ()
+                //{
+                    
+                //}
                 PlayState playState = PlayState.Unknown;
                 //System.Diagnostics.Debug.WriteLine(System.Threading.Thread.CurrentThread.ManagedThreadId.ToString() + ":  Instance_PlayStateChanged- {0}", playState);
                 try
@@ -396,6 +376,7 @@ namespace FMRadioPro
             }
             catch (Exception ex)
             {
+                Debug.WriteLine("PlayStateChanged:" + ex.ToString());
                 UmengSDK.UmengAnalytics.TrackException(ex);
             }
 
@@ -481,6 +462,7 @@ namespace FMRadioPro
             }
             catch (Exception ex)
             {
+                Debug.WriteLine("btnStop_Click" + ex.ToString());
                 UmengSDK.UmengAnalytics.TrackException(ex);
             }
         }
@@ -507,6 +489,7 @@ namespace FMRadioPro
             }
             catch (Exception ex)
             {
+                Debug.WriteLine("btnNext_Click"+ex.ToString());
                 UmengSDK.UmengAnalytics.TrackException(ex);
             }
         }
@@ -580,6 +563,7 @@ namespace FMRadioPro
             }
             catch (Exception ex)
             {
+                Debug.WriteLine("btnBack_Click" + ex.ToString());
                 UmengSDK.UmengAnalytics.TrackException(ex);
             }
         }
@@ -613,11 +597,13 @@ namespace FMRadioPro
                     btnPlay.Visibility = Visibility.Collapsed;
                     //TODO:显示当前播放内容
                 }
+               
                 else
                 {
                     btnPause.Visibility = Visibility.Collapsed;
                     btnPlay.Visibility = Visibility.Visible;
                     //TODO:播放内容清空
+
                 }
 
                 this.UpdateState(null, null);

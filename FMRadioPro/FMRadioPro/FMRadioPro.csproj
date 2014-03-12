@@ -171,6 +171,7 @@
     <Content Include="Assets\Media-Next1.png" />
     <Content Include="Assets\Media-Pause.png" />
     <Content Include="Assets\Media-Play.png" />
+    <Content Include="Assets\Power.png" />
     <Content Include="Assets\qcode.png" />
     <Content Include="Assets\Share-01.png" />
     <Content Include="Assets\SunShine.png" />

@@ -439,7 +439,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="90*"/>
                         <!--<RowDefinition Height="Auto"/>-->
-                        <RowDefinition Height="130"/>
+                        <RowDefinition Height="150"/>
                     </Grid.RowDefinitions>
                     <!--<Canvas Visibility="Collapsed" Grid.Row="5">
                     <Border x:Name="borderLeft" BorderThickness="1" HorizontalAlignment="Left" Height="96" VerticalAlignment="Top" Width="48" Background="{StaticResource PhoneAccentBrush}"/>
@@ -508,7 +508,7 @@
             			LayoutMode="List" JumpListStyle="{StaticResource JumpListStyle}" 
             			GroupHeaderTemplate="{StaticResource GroupHeaderTemplate}"                                                                           
             			ItemTemplate="{StaticResource ItemTemplate}"/>
-                    <StackPanel x:Name="spPlayControl" Orientation="Horizontal" Grid.Row="4" Margin="0" Height="120" Opacity="0.83" VerticalAlignment="Bottom">
+                    <StackPanel x:Name="spPlayControl" Orientation="Horizontal" Grid.Row="4" Margin="0" Height="150" Opacity="0.83" VerticalAlignment="Bottom">
                         <!--<Button x:Name="btnPause" Style="{StaticResource btnPauseStyle}" Visibility="Collapsed" />-->
                         <!--<Button x:Name="btnStop" Style="{StaticResource btnStopStyle}" Margin="0,0,0,0" HorizontalAlignment="Right" />-->
                         <!--<Button x:Name="btnBack" Style="{StaticResource btnBackStyle}" />-->
@@ -519,7 +519,10 @@
                         <!--<Button x:Name="btnNext" Style="{StaticResource btnNextStyle}" />-->
                         <FMRadioPro:ImageButton  x:Name="btnNext" Content="ImageButton" HorizontalAlignment="Left"  Height="100" ImageSource="/Assets/Media-Next.png" Width="100" VerticalAlignment="Bottom"/>
                         <FMRadioPro:ImageButton  x:Name="btnOption" Content="ImageButton"  Height="80" ImageSource="/Assets/Data-Files.png" Width="80" Margin="6,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
-                        <FMRadioPro:ImageButton  x:Name="btnShare" Content="ImageButton"  Height="75" ImageSource="/Assets/Share-01.png" Width="75" Margin="0" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+                        <StackPanel Orientation="Vertical" Margin="0,0,0,0">
+                            <FMRadioPro:ImageButton  x:Name="btnShare" Content="ImageButton"  Height="75" ImageSource="/Assets/Share-01.png" Width="75" Margin="0" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+                            <FMRadioPro:ImageButton  x:Name="btnStop" Content="ImageButton"  Height="75" ImageSource="/Assets/Power.png" Width="75" Margin="0" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Click="btnStop_Click"/>
+                        </StackPanel>
                     </StackPanel>
                 </Grid>
 

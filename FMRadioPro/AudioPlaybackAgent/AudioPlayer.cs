@@ -86,6 +86,11 @@ namespace AudioPlaybackAgent
             {
                 PlayStateChangedEA(this,new PlayStateEventArgs() { playState = playState });
             }
+            if (track.Source==null)
+            {
+                return;
+
+            }
 
             isoPlayState = playState;
 
