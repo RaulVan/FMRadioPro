@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -36,8 +37,13 @@
         <DataTemplate x:Name="ItemTemplate">
             <Grid Margin="{StaticResource PhoneTouchTargetOverhang}" Background="Transparent">
                 <StackPanel Orientation="Vertical">
-                    <TextBlock Text="{Binding Name}"  FontSize="30" Foreground="White" />
-                    <TextBlock Text="{Binding NamePinyin}"  FontSize="20"  Margin="10 0 0 0" Foreground="White" Opacity="0.7" />
+                    <toolkit:ContextMenuService.ContextMenu>
+                        <toolkit:ContextMenu>
+                            <toolkit:MenuItem Click="Delete_Click" Header="delete" />
+                        </toolkit:ContextMenu>
+                    </toolkit:ContextMenuService.ContextMenu>
+                    <TextBlock Text="{Binding Name, Mode=TwoWay}"  FontSize="30" Foreground="White" />
+                    <TextBlock Text="{Binding NamePinyin, Mode=TwoWay}"  FontSize="20"  Margin="10 0 0 0" Foreground="White" Opacity="0.7" />
                 </StackPanel>
             </Grid>
 
@@ -503,7 +509,7 @@
 
                     </Border>
                     <!--<Grid x:Name="gridRadioList" >-->
-                    <phone:LongListSelector Grid.Row="3" x:Name="listRadioList"    ItemsSource="{Binding}"
+                    <phone:LongListSelector Grid.Row="3" x:Name="listRadioList"    ItemsSource="{Binding }"
             			HideEmptyGroups="True"
             			LayoutMode="List" JumpListStyle="{StaticResource JumpListStyle}" 
             			GroupHeaderTemplate="{StaticResource GroupHeaderTemplate}"                                                                           

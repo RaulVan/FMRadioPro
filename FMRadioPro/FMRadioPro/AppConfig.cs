@@ -14,6 +14,11 @@ namespace FMRadioPro
        /// 友盟统计API Key
        /// </summary>
        public static string AppKey = "530af5be56240b7e95046e75";
+
+       /// <summary>
+       /// DEBUG是使用key
+       /// </summary>
+       public static string DebugAppKey = "5313e59056240b7a8a1ab50e";
        /// <summary>
         /// 当前播放曲目
        /// </summary>
@@ -30,6 +35,19 @@ namespace FMRadioPro
            }
        }
 
+       public static List<AudioTrack> isoPlayTrack
+       {
+           get
+           {
+               return IsolatedStorageSettings.ApplicationSettings.Contains("isoPlayTrack") ? (List<AudioTrack>)IsolatedStorageSettings.ApplicationSettings["isoPlayTrack"] : null;
+
+           }
+           set
+           {
+               IsolatedStorageSettings.ApplicationSettings["isoPlayTrack"] = value;
+               IsolatedStorageSettings.ApplicationSettings.Save();
+           }
+       }
       
 
     }

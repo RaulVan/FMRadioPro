@@ -54,13 +54,7 @@ namespace FMRadioPro
             audioPlayer.PlayStateChangedEA += audioPlayer_PlayStateChangedEA;
             // 用于本地化 ApplicationBar 的示例代码
             //BuildLocalizedApplicationBar();
-            //List<string> data=new List<string> ();
-            //for (int i = 0; i < 100; i++)
-            //{
-            //    data.Add(i + "/Deanna 频道 test频道 test频道 test频道 test");
-            //}
-            //listRadioList.ItemsSource = data;
-            // gridPanel.Width = Application.Current.Host.Content.ActualWidth * 2;
+           
             this.Loaded += MainPage_Loaded;
             this.btnBack.Click += btnBack_Click;
             this.btnPlay.Click += btnPlay_Click;
@@ -70,15 +64,7 @@ namespace FMRadioPro
             this.listRadioList.SelectionChanged += listRadioList_SelectionChanged;
             btnOption.Click += btnOption_Click;
             btnShare.Click += btnShare_Click;
-            //this.topMenBar.ManipulationDelta += topMenBar_ManipulationDelta;
-            //this.topMenBar.ManipulationCompleted += topMenBar_ManipulationCompleted;
-
-            //topMenBar.Visibility = Visibility.Collapsed;
-
-            //Application.Current.UnhandledException += (a, b) =>
-            //    {
-            //        Debug.WriteLine("Exit--------------------------------");
-            //    };
+            
         }
 
         /// <summary>
@@ -270,17 +256,7 @@ namespace FMRadioPro
 
                 AudioTrack selectAudioTrack = new AudioTrack(new Uri(selectenItem.URL, UriKind.Absolute), selectenItem.Name, selectenItem.NamePinyin, "", null, "", EnabledPlayerControls.Pause);
                 //TODO：查找当前Select项在_PlayList中的index，然后给 isoCurrentTrack
-                // var index=  _playList.BinarySearch(selectAudioTrack);
-                //  _playList.Where(p => p.Source == selectAudioTrack.Source).ToList();
-
-                //var a = from p in _playList
-                //        where p.Source == selectAudioTrack.Source
-                //        select new AudioTrack(
-                //            p.Source,
-                //            p.Title,
-                //            p.Artist,p.Album,p.AlbumArt,p.Tag,p.PlayerControls
-
-                //            );
+               
 
                 foreach (var item in _playList)
                 {
@@ -297,7 +273,7 @@ namespace FMRadioPro
                 //TODO:播放当前选择项
                 Debug.WriteLine("SelectItem Radio URL:" + selectenItem.URL);
                 Debug.WriteLine("SelectenItem Radio Index:" + index);
-                BackgroundAudioPlayer.Instance.Track = _playList[AppConfig.isoCurrentTrack];// new AudioTrack(new Uri(selectenItem.URL, UriKind.Absolute), selectenItem.Name, null, null, null, "fd", EnabledPlayerControls.Pause);
+                BackgroundAudioPlayer.Instance.Track = _playList[AppConfig.isoCurrentTrack];
                 //BackgroundAudioPlayer.Instance.Volume = 1.0d;
                 this.UpdateState(null, null);
             }
@@ -440,25 +416,52 @@ namespace FMRadioPro
         {
             try
             {
-                this.timerr.Stop();
-                BackgroundAudioPlayer.Instance.Stop();
-                this.UpdateState(null, null);
-                Debug.WriteLine("Stop_Click Play:" + AppConfig.isoCurrentTrack);
+                CustomMessageBox cuMessageBox = new CustomMessageBox()
+                {
+                    Caption="停止播放并退出？",
+                    Message="",
+                    LeftButtonContent="NO",
+                    RightButtonContent="YES",
+                };
 
-                FrameworkDispatcher.Update();
-                MediaPlayer.Stop();
-                FrameworkDispatcher.Update();
-                MediaPlayer.Play(Song.FromUri("Snooze It!", new Uri("Audio/Void.wav", UriKind.Relative)));
-                FrameworkDispatcher.Update();
-                //if (DataCommunication.Read().ClearZunePlaylist)
-                //{
-                //    MediaPlayer.Play(Song.FromUri("Snooze It!", new Uri("Audio/Void.wav", UriKind.Relative)));
-                //    FrameworkDispatcher.Update();
-                //}
-                MediaPlayer.Stop();
-                FrameworkDispatcher.Update();
+                
+                cuMessageBox.Dismissed += (s1, e1) =>
+                {
+                    switch (e1.Result)
+                    {
+                        case CustomMessageBoxResult.LeftButton:
+                            // Do something.
 
-                Application.Current.Terminate();//退出应用程序
+                            break;
+                        case CustomMessageBoxResult.RightButton:
+                            // Do something.
+
+                            this.timerr.Stop();
+                            BackgroundAudioPlayer.Instance.Stop();
+                            this.UpdateState(null, null);
+                            Debug.WriteLine("Stop_Click Play:" + AppConfig.isoCurrentTrack);
+
+                            FrameworkDispatcher.Update();
+                            MediaPlayer.Stop();
+                            FrameworkDispatcher.Update();
+                            MediaPlayer.Play(Song.FromUri("Snooze It!", new Uri("Audio/Void.wav", UriKind.Relative)));
+                            FrameworkDispatcher.Update();
+                            
+                            MediaPlayer.Stop();
+                            FrameworkDispatcher.Update();
+
+                            Application.Current.Terminate();//退出应用程序
+                            break;
+                        case CustomMessageBoxResult.None:
+                            // Do something.
+                            break;
+                        default:
+                            break;
+                    }
+                };
+
+
+                cuMessageBox.Show();
             }
             catch (Exception ex)
             {
@@ -671,6 +674,7 @@ namespace FMRadioPro
                                     {
                                         _playList.Add(new AudioTrack(new Uri(item.URL, UriKind.Absolute), item.Name, item.NamePinyin, "", null, "", EnabledPlayerControls.Pause));
                                     }
+                                    AppConfig.isoPlayTrack = _playList;
                                 }
                             });
                     });
@@ -698,6 +702,14 @@ namespace FMRadioPro
 
         private void btnInterFM_Click(object sender, RoutedEventArgs e)
         {
+        }
+
+        private void Delete_Click(object sender, RoutedEventArgs e)
+        {
+            var item = (sender as MenuItem).DataContext;
+            listRadioList.ItemsSource.Remove(item);
+            //listRadioList.r
+
         }
 
         // 用于生成本地化 ApplicationBar 的示例代码

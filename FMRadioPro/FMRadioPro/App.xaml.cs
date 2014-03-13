@@ -48,7 +48,7 @@ namespace FMRadioPro
             InitializeLanguage();
 
 #if DEBUG
-             UmengAnalytics.Init("5313e59056240b7a8a1ab50e", "Debug");
+             UmengAnalytics.Init(AppConfig.DebugAppKey, "Debug");
 #else
 
             UmengAnalytics.Init(AppConfig.AppKey, "Marketplace");

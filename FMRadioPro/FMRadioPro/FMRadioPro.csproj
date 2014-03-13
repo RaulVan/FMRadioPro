@@ -148,6 +148,7 @@
   <ItemGroup>
     <None Include="FMRadioPro_2014_03_02_18_04_16.sap" />
     <None Include="FMRadioPro_2014_03_02_18_16_04.sap" />
+    <None Include="packages.config" />
     <None Include="Properties\AppManifest.xml" />
     <None Include="Properties\WMAppManifest.xml">
       <SubType>Designer</SubType>
@@ -204,7 +205,13 @@
     <Content Include="Lib\Com.MSN.Ads.WindowsPhone.dll" />
     <Content Include="Lib\UmengAnalyticsWP8.dll" />
     <Content Include="Lib\UmengSocialWP.dll" />
+    <Content Include="README_FIRST.txt" />
     <Content Include="Resources\Text1.txt" />
+    <Content Include="Toolkit.Content\ApplicationBar.Add.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Delete.png" />
+    <Content Include="Toolkit.Content\ApplicationBar.Select.png" />
     <Content Include="UmImages\location.png" />
     <Content Include="UmImages\share.png" />
     <Content Include="UmImages\sns\douban.png" />
@@ -233,6 +240,9 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Com.MSN.Ads.WindowsPhone, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Phone.Controls.Toolkit">
+      <HintPath>..\packages\WPtoolkit.4.2013.08.16\lib\wp8\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
+    </Reference>
     <Reference Include="UmengAnalyticsWP8, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="UmengSocialWP, Version=0.9.0.0, Culture=neutral, processorArchitecture=MSIL" />
   </ItemGroup>
