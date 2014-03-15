@@ -90,11 +90,11 @@ namespace FMRadioPro
 
                 WriteableBitmap bitmap =await  Screen();
 
-                byte[] imageBuffer;
+               // byte[] imageBuffer;
                 using (MemoryStream memoryStream = new MemoryStream())
                 {
                     bitmap.SaveJpeg(memoryStream, bitmap.PixelWidth, bitmap.PixelHeight, 0, 100);
-                    imageBuffer = memoryStream.ToArray();
+                  //  imageBuffer = memoryStream.ToArray();
 
                     bitmapImage.SetSource(memoryStream);
 
@@ -158,13 +158,13 @@ namespace FMRadioPro
 
 
             //截图
+            await Task.Delay(200);
             double width = Application.Current.Host.Content.ActualWidth;
             double heigth = Application.Current.Host.Content.ActualHeight;
-            await Task.Delay(200);
-            var bit = new WriteableBitmap((int)width, (int)heigth);
-            bit.Render(App.Current.RootVisual, null);
-            bit.Invalidate();
-            WriteableBitmap wbmp = bit;
+            WriteableBitmap wbmp  = new WriteableBitmap((int)width, (int)heigth);
+            wbmp.Render(App.Current.RootVisual, null);
+            wbmp.Invalidate();
+            
 
 
             //using (var stream = store.OpenFile(backgoundImagePath, System.IO.FileMode.OpenOrCreate))
@@ -173,7 +173,7 @@ namespace FMRadioPro
             //    //wbmp.SaveJpeg(stream, bitmap.PixelWidth, bitmap.PixelHeight, 0, 100);
             //}
 
-            WriteableBitmap wideBitmap = new WriteableBitmap(wbmp.PixelWidth, wbmp.PixelHeight+280);
+            WriteableBitmap wideBitmap = new WriteableBitmap((int)width,(int)(heigth + 280));
 
             System.IO.Stream stream1 = Application.GetResourceStream(new Uri(@"Assets/qcode.png", UriKind.Relative)).Stream;
             BitmapImage image1 = new BitmapImage();
