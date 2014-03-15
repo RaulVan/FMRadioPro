@@ -87,7 +87,7 @@ namespace FMRadioPro
                 BitmapImage bitmapImage = new BitmapImage();
                 bitmapImage.UriSource = new Uri("/Assets/qcode.png", UriKind.Relative);
 
-
+                
                 ShareData shareData = new ShareData();
                 string content = "";
                 if (string.IsNullOrWhiteSpace(txtPlayName.Text))
@@ -99,13 +99,7 @@ namespace FMRadioPro
                     content = string.Format("我正在使用FMRadioPro收听{0}，分享一个好APP，支持CodeMonkey @十一_x 写APP赚钱娶媳妇。", txtPlayName.Text);
                 }
                 shareData.Content = content;
-                //shareData.Url.Link = @"http://www.windowsphone.com/s?appid=3e6b465b-e8fc-4c06-a64a-b4bec05e60cf";
-                //shareData.Url.Type = UrlType.Picture;
-                //shareData.Url.Author = "FMRadioPro";
-                //shareData.Url.Title = "情书";
 
-
-                // WriteableBitmap ShareImage =
                 shareData.Picture = bitmapImage;
 
                 ShareOption option = new ShareOption();
@@ -131,79 +125,29 @@ namespace FMRadioPro
             }
         }
 
+        private WriteableBitmap Screen()
+        {
+            double width=Application.Current.Host.Content.ActualWidth;
+            double heigth=Application.Current.Host.Content.ActualHeight;
 
+            var bit = new WriteableBitmap((int)width, (int)heigth);
+                bit.Render(Application.Current.RootVisual,null);
+                bit.Invalidate();
+                return bit;
+        }
 
-
-
-        //}
-
-
+        /// <summary>
+        /// 关于
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnOption_Click(object sender, RoutedEventArgs e)
         {
             //TODO:Aobut.xaml
             NavigationService.Navigate(new Uri("/AboutPage.xaml", UriKind.Relative));
         }
 
-        //private void InitPathMenu()
-        //{
-        //    double width = Application.Current.Host.Content.ActualWidth;
-        //    double height = Application.Current.Host.Content.ActualHeight;
-        //    Rect rc = new Rect { Width = 280, Height = 600 };
-        //    var items = new List<AwesomMenuItem>();
-
-        //    items.Add(new AwesomMenuItem("Images/icon-star.png", "Images/bg-menuitem.png"));
-        //    items.Add(new AwesomMenuItem("Images/icon-star.png", "Images/bg-menuitem.png"));
-        //    items.Add(new AwesomMenuItem("Images/icon-star.png", "Images/bg-menuitem.png"));
-        //    items.Add(new AwesomMenuItem("Images/icon-star.png", "Images/bg-menuitem.png"));
-        //    //items.Add(new AwesomMenuItem("Images/icon-star.png", "Images/bg-menuitem.png"));
-        //    //items.Add(new AwesomMenuItem("Images/icon-star.png", "Images/bg-menuitem.png"));
-        //    //items.Add(new AwesomMenuItem("Images/icon-star.png", "Images/bg-menuitem.png"));
-
-        //    //构造的时候可以设置指定方法也可以通过方法来设置，都可以
-        //    //var menu = new AwesomeMenu(rc, items, "Images/icon-plus.png", "Images/bg-addbutton.png", AwesomeMenuType.AwesomeMenuTypeDownAndRight);
-        //    var menu = new AwesomeMenu(rc, items, "Images/icon-plus.png", "Images/bg-addbutton.png", new System.Windows.Point(width-50, height-50));
-        //    //menu.Background = new SolidColorBrush(Colors.Cyan);
-        //    //menu.SetType(AwesomeMenuType.AwesomeMenuTypeUpAndLeft);
-        //    //menu.SetStartPoint(new Point(0, 150));
-
-        //    menu.TapToDissmissItem = true;
-        //    menu.AwesomeMenuRadianType = AwesomeMenuRadianType.AwesomeMenuRadianNone;
-        //    menu.MenuItemSpacing = 0;
-        //    this.gridPanel.Children.Add(menu);
-        //    //ContentPanel.Children.Add(menu);
-        //    menu.ActionClosed += (item) =>
-        //    {
-        //        Dispatcher.BeginInvoke(delegate
-        //        {
-        //            ProcessItem(item);
-        //        });
-        //    };
-        //}
-
-        //private void ProcessItem(AwesomMenuItem item)
-        //{
-        //    if (item != null)
-        //    {
-        //        if (item != null && !item.Tag.Equals(999))
-        //        {
-        //            int index = Convert.ToInt32(item.Tag);
-        //            MessageBox.Show(string.Format("Item {0} Clicked!", index));
-        //            //switch (index)
-        //            //{
-        //            //    case 0:
-        //            //        MessageBox.Show(string.Format("Item {0} Clicked!", index));
-        //            //        break;
-        //            //    case 1:
-        //            //        MessageBox.Show(string.Format("Item {0} Clicked!", index));
-        //            //        break;
-        //            //    case 2:
-        //            //        break;
-        //            //}
-        //        }
-        //    }
-
-        //}
-
+    
         private void audioPlayer_PlayStateChangedEA(object sender, PlayStateEventArgs e)
         {
             //txtPlayState.Text =""+ e.playState;
