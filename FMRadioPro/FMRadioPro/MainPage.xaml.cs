@@ -80,14 +80,35 @@ namespace FMRadioPro
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void btnShare_Click(object sender, RoutedEventArgs e)
+        async void btnShare_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 BitmapImage bitmapImage = new BitmapImage();
-                bitmapImage.UriSource = new Uri("/Assets/qcode.png", UriKind.Relative);
+               // bitmapImage.UriSource = new Uri("/Assets/qcode.png", UriKind.Relative);
 
+
+                WriteableBitmap bitmap =await  Screen();
+
+                byte[] imageBuffer;
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    bitmap.SaveJpeg(memoryStream, bitmap.PixelWidth, bitmap.PixelHeight, 0, 100);
+                    imageBuffer = memoryStream.ToArray();
+
+                    bitmapImage.SetSource(memoryStream);
+
+                }
+                //using (MediaLibrary library = new MediaLibrary())
+                //{
+                //    library.SavePicture(string.Format("{0}.jpg", DateTime.Now.ToFileTime().ToString()), imageBuffer);
+                //}
                 
+                //TODO:WriteableBitmap to BitmapImage
+
+               
+                
+
                 ShareData shareData = new ShareData();
                 string content = "";
                 if (string.IsNullOrWhiteSpace(txtPlayName.Text))
@@ -125,15 +146,57 @@ namespace FMRadioPro
             }
         }
 
-        private WriteableBitmap Screen()
+        private async Task<WriteableBitmap> Screen()
         {
-            double width=Application.Current.Host.Content.ActualWidth;
-            double heigth=Application.Current.Host.Content.ActualHeight;
+            //double width=Application.Current.Host.Content.ActualWidth;
+            //double heigth=Application.Current.Host.Content.ActualHeight;
 
+            //var bit = new WriteableBitmap((int)width, (int)heigth);
+            //    bit.Render(Application.Current.RootVisual,null);
+            //    bit.Invalidate();
+            //    return bit;
+
+
+            //截图
+            double width = Application.Current.Host.Content.ActualWidth;
+            double heigth = Application.Current.Host.Content.ActualHeight;
+            await Task.Delay(200);
             var bit = new WriteableBitmap((int)width, (int)heigth);
-                bit.Render(Application.Current.RootVisual,null);
-                bit.Invalidate();
-                return bit;
+            bit.Render(App.Current.RootVisual, null);
+            bit.Invalidate();
+            WriteableBitmap wbmp = bit;
+
+
+            //using (var stream = store.OpenFile(backgoundImagePath, System.IO.FileMode.OpenOrCreate))
+            //{
+            //    System.Windows.Media.Imaging.Extensions.SaveJpeg(wbmp, stream, MediumTilePixelWidth, MediumTilePixelHeight, 0, 100);
+            //    //wbmp.SaveJpeg(stream, bitmap.PixelWidth, bitmap.PixelHeight, 0, 100);
+            //}
+
+            WriteableBitmap wideBitmap = new WriteableBitmap(wbmp.PixelWidth, wbmp.PixelHeight+280);
+
+            System.IO.Stream stream1 = Application.GetResourceStream(new Uri(@"Assets/qcode.png", UriKind.Relative)).Stream;
+            BitmapImage image1 = new BitmapImage();
+            image1.SetSource(stream1);
+
+            //System.IO.Stream stream2 = Application.GetResourceStream(new Uri(@"Assets/Images/raul.png", UriKind.Relative)).Stream;
+            //BitmapImage image2 = new BitmapImage();
+            //image2.SetSource(stream2);
+
+            //System.IO.Stream stream3 = Application.GetResourceStream(new Uri(@"Assets/Images/raul.png", UriKind.Relative)).Stream;
+            //BitmapImage image3 = new BitmapImage();
+            //image3.SetSource(stream3);
+
+            //System.IO.Stream stream4 = Application.GetResourceStream(new Uri(@"Assets/Images/raul.png", UriKind.Relative)).Stream;
+            //BitmapImage image4 = new BitmapImage();
+            //image4.SetSource(stream4);
+
+
+            wideBitmap.Blit(new Rect(0, 0, width, heigth), new WriteableBitmap(wbmp), new Rect(0, 0, wbmp.PixelWidth, wbmp.PixelHeight), WriteableBitmapExtensions.BlendMode.Additive);
+            wideBitmap.Blit(new Rect((width-280)/2, heigth, 280, 280), new WriteableBitmap(image1), new Rect(0, 0, image1.PixelWidth, image1.PixelHeight), WriteableBitmapExtensions.BlendMode.Additive);
+
+            return wideBitmap;
+
         }
 
         /// <summary>
