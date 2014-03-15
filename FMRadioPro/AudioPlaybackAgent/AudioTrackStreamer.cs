@@ -2,6 +2,7 @@
 using System.Windows;
 using Microsoft.Phone.BackgroundAudio;
 using Silverlight.Media;
+using System.Diagnostics;
 
 namespace AudioPlaybackAgent
 {
@@ -71,13 +72,21 @@ namespace AudioPlaybackAgent
         {
             lock (AudioTrackStreamer.syncRoot)
             {
-                AudioTrackStreamer.mss = new ShoutcastMediaStreamSource(new Uri(track.Tag));
-                AudioTrackStreamer.mss.MetadataChanged += new RoutedEventHandler(AudioTrackStreamer.MetadataChanged);
-                AudioTrackStreamer.mss.Closed += (s, e) =>
+                try
                 {
-                    this.NotifyComplete();
-                };
-                streamer.SetSource(AudioTrackStreamer.mss);
+                    AudioTrackStreamer.mss = new ShoutcastMediaStreamSource(new Uri(track.Tag));
+                    AudioTrackStreamer.mss.MetadataChanged += new RoutedEventHandler(AudioTrackStreamer.MetadataChanged);
+                    AudioTrackStreamer.mss.Closed += (s, e) =>
+                    {
+                        this.NotifyComplete();
+                    };
+                    streamer.SetSource(AudioTrackStreamer.mss);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("----------===============");
+                    Debug.WriteLine("OnBeginStreaming:" + ex);
+                }
             }
         }
 

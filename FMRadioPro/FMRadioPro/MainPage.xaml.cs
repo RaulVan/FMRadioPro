@@ -1,4 +1,10 @@
-﻿using AudioPlaybackAgent;
+﻿/*
+ *代码很乱很糟糕，fuck。
+ * 
+ */
+
+
+using AudioPlaybackAgent;
 using FMRadioPro.Data;
 using Microsoft.Phone.BackgroundAudio;
 using Microsoft.Phone.Controls;
@@ -42,6 +48,8 @@ namespace FMRadioPro
         public static int gCurrentTrack = 0;
 
         private AudioPlayer audioPlayer = new AudioPlayer();
+
+        bool isplay = false;
 
         // AudioCategory
         // 构造函数
@@ -226,26 +234,8 @@ namespace FMRadioPro
                     //TODO:播放内容清空
                 }
             }
-           // var selectenItem = (RadiosInfo)listRadioList.ItemsSource.SelectedItem;
-           // listRadioList.ScrollTo(selectenItem);
-            //  Debug.WriteLine("AudioPlayer.isoPlayState);" + AudioPlayer.isoPlayState);
         }
 
-        private void topMenBar_ManipulationCompleted(object sender, System.Windows.Input.ManipulationCompletedEventArgs e)
-        {
-        }
-
-        private void topMenBar_ManipulationDelta(object sender, System.Windows.Input.ManipulationDeltaEventArgs e)
-        {
-            //System.Windows.Shapes.Rectangle rg = sender as Rectangle;
-            //TranslateTransform tf = new TranslateTransform();
-            //tf.X = e.DeltaManipulation.Translation.X;
-            //tf.Y = e.DeltaManipulation.Translation.Y;
-
-            //rg.RenderTransform = tf;
-
-            //e.Handled = true;
-        }
 
         private void listRadioList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -274,8 +264,27 @@ namespace FMRadioPro
                 Debug.WriteLine("SelectItem Radio URL:" + selectenItem.URL);
                 Debug.WriteLine("SelectenItem Radio Index:" + index);
                 BackgroundAudioPlayer.Instance.Track = _playList[AppConfig.isoCurrentTrack];
+
+
+
+                if (PlayState.Unknown == BackgroundAudioPlayer.Instance.PlayerState)
+                {
+
+                    isplay = true;
+                    //BackgroundAudioPlayer.Instance.Stop();
+                    BackgroundAudioPlayer.Instance.Track = _playList[AppConfig.isoCurrentTrack];
+                    BackgroundAudioPlayer.Instance.Play();
+                }
+
+                else
+                {
+                    //BackgroundAudioPlayer.Instance.Stop();
+                    BackgroundAudioPlayer.Instance.Track = _playList[AppConfig.isoCurrentTrack];
+                    // BackgroundAudioPlayer.Instance.Play();
+                    //this.UpdateState(null, null);
+                }
+                    this.UpdateState(null, null);
                 //BackgroundAudioPlayer.Instance.Volume = 1.0d;
-                this.UpdateState(null, null);
             }
             catch (Exception ex)
             {
@@ -293,30 +302,14 @@ namespace FMRadioPro
         {
             try
             {
-                //BackgroundAudioPlayer play = sender as BackgroundAudioPlayer;
-                //if (play.Error!=null)
-                //{
-                //    //FrameworkDispatcher.Update();
-                //    //MediaPlayer.Stop();
-                //    //FrameworkDispatcher.Update();
-                //    //MediaPlayer.Play(Song.FromUri("Snooze It!", new Uri("Audio/Void.wav", UriKind.Relative)));
-                //    //FrameworkDispatcher.Update();
-                //    ////if (DataCommunication.Read().ClearZunePlaylist)
-                //    ////{
-                //    ////    MediaPlayer.Play(Song.FromUri("Snooze It!", new Uri("Audio/Void.wav", UriKind.Relative)));
-                //    ////    FrameworkDispatcher.Update();
-                //    ////}
-                //    //MediaPlayer.Stop();
-                //    //FrameworkDispatcher.Update();
-                //    BackgroundAudioPlayer.Instance.Close();
-                //    BackgroundAudioPlayer.Instance.Play();
-                //}
-                //if ()
-                //{
-                    
-                //}
-                PlayState playState = PlayState.Unknown;
-                //System.Diagnostics.Debug.WriteLine(System.Threading.Thread.CurrentThread.ManagedThreadId.ToString() + ":  Instance_PlayStateChanged- {0}", playState);
+                BackgroundAudioPlayer play = sender as BackgroundAudioPlayer;
+                if (play.Error != null)
+                {
+                  //TODO:处理后台播放错误
+                }
+               
+                PlayState playState;
+               
                 try
                 {
                     playState = BackgroundAudioPlayer.Instance.PlayerState;
@@ -329,6 +322,12 @@ namespace FMRadioPro
 
                 switch (playState)
                 {
+                    case PlayState.Unknown:
+                        //BackgroundAudioPlayer.Instance.Stop();
+                        //BackgroundAudioPlayer.Instance.Track = _playList[AppConfig.isoCurrentTrack];
+                        //BackgroundAudioPlayer.Instance.Play();
+                        //BackgroundAudioPlayer.Instance.Stop();
+                        break;
                     case PlayState.Paused:
                         this.UpdateState(null, null);
                         this.timerr.Stop();
@@ -345,7 +344,7 @@ namespace FMRadioPro
                         this.timerr.Stop();
                         this.UpdateState(null, null);
                         break;
-
+                        
                     default:
                         break;
                 }
@@ -506,10 +505,10 @@ namespace FMRadioPro
         {
             try
             {
-                if (!BackgroundAudioPlayer.Instance.CanPause)
-                {
-                    return;
-                }
+                //if (!BackgroundAudioPlayer.Instance.CanPause)
+                //{
+                //    return;
+                //}
                 BackgroundAudioPlayer.Instance.Pause();
                 Debug.WriteLine("Pause_Click Play:" + AppConfig.isoCurrentTrack);
             }
@@ -528,13 +527,27 @@ namespace FMRadioPro
         {
             try
             {
-                //BackgroundAudioPlayer.Instance.Play();
-
-                //BackgroundAudioPlayer.Instance.Track = new AudioTrack(new Uri("mms://a1450.l11459845449.c114598.g.lm.akamaistream.net/D/1450/114598/v0001/reflector:45449", UriKind.Absolute), "SKY.FM", null, null, null, "fd", EnabledPlayerControls.Pause);
-
+                ////BackgroundAudioPlayer.Instance.Track = null;// new AudioTrack();
                 BackgroundAudioPlayer.Instance.Track = _playList[AppConfig.isoCurrentTrack];
-                //BackgroundAudioPlayer.Instance.Play();
                 BackgroundAudioPlayer.Instance.Volume = 1.0d;
+                ////BackgroundAudioPlayer.Instance.Play();
+
+                if (PlayState.Playing == BackgroundAudioPlayer.Instance.PlayerState)
+                {
+                    BackgroundAudioPlayer.Instance.Pause();
+                }
+                else if (PlayState.Unknown == BackgroundAudioPlayer.Instance.PlayerState)
+                {
+
+                    //   BackgroundAudioPlayer.Instance.Stop();
+
+                    BackgroundAudioPlayer.Instance.Track = _playList[AppConfig.isoCurrentTrack];
+                    BackgroundAudioPlayer.Instance.Play();
+                }
+                else
+                {
+                    BackgroundAudioPlayer.Instance.Track = _playList[AppConfig.isoCurrentTrack];
+                }
 
                 Debug.WriteLine("Play_Click Play:" + AppConfig.isoCurrentTrack);
             }

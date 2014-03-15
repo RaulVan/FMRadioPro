@@ -14,10 +14,6 @@
 北京长书广播=mms://alive.rbc.cn/cfm1043
 北京戏曲曲艺广播=mms://alive.rbc.cn/cfm1051
 北京欢乐时光广播=mms://alive.rbc.cn/cfm1065
-中国 国际广播电台环球资讯=mms://media.crinewsradio.cn/crinewsradio
-中国国际广播电台FM887=mms://live.hitfm.cn/fm887
-中国国际广播电台怀旧金曲=mms://live.cri.cn/oldies
-中国国际广播电台都市流行=mms://live.cri.cn/pop
 河北新闻广播=mms://audio1.hebradio.com/live1
 河北经济广播=mms://audio1.hebradio.com/live2
 河北交通广播=mms://audio1.hebradio.com/live3
@@ -133,6 +129,10 @@
 湖北电台交通广播=mms://58.48.156.93/1078
 湖北电台生活广播=mms://58.48.156.93/966
 湖北电台妇女儿童=mms://58.48.156.93/1026
+湖北娱乐电台=mms://219.140.196.38/live_JianKang/.asf/	 
+湖北经济电台=mms://219.140.196.38/live_JingJi/.asf/	 
+湖北音乐电台=mms://219.140.196.38/live_JiaoTong/.asf/	 
+湖北中波电台=mms://211.158.10.48/fm881/	 
 武汉电台交通频道=mms://whreal.whtv.com.cn/jt
 武汉电台长江经济=mms://whreal.whtv.com.cn/cj
 武汉电台文艺广播=mms://whreal.whtv.com.cn/wy
@@ -144,8 +144,6 @@
 宜昌电台都市之声=mms://119.36.136.157:8380/
 宜昌电台交通音乐=mms://119.36.136.157:8180/
 宜昌电台新闻综合=mms://119.36.136.157:8280/
-福建电台经济广播= mms://202.109.202.12/jj?MjYzODM0IzEjIzI0NDk5MQ==
-福建电台音乐广播=mms://61.131.4.183/fm913     
 厦门电台新闻广播=mms://mediasrv1.iptv.xmg.com.cn/xinwen
 厦门电台经济交通=mms://mediasrv1.iptv.xmg.com.cn/jingji
 厦门电台音乐广播=mms://mediasrv1.iptv.xmg.com.cn/yinyue
@@ -174,3 +172,4 @@
 国际电台Nairobi 91.9 = mms://livexwb.cri.com.cn/kenya
 国际电台Vientiane 93.0 = mms://livexwb.cri.com.cn/lao
 国际电台Perth 104.9=mms://livexwb.cri.com.cn/aus
+猫扑电台=mms://ting.mop.com/mopradio

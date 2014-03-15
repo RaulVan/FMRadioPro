@@ -5,6 +5,8 @@ using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Phone.Net;
+using Microsoft.Phone.Net.NetworkInformation;
 
 namespace FMRadioPro
 {
@@ -49,6 +51,19 @@ namespace FMRadioPro
            }
        }
       
+
+       public string GetNetwork()
+       {
+           return DeviceNetworkInformation.CellularMobileOperator.ToString();
+           //var info = Microsoft.Phone.Net.NetworkInformation.NetworkInterface.NetworkInterfaceType;
+           //switch (info)
+           //{
+           //    case NetworkInterfaceType.Wireless80211:
+           //        return "WiFi";
+           //    default:
+           //        return "Other";
+           //}
+       }
 
     }
 }

@@ -15,6 +15,12 @@ namespace AudioPlaybackAgent
     {
         public event EventHandler< PlayStateEventArgs> PlayStateChangedEA;
 
+        
+
+        //private static List<AudioTrack> fPlayList;
+
+        //private static int gCurrentTrack;
+
 
         /// <summary>
         /// 当前播放状态
@@ -47,6 +53,8 @@ namespace AudioPlaybackAgent
         /// </remarks>
         public AudioPlayer()
         {
+            //fPlayList = IsolatedStorageSettings.ApplicationSettings.Contains("isoPlayTrack") ? (List<AudioTrack>)IsolatedStorageSettings.ApplicationSettings["isoPlayTrack"] : null;
+            //gCurrentTrack = IsolatedStorageSettings.ApplicationSettings.Contains("isoCurrentTrack") ? (int)IsolatedStorageSettings.ApplicationSettings["isoCurrentTrack"] : 0;
             if (!AudioPlayer.classInitialized)
             {
                 AudioPlayer.classInitialized = true;
@@ -86,11 +94,12 @@ namespace AudioPlaybackAgent
             {
                 PlayStateChangedEA(this,new PlayStateEventArgs() { playState = playState });
             }
-            if (track.Source==null)
-            {
-                return;
+            //if (track.Source==null)
+            //{
+            //    return;
+            //    //var tt = IsolatedStorageSettings.ApplicationSettings.Contains("isoPlayTrack") ? (List<AudioTrack>)IsolatedStorageSettings.ApplicationSettings["isoPlayTrack"] : null;
 
-            }
+            //}
 
             isoPlayState = playState;
 
@@ -105,6 +114,7 @@ namespace AudioPlaybackAgent
                     // TODO: Handle the shutdown state here (e.g. save state)
                     break;
                 case PlayState.Unknown:
+                   // player.Play();
                     break;
                 case PlayState.Stopped:
                     break;
@@ -146,9 +156,16 @@ namespace AudioPlaybackAgent
             {
                 case UserAction.Play:
                     // Since we are just restarting the same stream, this should be fine.
+                    if (player.PlayerState!=PlayState.Playing)
+                    {
                     player.Track = track;
+                       // player.Track = fPlayList[gCurrentTrack];
+                        player.Play();
+                    }
                     break;
                 case UserAction.Stop:
+                    player.Stop();
+                    break;
                 case UserAction.Pause:
                     player.Stop();
 

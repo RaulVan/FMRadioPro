@@ -9,6 +9,9 @@ using Microsoft.Phone.Shell;
 using FMRadioPro.Resources;
 using UmengSDK;
 using Microsoft.Phone.Marketplace;
+using FMRadioPro.Data;
+using System.Collections.Generic;
+using Microsoft.Phone.BackgroundAudio;
 
 namespace FMRadioPro
 {
@@ -83,6 +86,13 @@ namespace FMRadioPro
         // 此代码在重新激活应用程序时不执行
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
+            List<RadiosInfo> radios = RadiosData.GetRadioData();
+            List<AudioTrack> _playList = new List<AudioTrack>();
+            foreach (var item in radios)
+            {
+                _playList.Add(new AudioTrack(new Uri(item.URL, UriKind.Absolute), item.Name, item.NamePinyin, "", null, "", EnabledPlayerControls.Pause));
+            }
+            AppConfig.isoPlayTrack = _playList;
         }
 
         // 激活应用程序(置于前台)时执行的代码
