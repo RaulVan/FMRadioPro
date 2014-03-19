@@ -70,7 +70,7 @@ namespace FMRadioPro
             this.btnNext.Click += btnNext_Click;
             //this.btnStop.Click += btnStop_Click;
             this.listRadioList.SelectionChanged += listRadioList_SelectionChanged;
-            btnOption.Click += btnOption_Click;
+            //btnOption.Click += btnOption_Click;
             btnShare.Click += btnShare_Click;
             
         }
@@ -694,7 +694,7 @@ namespace FMRadioPro
                                     {
                                         _playList.Add(new AudioTrack(new Uri(item.URL, UriKind.Absolute), item.Name, item.NamePinyin, "", null, "", EnabledPlayerControls.Pause));
                                     }
-                                    AppConfig.isoPlayTrack = _playList;
+                                    //AppConfig.isoPlayTrack = _playList;
                                 }
                             });
                     });
@@ -730,6 +730,71 @@ namespace FMRadioPro
             listRadioList.ItemsSource.Remove(item);
             //listRadioList.r
 
+        }
+
+        private void btnOption_Click_1(object sender, System.EventArgs e)
+        {
+        	// 在此处添加事件处理程序实现。
+            NavigationService.Navigate(new Uri("/AboutPage.xaml", UriKind.Relative));
+        }
+
+        private void btnStop_Click_1(object sender, System.EventArgs e)
+        {
+        	// 在此处添加事件处理程序实现。
+            try
+            {
+                CustomMessageBox cuMessageBox = new CustomMessageBox()
+                {
+                    Caption = "停止播放并退出？",
+                    Message = "",
+                    LeftButtonContent = "NO",
+                    RightButtonContent = "YES",
+                };
+
+
+                cuMessageBox.Dismissed += (s1, e1) =>
+                {
+                    switch (e1.Result)
+                    {
+                        case CustomMessageBoxResult.LeftButton:
+                            // Do something.
+
+                            break;
+                        case CustomMessageBoxResult.RightButton:
+                            // Do something.
+
+                            this.timerr.Stop();
+                            BackgroundAudioPlayer.Instance.Stop();
+                            this.UpdateState(null, null);
+                            Debug.WriteLine("Stop_Click Play:" + AppConfig.isoCurrentTrack);
+
+                            FrameworkDispatcher.Update();
+                            MediaPlayer.Stop();
+                            FrameworkDispatcher.Update();
+                            MediaPlayer.Play(Song.FromUri("Snooze It!", new Uri("Audio/Void.wav", UriKind.Relative)));
+                            FrameworkDispatcher.Update();
+
+                            MediaPlayer.Stop();
+                            FrameworkDispatcher.Update();
+
+                            Application.Current.Terminate();//退出应用程序
+                            break;
+                        case CustomMessageBoxResult.None:
+                            // Do something.
+                            break;
+                        default:
+                            break;
+                    }
+                };
+
+
+                cuMessageBox.Show();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("btnStop_Click" + ex.ToString());
+                UmengSDK.UmengAnalytics.TrackException(ex);
+            }
         }
 
         // 用于生成本地化 ApplicationBar 的示例代码

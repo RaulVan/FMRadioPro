@@ -101,7 +101,7 @@ namespace AudioPlaybackAgent
 
             //}
 
-            isoPlayState = playState;
+          //  isoPlayState = playState;
 
             switch (playState)
             {

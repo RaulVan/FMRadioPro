@@ -424,13 +424,16 @@
             </Setter>
         </Style>
     </phone:PhoneApplicationPage.Resources>
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar Mode="Minimized" Opacity="0.1">
+            <shell:ApplicationBarIconButton  x:Name="btnOption"  IconUri="/Assets/AppBar/aobut.png" Text="关于" Click="btnOption_Click_1"/>
+            <shell:ApplicationBarIconButton x:Name="btnStop"  IconUri="/Assets/AppBar/Power.png" Text="Close" Click="btnStop_Click_1"/>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
 
     <!--LayoutRoot 是包含所有页面内容的根网格-->
     <Grid Background="Black">
-        <Grid x:Name="LayoutRoot" Opacity="1">
-            <Grid.Background>
-                <ImageBrush Stretch="None" ImageSource="/Assets/www_emojpg_ru-239.jpg"/>
-            </Grid.Background>
+        <Grid x:Name="LayoutRoot" Opacity="1" Background="#FF232020">
             <Grid x:Name="gridPanel" Margin="0" >
                 <!--<Grid.ColumnDefinitions>
                 <ColumnDefinition Width="7"/>
@@ -518,17 +521,14 @@
                         <!--<Button x:Name="btnPause" Style="{StaticResource btnPauseStyle}" Visibility="Collapsed" />-->
                         <!--<Button x:Name="btnStop" Style="{StaticResource btnStopStyle}" Margin="0,0,0,0" HorizontalAlignment="Right" />-->
                         <!--<Button x:Name="btnBack" Style="{StaticResource btnBackStyle}" />-->
-                        <FMRadioPro:ImageButton  x:Name="btnBack" Content="ImageButton" HorizontalAlignment="Left"  Height="100" ImageSource="/Assets/Media-Back.png" VerticalAlignment="Bottom" Width="100"/>
+                        <FMRadioPro:ImageButton  x:Name="btnBack" Content="ImageButton" HorizontalAlignment="Left"  Height="100" ImageSource="/Assets/Media-Back.png" VerticalAlignment="Bottom" Width="100" Margin="12,0,0,0"/>
                         <!--<Button x:Name="btnPlay" Style="{StaticResource btnPlayStyle}" />-->
                         <FMRadioPro:ImageButton x:Name="btnPlay" Content="ImageButton" HorizontalAlignment="Left" Height="120" ImageSource="/Assets/Media-Play.png" VerticalAlignment="Top" Width="120"/>
                         <FMRadioPro:ImageButton  x:Name="btnPause" Content="ImageButton" HorizontalAlignment="Left" Visibility="Collapsed" Height="120" ImageSource="/Assets/Media-Pause.png" VerticalAlignment="Top" Width="120"/>
                         <!--<Button x:Name="btnNext" Style="{StaticResource btnNextStyle}" />-->
                         <FMRadioPro:ImageButton  x:Name="btnNext" Content="ImageButton" HorizontalAlignment="Left"  Height="100" ImageSource="/Assets/Media-Next.png" Width="100" VerticalAlignment="Bottom"/>
-                        <FMRadioPro:ImageButton  x:Name="btnOption" Content="ImageButton"  Height="80" ImageSource="/Assets/Data-Files.png" Width="80" Margin="6,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
-                        <StackPanel Orientation="Vertical" Margin="0,0,0,0">
-                            <FMRadioPro:ImageButton  x:Name="btnShare" Content="ImageButton"  Height="75" ImageSource="/Assets/Share-01.png" Width="75" Margin="0" VerticalAlignment="Top" HorizontalAlignment="Right"/>
-                            <FMRadioPro:ImageButton  x:Name="btnStop" Content="ImageButton"  Height="75" ImageSource="/Assets/Power.png" Width="75" Margin="0" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Click="btnStop_Click"/>
-                        </StackPanel>
+                        <FMRadioPro:ImageButton  x:Name="btnShare" Content="ImageButton"  Height="75" ImageSource="/Assets/Share-01.png" Width="75" Margin="60,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+                        <!--<FMRadioPro:ImageButton  x:Name="btnOption" Content="ImageButton"  Height="80" ImageSource="/Assets/Data-Files.png" Width="80" Margin="6,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>-->
                     </StackPanel>
                 </Grid>
 
