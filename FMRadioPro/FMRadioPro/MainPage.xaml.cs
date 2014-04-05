@@ -267,31 +267,68 @@ namespace FMRadioPro
 
                 AppConfig.isoCurrentTrack = index;
 
-                //TODO:播放当前选择项
-                Debug.WriteLine("SelectItem Radio URL:" + selectenItem.URL);
-                Debug.WriteLine("SelectenItem Radio Index:" + index);
-                BackgroundAudioPlayer.Instance.Track = _playList[AppConfig.isoCurrentTrack];
+                ////TODO:播放当前选择项
+                //Debug.WriteLine("SelectItem Radio URL:" + selectenItem.URL);
+                //Debug.WriteLine("SelectenItem Radio Index:" + index);
+                //BackgroundAudioPlayer.Instance.Track = _playList[AppConfig.isoCurrentTrack];
 
 
 
-                if (PlayState.Unknown == BackgroundAudioPlayer.Instance.PlayerState)
-                {
+                //if (PlayState.Unknown == BackgroundAudioPlayer.Instance.PlayerState)
+                //{
 
-                    isplay = true;
-                    //BackgroundAudioPlayer.Instance.Stop();
-                    BackgroundAudioPlayer.Instance.Track = _playList[AppConfig.isoCurrentTrack];
-                    BackgroundAudioPlayer.Instance.Play();
-                }
+                //    isplay = true;
+                //    //BackgroundAudioPlayer.Instance.Stop();
+                //    BackgroundAudioPlayer.Instance.Track = _playList[AppConfig.isoCurrentTrack];
+                //    BackgroundAudioPlayer.Instance.Play();
+                //}
 
-                else
-                {
-                    //BackgroundAudioPlayer.Instance.Stop();
-                    BackgroundAudioPlayer.Instance.Track = _playList[AppConfig.isoCurrentTrack];
-                    // BackgroundAudioPlayer.Instance.Play();
-                    //this.UpdateState(null, null);
-                }
-                    this.UpdateState(null, null);
+                //else
+                //{
+                //    //BackgroundAudioPlayer.Instance.Stop();
+                //    BackgroundAudioPlayer.Instance.Track = _playList[AppConfig.isoCurrentTrack];
+                //    // BackgroundAudioPlayer.Instance.Play();
+                //    //this.UpdateState(null, null);
+                //}
+                //    this.UpdateState(null, null);
+
+
                 //BackgroundAudioPlayer.Instance.Volume = 1.0d;
+
+
+
+
+                try
+                {
+                    ////BackgroundAudioPlayer.Instance.Track = null;// new AudioTrack();
+                    BackgroundAudioPlayer.Instance.Track = _playList[index];
+                    BackgroundAudioPlayer.Instance.Volume = 1.0d;
+                    ////BackgroundAudioPlayer.Instance.Play();
+
+                    if (PlayState.Playing == BackgroundAudioPlayer.Instance.PlayerState)
+                    {
+                        BackgroundAudioPlayer.Instance.Pause();
+                    }
+                    else if (PlayState.Unknown == BackgroundAudioPlayer.Instance.PlayerState)
+                    {
+
+                        //   BackgroundAudioPlayer.Instance.Stop();
+
+                        BackgroundAudioPlayer.Instance.Track = _playList[index];
+                        BackgroundAudioPlayer.Instance.Play();
+                    }
+                    else
+                    {
+                        BackgroundAudioPlayer.Instance.Track = _playList[index];
+                    }
+
+                    Debug.WriteLine("Play_Click Play:" + index);
+                }
+                catch (Exception ex)
+                {
+                    UmengSDK.UmengAnalytics.TrackException(ex);
+                }
+
             }
             catch (Exception ex)
             {

@@ -116,6 +116,9 @@
     <Compile Include="Data\RadiosInfoInGroup.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="FMPage.xaml.cs">
+      <DependentUpon>FMPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ImageButton.cs" />
     <Compile Include="LocalizedStrings.cs" />
     <Compile Include="MainPage.xaml.cs">
@@ -141,14 +144,16 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="FMPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <None Include="FMRadioPro_2014_03_02_18_04_16.sap" />
-    <None Include="FMRadioPro_2014_03_02_18_16_04.sap" />
     <None Include="packages.config" />
     <None Include="Properties\AppManifest.xml" />
     <None Include="Properties\WMAppManifest.xml">
