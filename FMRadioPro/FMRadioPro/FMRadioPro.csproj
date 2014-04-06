@@ -131,6 +131,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\IntLoopingDataSource.cs" />
+    <Compile Include="Utilities\LoopingDataSourceBase.cs" />
     <Compile Include="Utilities\PyCode.cs" />
     <Compile Include="Utilities\Pinyin.cs" />
     <Compile Include="Utilities\PyHash.cs" />

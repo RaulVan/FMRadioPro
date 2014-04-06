@@ -6,6 +6,7 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls.Primitives;assembly=Microsoft.Phone.Controls.Toolkit"
    xmlns:FMRadioPro="clr-namespace:FMRadioPro"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -52,10 +53,16 @@
                     </Border.BorderBrush>
                 </Border>
                 <Grid Grid.Row="3">
-                    <StackPanel Orientation="Vertical">
+                    <!--<StackPanel Orientation="Vertical">
                         <TextBlock x:Name="txtFrequency" Text="{Binding Value, ElementName=sliderFrequency}" FontSize="120" HorizontalAlignment="Center" />
                         <Slider x:Name="sliderFrequency" Maximum="108" Minimum="87.5" Value="89.9"  Margin="0,20,0,0"/>
-                    </StackPanel>
+                    </StackPanel>-->
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="200"/>
+                    </Grid.ColumnDefinitions>
+                    <toolkit:LoopingSelector Grid.Column="0" x:Name="loopSelector1" ItemSize="100,100" ItemMargin="2,3,3,2" FontSize="70"></toolkit:LoopingSelector>
+                    <toolkit:LoopingSelector Grid.Column="1" x:Name="loopSelector2" ItemSize="100,100" ItemMargin="2,3,3,2" FontSize="80" ></toolkit:LoopingSelector>
                 </Grid>
                 <StackPanel x:Name="spPlayControl" Orientation="Horizontal" Grid.Row="4" Margin="0" Height="150" Opacity="0.83" VerticalAlignment="Bottom">
                     <FMRadioPro:ImageButton  x:Name="btnBack" Content="ImageButton" HorizontalAlignment="Left"  Height="100" ImageSource="/Assets/Media-Back.png" VerticalAlignment="Bottom" Width="100" Margin="12,0,0,0" />
