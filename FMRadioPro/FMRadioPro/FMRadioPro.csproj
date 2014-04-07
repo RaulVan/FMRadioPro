@@ -186,6 +186,9 @@
     </Content>
     <Content Include="Assets\Data-Files.png" />
     <Content Include="Assets\Heart.png" />
+    <Content Include="Assets\heartL.png" />
+    <Content Include="Assets\heartR.png" />
+    <Content Include="Assets\Hearts.png" />
     <Content Include="Assets\Media-Back.png" />
     <Content Include="Assets\Media-Next.png" />
     <Content Include="Assets\Media-Next1.png" />
