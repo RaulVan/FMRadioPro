@@ -107,6 +107,9 @@
     <Compile Include="AwesomeMenu\AwesomeMenuRadianType.cs" />
     <Compile Include="AwesomeMenu\AwesomeMenuType.cs" />
     <Compile Include="AwesomeMenu\AwesomMenuItem.cs" />
+    <Compile Include="Data\FMRadioDataContext.cs" />
+    <Compile Include="Data\FMRadioItem.cs" />
+    <Compile Include="Data\FMRadioModel.cs" />
     <Compile Include="Data\RadiosData.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -115,6 +118,9 @@
     </Compile>
     <Compile Include="Data\RadiosInfoInGroup.cs">
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FMListPage.xaml.cs">
+      <DependentUpon>FMListPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="FMPage.xaml.cs">
       <DependentUpon>FMPage.xaml</DependentUpon>
@@ -132,6 +138,7 @@
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
     <Compile Include="Utilities\IntLoopingDataSource.cs" />
+    <Compile Include="Utilities\LongListSelectorEx.cs" />
     <Compile Include="Utilities\LoopingDataSourceBase.cs" />
     <Compile Include="Utilities\PyCode.cs" />
     <Compile Include="Utilities\Pinyin.cs" />
@@ -143,6 +150,10 @@
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
     <Page Include="AboutPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FMListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
