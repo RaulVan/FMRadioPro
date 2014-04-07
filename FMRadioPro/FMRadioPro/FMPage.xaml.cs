@@ -77,11 +77,20 @@ namespace FMRadioPro
             fmRadio.PowerMode = RadioPowerMode.On;
             fmRadio.CurrentRegion = RadioRegion.Europe;
 
-            if (fmRadio.SignalStrength == 0)
+            try
             {
-                MessageBox.Show("确保插入耳机，正常使用收音机功能!", "提示", MessageBoxButton.OK);
-                return;
+                if (fmRadio.SignalStrength == 0)
+                {
+                }
             }
+            catch (Exception)
+            {
+                    MessageBox.Show("确保插入耳机，正常使用收音机功能!", "提示", MessageBoxButton.OK);
+                    return;
+                
+                
+            }
+           
         }
 
         void btnPlay_Click(object sender, RoutedEventArgs e)

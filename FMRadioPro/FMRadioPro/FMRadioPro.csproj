@@ -125,6 +125,9 @@
     <Compile Include="FMPage.xaml.cs">
       <DependentUpon>FMPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="HeartPage.xaml.cs">
+      <DependentUpon>HeartPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ImageButton.cs" />
     <Compile Include="LocalizedStrings.cs" />
     <Compile Include="MainPage.xaml.cs">
@@ -158,6 +161,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="FMPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="HeartPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
