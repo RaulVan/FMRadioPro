@@ -65,5 +65,31 @@ namespace FMRadioPro
            //}
        }
 
+       public static int isoCurrentFMFrequency1
+       {
+           get
+           {
+               return IsolatedStorageSettings.ApplicationSettings.Contains("isoCurrentFMFrequency1") ? (int)IsolatedStorageSettings.ApplicationSettings["isoCurrentFMFrequency1"] : 101;
+           }
+           set
+           {
+               IsolatedStorageSettings.ApplicationSettings["isoCurrentFMFrequency1"] = value;
+               IsolatedStorageSettings.ApplicationSettings.Save();
+           }
+       }
+
+       public static int isoCurrentFMFrequency2
+       {
+           get
+           {
+               return IsolatedStorageSettings.ApplicationSettings.Contains("isoCurrentFMFrequency2") ? (int)IsolatedStorageSettings.ApplicationSettings["isoCurrentFMFrequency2"] : 1;
+           }
+           set
+           {
+               IsolatedStorageSettings.ApplicationSettings["isoCurrentFMFrequency2"] = value;
+               IsolatedStorageSettings.ApplicationSettings.Save();
+           }
+       }
+
     }
 }

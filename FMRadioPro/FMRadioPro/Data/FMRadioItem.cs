@@ -8,10 +8,11 @@ using System.Data.Linq.Mapping;
 
 namespace FMRadioPro.Data
 {
+    [Table]
     public class FMRadioItem:INotifyPropertyChanged,INotifyPropertyChanging
     {
-        //public FMRadioItem()
-        //{ }
+        public FMRadioItem()
+        { }
         public FMRadioItem(double frequency)
         {
             _id = Guid.NewGuid();

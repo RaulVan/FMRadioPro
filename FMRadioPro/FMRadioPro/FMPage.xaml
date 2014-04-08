@@ -65,7 +65,7 @@
                     <toolkit:LoopingSelector Grid.Column="0" x:Name="loopSelector1" ItemSize="100,100" ItemMargin="2,3,3,2" FontSize="70"></toolkit:LoopingSelector>
                     <toolkit:LoopingSelector Grid.Column="1" x:Name="loopSelector2" ItemSize="100,100" ItemMargin="2,3,3,2" FontSize="80" ></toolkit:LoopingSelector>
                     <StackPanel Grid.Column="2">
-                        <FMRadioPro:ImageButton  x:Name="btnAddRadio" Content="ImageButton"  Height="75" ImageSource="/Assets/Share-01.png" Width="75" Margin="0,0,0,0"  VerticalAlignment="Top" />
+                        <FMRadioPro:ImageButton  x:Name="btnAddRadio" Content="ImageButton"  Height="75" ImageSource="/Assets/Share-01.png" Width="75" Margin="0,0,0,0"  VerticalAlignment="Top" Click="btnAddRadio_Click" />
                         <FMRadioPro:ImageButton   Content="ImageButton"  Height="75" ImageSource="/Assets/Share-01.png" Width="75" Margin="0,0,0,0"  />
                     </StackPanel>
                 </Grid>
