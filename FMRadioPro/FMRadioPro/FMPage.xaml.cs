@@ -12,6 +12,18 @@ using System.Windows.Threading;
 using System.Diagnostics;
 using FMRadioPro.Utilities;
 using FMRadioPro.Data;
+using Com.MSN.Ads.WindowsPhone.SDK.View;
+using Microsoft.Phone.BackgroundAudio;
+
+
+/*启动
+ * 加载电台
+ * 选择频道播放
+ * 添加收藏
+ * 管理收藏
+ * 播放收听
+ *返回
+ */
 
 namespace FMRadioPro
 {
@@ -24,6 +36,10 @@ namespace FMRadioPro
         FMRadio fmRadio;
         public FMPage()
         {
+            //if (BackgroundAudioPlayer.Instance.Track != null)
+            //{
+            //    BackgroundAudioPlayer.Instance.Close();
+            //}
             InitializeComponent();
 
             //TODO:启动后加载上次退出时的频道，没有就默认
@@ -34,7 +50,7 @@ namespace FMRadioPro
             this.loopSelector1.DataSource.SelectionChanged += DataSource_SelectionChanged;
             this.loopSelector2.DataSource.SelectionChanged+=DataSource_SelectionChanged2;
 
-            btnPlay.Click += btnPlay_Click;
+           // btnPlay.Click += btnPlay_Click;
             this.Loaded += FMPage_Loaded;
         }
 
@@ -61,17 +77,11 @@ namespace FMRadioPro
                 return;
             }
 
-            try
-            {
-                fmRadio = FMRadio.Instance;
-                fmRadio.PowerMode = RadioPowerMode.On;
-                fmRadio.CurrentRegion = RadioRegion.Europe;
-            }
-            catch (Exception )
-            {
-                 MessageBox.Show("确保您的手机可以正常使用收音机功能!", "提示", MessageBoxButton.OK);
-                return;
-            }
+           
+            fmRadio.Frequency = fre;
+
+            frequency = fre;
+            flag = true;
 
             try
             {
@@ -85,10 +95,6 @@ namespace FMRadioPro
                 return;
             }
 
-            fmRadio.Frequency = fre;
-
-            frequency = fre;
-            flag = true;
             //TODO:信号强度
             //this.Dispatcher.BeginInvoke(() =>
             //{
@@ -125,6 +131,69 @@ namespace FMRadioPro
             //{
             //    Debug.WriteLine(item.Frequency);
             //}
+
+            try
+            {
+                fmRadio = FMRadio.Instance;
+                fmRadio.PowerMode = RadioPowerMode.On;
+                fmRadio.CurrentRegion = RadioRegion.Europe;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("确保您的手机可以正常使用收音机功能!", "提示", MessageBoxButton.OK);
+                return;
+            }
+
+            //TODO:Add AD 
+            Thickness adPosition = new Thickness();//定义广告banner的位置。
+            adPosition.Left = 0;
+            adPosition.Top = 0;
+            adPosition.Right = 0;
+            adPosition.Bottom = 0;
+            AdControl adControl = new AdControl(this);
+            adControl.Height = 100;
+            adControl.InitAd(adPosition, "ODA2fDkzN3wyOTA5fDE=");//初始化广告banner
+
+
+            adControl.AdReveiceEvent += adControl_AdReveiceEvent;
+            adControl.AdFailedEvent += adControl_AdFailedEvent;
+            adControl.LeaveApplicationEvent += adControl_LeaveApplicationEvent;
+            adControl.PresentScreenEvent += adControl_PresentScreenEvent;
+            adControl.DismissScreenEvent += adControl_DismissScreenEvent;
+
+
+            gridAD.Children.Add(adControl);
+            adControl.LoadAd();
+
+        }
+
+        void adControl_DismissScreenEvent(AdControl adControl)
+        {
+            Debug.WriteLine("---------MSNLog--------adControl_DismissScreenEvent");
+        }
+
+
+        void adControl_PresentScreenEvent(AdControl adControl)
+        {
+            Debug.WriteLine("---------MSNLog--------adControl_PresentScreenEvent");
+        }
+
+
+        void adControl_LeaveApplicationEvent(AdControl adControl)
+        {
+            Debug.WriteLine("---------MSNLog--------adControl_LeaveApplicationEvent");
+        }
+
+
+        void adControl_AdFailedEvent(ErrorCode errorCode, AdControl adControl)
+        {
+            Debug.WriteLine("---------MSNLog--------adControl_AdFailedEvent");
+        }
+
+
+        void adControl_AdReveiceEvent(AdControl adControl)
+        {
+            Debug.WriteLine("---------MSNLog--------adView_AdReveiceEvent");
         }
 
         void btnPlay_Click(object sender, RoutedEventArgs e)

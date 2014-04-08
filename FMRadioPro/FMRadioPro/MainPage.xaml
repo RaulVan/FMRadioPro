@@ -517,18 +517,13 @@
             			LayoutMode="List" JumpListStyle="{StaticResource JumpListStyle}" 
             			GroupHeaderTemplate="{StaticResource GroupHeaderTemplate}"                                                                           
             			ItemTemplate="{StaticResource ItemTemplate}"/>
-                    <StackPanel x:Name="spPlayControl" Orientation="Horizontal" Grid.Row="4" Margin="0" Height="150" Opacity="0.83" VerticalAlignment="Bottom">
-                        <!--<Button x:Name="btnPause" Style="{StaticResource btnPauseStyle}" Visibility="Collapsed" />-->
-                        <!--<Button x:Name="btnStop" Style="{StaticResource btnStopStyle}" Margin="0,0,0,0" HorizontalAlignment="Right" />-->
-                        <!--<Button x:Name="btnBack" Style="{StaticResource btnBackStyle}" />-->
+                    <StackPanel  x:Name="spPlayControl" Orientation="Horizontal" Grid.Row="4" Margin="0" Height="150" Opacity="0.83" VerticalAlignment="Bottom">
+                        
                         <FMRadioPro:ImageButton  x:Name="btnBack" Content="ImageButton" HorizontalAlignment="Left"  Height="100" ImageSource="/Assets/Media-Back.png" VerticalAlignment="Bottom" Width="100" Margin="12,0,0,0"/>
-                        <!--<Button x:Name="btnPlay" Style="{StaticResource btnPlayStyle}" />-->
                         <FMRadioPro:ImageButton x:Name="btnPlay" Content="ImageButton" HorizontalAlignment="Left" Height="120" ImageSource="/Assets/Media-Play.png" VerticalAlignment="Top" Width="120"/>
                         <FMRadioPro:ImageButton  x:Name="btnPause" Content="ImageButton" HorizontalAlignment="Left" Visibility="Collapsed" Height="120" ImageSource="/Assets/Media-Pause.png" VerticalAlignment="Top" Width="120"/>
-                        <!--<Button x:Name="btnNext" Style="{StaticResource btnNextStyle}" />-->
                         <FMRadioPro:ImageButton  x:Name="btnNext" Content="ImageButton" HorizontalAlignment="Left"  Height="100" ImageSource="/Assets/Media-Next.png" Width="100" VerticalAlignment="Bottom"/>
                         <FMRadioPro:ImageButton  x:Name="btnShare" Content="ImageButton"  Height="75" ImageSource="/Assets/Share-01.png" Width="75" Margin="60,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-                        <!--<FMRadioPro:ImageButton  x:Name="btnOption" Content="ImageButton"  Height="80" ImageSource="/Assets/Data-Files.png" Width="80" Margin="6,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>-->
                     </StackPanel>
                 </Grid>
 

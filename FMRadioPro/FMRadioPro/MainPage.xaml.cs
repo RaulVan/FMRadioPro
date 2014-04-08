@@ -1,8 +1,7 @@
 ﻿/*
  *代码很乱很糟糕，fuck。
- * 
+ *
  */
-
 
 using AudioPlaybackAgent;
 using FMRadioPro.Data;
@@ -13,20 +12,16 @@ using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Threading;
 using UmengSDK;
 using UmengSocialSDK;
 using UmengSocialSDK.Net.Request;
-using System.IO;
-
-using Microsoft.Phone.Marketplace;
-
 
 namespace FMRadioPro
 {
@@ -49,7 +44,7 @@ namespace FMRadioPro
 
         private AudioPlayer audioPlayer = new AudioPlayer();
 
-        bool isplay = false;
+        private bool isplay = false;
 
         // AudioCategory
         // 构造函数
@@ -62,7 +57,7 @@ namespace FMRadioPro
             audioPlayer.PlayStateChangedEA += audioPlayer_PlayStateChangedEA;
             // 用于本地化 ApplicationBar 的示例代码
             //BuildLocalizedApplicationBar();
-           
+
             this.Loaded += MainPage_Loaded;
             this.btnBack.Click += btnBack_Click;
             this.btnPlay.Click += btnPlay_Click;
@@ -72,7 +67,6 @@ namespace FMRadioPro
             this.listRadioList.SelectionChanged += listRadioList_SelectionChanged;
             //btnOption.Click += btnOption_Click;
             btnShare.Click += btnShare_Click;
-            
         }
 
         /// <summary>
@@ -80,34 +74,18 @@ namespace FMRadioPro
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        async void btnShare_Click(object sender, RoutedEventArgs e)
+        private async void btnShare_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 BitmapImage bitmapImage = new BitmapImage();
-               // bitmapImage.UriSource = new Uri("/Assets/qcode.png", UriKind.Relative);
+                WriteableBitmap bitmap = await Screen();
 
-
-                WriteableBitmap bitmap =await  Screen();
-
-               // byte[] imageBuffer;
                 using (MemoryStream memoryStream = new MemoryStream())
                 {
                     bitmap.SaveJpeg(memoryStream, bitmap.PixelWidth, bitmap.PixelHeight, 0, 100);
-                  //  imageBuffer = memoryStream.ToArray();
-
                     bitmapImage.SetSource(memoryStream);
-
                 }
-                //using (MediaLibrary library = new MediaLibrary())
-                //{
-                //    library.SavePicture(string.Format("{0}.jpg", DateTime.Now.ToFileTime().ToString()), imageBuffer);
-                //}
-                
-                //TODO:WriteableBitmap to BitmapImage
-
-               
-                
 
                 ShareData shareData = new ShareData();
                 string content = "";
@@ -133,7 +111,7 @@ namespace FMRadioPro
                     }
                     else
                     {
-                        //分享失败          
+                        //分享失败
                         //MessageBox.Show("分享失败");
                     }
                 };
@@ -148,55 +126,30 @@ namespace FMRadioPro
 
         private async Task<WriteableBitmap> Screen()
         {
-            //double width=Application.Current.Host.Content.ActualWidth;
-            //double heigth=Application.Current.Host.Content.ActualHeight;
-
-            //var bit = new WriteableBitmap((int)width, (int)heigth);
-            //    bit.Render(Application.Current.RootVisual,null);
-            //    bit.Invalidate();
-            //    return bit;
-
-
             //截图
             await Task.Delay(200);
-            double width = Application.Current.Host.Content.ActualWidth;
-            double heigth = Application.Current.Host.Content.ActualHeight;
-            WriteableBitmap wbmp  = new WriteableBitmap((int)width, (int)heigth);
-            wbmp.Render(App.Current.RootVisual, null);
-            wbmp.Invalidate();
-            
+
+            using (System.IO.Stream stream1 = Application.GetResourceStream(new Uri(@"Assets/qcode.png", UriKind.Relative)).Stream)
+            {
+                double width = Application.Current.Host.Content.ActualWidth;
+                double heigth = Application.Current.Host.Content.ActualHeight;
+                WriteableBitmap wbmp = new WriteableBitmap((int)width, (int)heigth);
+                wbmp.Render(App.Current.RootVisual, null);
+                wbmp.Invalidate();
 
 
-            //using (var stream = store.OpenFile(backgoundImagePath, System.IO.FileMode.OpenOrCreate))
-            //{
-            //    System.Windows.Media.Imaging.Extensions.SaveJpeg(wbmp, stream, MediumTilePixelWidth, MediumTilePixelHeight, 0, 100);
-            //    //wbmp.SaveJpeg(stream, bitmap.PixelWidth, bitmap.PixelHeight, 0, 100);
-            //}
+                WriteableBitmap wideBitmap = new WriteableBitmap((int)width, (int)(heigth + 280));
 
-            WriteableBitmap wideBitmap = new WriteableBitmap((int)width,(int)(heigth + 280));
+                BitmapImage image1 = new BitmapImage();
+                image1.SetSource(stream1);
+                stream1.Close();
+                //stream1.Flush();
 
-            System.IO.Stream stream1 = Application.GetResourceStream(new Uri(@"Assets/qcode.png", UriKind.Relative)).Stream;
-            BitmapImage image1 = new BitmapImage();
-            image1.SetSource(stream1);
+                wideBitmap.Blit(new Rect(0, 0, width, heigth), new WriteableBitmap(wbmp), new Rect(0, 0, wbmp.PixelWidth, wbmp.PixelHeight), WriteableBitmapExtensions.BlendMode.Additive);
+                wideBitmap.Blit(new Rect((width - 280) / 2, heigth, 280, 280), new WriteableBitmap(image1), new Rect(0, 0, image1.PixelWidth, image1.PixelHeight), WriteableBitmapExtensions.BlendMode.Additive);
 
-            //System.IO.Stream stream2 = Application.GetResourceStream(new Uri(@"Assets/Images/raul.png", UriKind.Relative)).Stream;
-            //BitmapImage image2 = new BitmapImage();
-            //image2.SetSource(stream2);
-
-            //System.IO.Stream stream3 = Application.GetResourceStream(new Uri(@"Assets/Images/raul.png", UriKind.Relative)).Stream;
-            //BitmapImage image3 = new BitmapImage();
-            //image3.SetSource(stream3);
-
-            //System.IO.Stream stream4 = Application.GetResourceStream(new Uri(@"Assets/Images/raul.png", UriKind.Relative)).Stream;
-            //BitmapImage image4 = new BitmapImage();
-            //image4.SetSource(stream4);
-
-
-            wideBitmap.Blit(new Rect(0, 0, width, heigth), new WriteableBitmap(wbmp), new Rect(0, 0, wbmp.PixelWidth, wbmp.PixelHeight), WriteableBitmapExtensions.BlendMode.Additive);
-            wideBitmap.Blit(new Rect((width-280)/2, heigth, 280, 280), new WriteableBitmap(image1), new Rect(0, 0, image1.PixelWidth, image1.PixelHeight), WriteableBitmapExtensions.BlendMode.Additive);
-
-            return wideBitmap;
-
+                return wideBitmap;
+            }
         }
 
         /// <summary>
@@ -210,7 +163,6 @@ namespace FMRadioPro
             NavigationService.Navigate(new Uri("/AboutPage.xaml", UriKind.Relative));
         }
 
-    
         private void audioPlayer_PlayStateChangedEA(object sender, PlayStateEventArgs e)
         {
             //txtPlayState.Text =""+ e.playState;
@@ -223,26 +175,32 @@ namespace FMRadioPro
 
         private void UpdateState(object sender, EventArgs e)
         {
-            AudioTrack audioTrack = BackgroundAudioPlayer.Instance.Track;
-
-            if (audioTrack != null)
+            try
             {
-                txtPlayName.Text = audioTrack.Title;
-                if (PlayState.Playing == BackgroundAudioPlayer.Instance.PlayerState)
+                AudioTrack audioTrack = BackgroundAudioPlayer.Instance.Track;
+
+                if (audioTrack != null)
                 {
-                    btnPause.Visibility = Visibility.Visible;
-                    btnPlay.Visibility = Visibility.Collapsed;
-                    //TODO:显示当前播放内容
-                }
-                else
-                {
-                    btnPause.Visibility = Visibility.Collapsed;
-                    btnPlay.Visibility = Visibility.Visible;
-                    //TODO:播放内容清空
+                    txtPlayName.Text = audioTrack.Title;
+                    if (PlayState.Playing == BackgroundAudioPlayer.Instance.PlayerState)
+                    {
+                        btnPause.Visibility = Visibility.Visible;
+                        btnPlay.Visibility = Visibility.Collapsed;
+                        //TODO:显示当前播放内容
+                    }
+                    else
+                    {
+                        btnPause.Visibility = Visibility.Collapsed;
+                        btnPlay.Visibility = Visibility.Visible;
+                        //TODO:播放内容清空
+                    }
                 }
             }
+            catch (Exception)
+            {
+                timerr.Stop();
+            }
         }
-
 
         private void listRadioList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -253,7 +211,6 @@ namespace FMRadioPro
 
                 AudioTrack selectAudioTrack = new AudioTrack(new Uri(selectenItem.URL, UriKind.Absolute), selectenItem.Name, selectenItem.NamePinyin, "", null, "", EnabledPlayerControls.Pause);
                 //TODO：查找当前Select项在_PlayList中的index，然后给 isoCurrentTrack
-               
 
                 foreach (var item in _playList)
                 {
@@ -272,11 +229,8 @@ namespace FMRadioPro
                 //Debug.WriteLine("SelectenItem Radio Index:" + index);
                 //BackgroundAudioPlayer.Instance.Track = _playList[AppConfig.isoCurrentTrack];
 
-
-
                 //if (PlayState.Unknown == BackgroundAudioPlayer.Instance.PlayerState)
                 //{
-
                 //    isplay = true;
                 //    //BackgroundAudioPlayer.Instance.Stop();
                 //    BackgroundAudioPlayer.Instance.Track = _playList[AppConfig.isoCurrentTrack];
@@ -292,11 +246,7 @@ namespace FMRadioPro
                 //}
                 //    this.UpdateState(null, null);
 
-
                 //BackgroundAudioPlayer.Instance.Volume = 1.0d;
-
-
-
 
                 try
                 {
@@ -311,7 +261,6 @@ namespace FMRadioPro
                     }
                     else if (PlayState.Unknown == BackgroundAudioPlayer.Instance.PlayerState)
                     {
-
                         //   BackgroundAudioPlayer.Instance.Stop();
 
                         BackgroundAudioPlayer.Instance.Track = _playList[index];
@@ -328,7 +277,6 @@ namespace FMRadioPro
                 {
                     UmengSDK.UmengAnalytics.TrackException(ex);
                 }
-
             }
             catch (Exception ex)
             {
@@ -349,11 +297,11 @@ namespace FMRadioPro
                 BackgroundAudioPlayer play = sender as BackgroundAudioPlayer;
                 if (play.Error != null)
                 {
-                  //TODO:处理后台播放错误
+                    //TODO:处理后台播放错误
                 }
-               
+
                 PlayState playState;
-               
+
                 try
                 {
                     playState = BackgroundAudioPlayer.Instance.PlayerState;
@@ -372,6 +320,7 @@ namespace FMRadioPro
                         //BackgroundAudioPlayer.Instance.Play();
                         //BackgroundAudioPlayer.Instance.Stop();
                         break;
+
                     case PlayState.Paused:
                         this.UpdateState(null, null);
                         this.timerr.Stop();
@@ -388,7 +337,7 @@ namespace FMRadioPro
                         this.timerr.Stop();
                         this.UpdateState(null, null);
                         break;
-                        
+
                     default:
                         break;
                 }
@@ -461,13 +410,12 @@ namespace FMRadioPro
             {
                 CustomMessageBox cuMessageBox = new CustomMessageBox()
                 {
-                    Caption="停止播放并退出？",
-                    Message="",
-                    LeftButtonContent="NO",
-                    RightButtonContent="YES",
+                    Caption = "停止播放并退出？",
+                    Message = "",
+                    LeftButtonContent = "NO",
+                    RightButtonContent = "YES",
                 };
 
-                
                 cuMessageBox.Dismissed += (s1, e1) =>
                 {
                     switch (e1.Result)
@@ -476,6 +424,7 @@ namespace FMRadioPro
                             // Do something.
 
                             break;
+
                         case CustomMessageBoxResult.RightButton:
                             // Do something.
 
@@ -489,20 +438,21 @@ namespace FMRadioPro
                             FrameworkDispatcher.Update();
                             MediaPlayer.Play(Song.FromUri("Snooze It!", new Uri("Audio/Void.wav", UriKind.Relative)));
                             FrameworkDispatcher.Update();
-                            
+
                             MediaPlayer.Stop();
                             FrameworkDispatcher.Update();
 
                             Application.Current.Terminate();//退出应用程序
                             break;
+
                         case CustomMessageBoxResult.None:
                             // Do something.
                             break;
+
                         default:
                             break;
                     }
                 };
-
 
                 cuMessageBox.Show();
             }
@@ -535,7 +485,7 @@ namespace FMRadioPro
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("btnNext_Click"+ex.ToString());
+                Debug.WriteLine("btnNext_Click" + ex.ToString());
                 UmengSDK.UmengAnalytics.TrackException(ex);
             }
         }
@@ -582,7 +532,6 @@ namespace FMRadioPro
                 }
                 else if (PlayState.Unknown == BackgroundAudioPlayer.Instance.PlayerState)
                 {
-
                     //   BackgroundAudioPlayer.Instance.Stop();
 
                     BackgroundAudioPlayer.Instance.Track = _playList[AppConfig.isoCurrentTrack];
@@ -632,8 +581,6 @@ namespace FMRadioPro
         {
             try
             {
-                //borderCenter.Margin = new Thickness(0, 0, 0, 0);
-                //MoveAnimation.MoveTo(borderCenter, 120, 120, TimeSpan.FromSeconds(1.5), null);
                 this.timerr = new DispatcherTimer();
                 this.timerr.Interval = TimeSpan.FromSeconds(.05);
                 this.timerr.Tick += UpdateState;
@@ -657,56 +604,17 @@ namespace FMRadioPro
                     btnPlay.Visibility = Visibility.Collapsed;
                     //TODO:显示当前播放内容
                 }
-               
+
                 else
                 {
                     btnPause.Visibility = Visibility.Collapsed;
                     btnPlay.Visibility = Visibility.Visible;
                     //TODO:播放内容清空
-
                 }
 
                 this.UpdateState(null, null);
 
-                #region 动画
-
-                //int index = 0;
-                //DispatcherTimer timer = new DispatcherTimer();
-                //timer.Tick += (a, w) =>
-                //    {
-                //        if (index == 0)
-                //        {
-                //            MoveAnimation.MoveTo(borderBottom, 102, 150, TimeSpan.FromSeconds(0.5), null);
-                //        }
-                //        else if (index == 1)
-                //        {
-                //            MoveAnimation.MoveTo(borderLeft, 50, 102, TimeSpan.FromSeconds(0.5), null);
-                //        }
-                //        else if (index == 2)
-                //        {
-                //            MoveAnimation.MoveTo(borderRight, 150, 50, TimeSpan.FromSeconds(0.5), null);
-                //        }
-
-                //        else if (index == 3)
-                //        {
-                //            MoveAnimation.MoveTo(borderTop, 50, 50, TimeSpan.FromSeconds(0.5), null);
-                //        }
-                //        else if (index == 4)
-                //        {
-                //            MoveAnimation.MoveTo(borderCenter, 100, 100, TimeSpan.FromSeconds(0.5), null);
-                //        }
-                //        else
-                //        {
-                //            timer.Stop();
-                //            Debug.WriteLine("Move over!");
-                //        }
-                //        index++;
-                //    };
-                //timer.Interval = TimeSpan.FromSeconds(0.3);
-                //timer.Start();
-
-                #endregion 动画
-
+                //TODO：移到页面加载时加载
                 await Task.Run(() =>
                     {
                         this.listRadioList.Dispatcher.BeginInvoke(() =>
@@ -735,9 +643,6 @@ namespace FMRadioPro
                                 }
                             });
                     });
-
-                //SunshineStory.Begin();
-
                 base.OnNavigatedTo(e);
                 UmengAnalytics.TrackPageStart("MainPage");
             }
@@ -766,18 +671,18 @@ namespace FMRadioPro
             var item = (sender as MenuItem).DataContext;
             listRadioList.ItemsSource.Remove(item);
             //listRadioList.r
-
         }
 
         private void btnOption_Click_1(object sender, System.EventArgs e)
         {
-        	// 在此处添加事件处理程序实现。
+            // 在此处添加事件处理程序实现。
             NavigationService.Navigate(new Uri("/AboutPage.xaml", UriKind.Relative));
         }
 
         private void btnStop_Click_1(object sender, System.EventArgs e)
         {
-        	// 在此处添加事件处理程序实现。
+            //TODO：该功能移到开始页面
+            // 在此处添加事件处理程序实现。
             try
             {
                 CustomMessageBox cuMessageBox = new CustomMessageBox()
@@ -788,7 +693,6 @@ namespace FMRadioPro
                     RightButtonContent = "YES",
                 };
 
-
                 cuMessageBox.Dismissed += (s1, e1) =>
                 {
                     switch (e1.Result)
@@ -797,6 +701,7 @@ namespace FMRadioPro
                             // Do something.
 
                             break;
+
                         case CustomMessageBoxResult.RightButton:
                             // Do something.
 
@@ -816,14 +721,15 @@ namespace FMRadioPro
 
                             Application.Current.Terminate();//退出应用程序
                             break;
+
                         case CustomMessageBoxResult.None:
                             // Do something.
                             break;
+
                         default:
                             break;
                     }
                 };
-
 
                 cuMessageBox.Show();
             }
