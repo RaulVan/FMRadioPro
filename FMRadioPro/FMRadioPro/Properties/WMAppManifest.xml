@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2012/deployment" AppPlatformVersion="8.0">
   <DefaultLanguage xmlns="" code="zh-CN" />
-  <App xmlns="" ProductID="{5b0c588e-5fc9-4513-9f51-3b9085f1422b}" Title="FMRadioPro" RuntimeType="Silverlight" Version="0.7.7.7" Genre="apps.normal" Author="Eleven Van" Description="网络电台与本地电台结合" Publisher="Eleven Van" PublisherID="{acb9ce89-67c8-4f58-bab5-ee7b590bbaf3}">
+  <App xmlns="" ProductID="{5b0c588e-5fc9-4513-9f51-3b9085f1422b}" Title="FMRadio Pro" RuntimeType="Silverlight" Version="0.7.7.7" Genre="apps.normal" Author="Eleven Van" Description="网络电台与本地电台结合" Publisher="Eleven Van" PublisherID="{acb9ce89-67c8-4f58-bab5-ee7b590bbaf3}">
     <IconPath IsRelative="true" IsResource="false">Assets\100x100.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING" />

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Phone.Net;
 using Microsoft.Phone.Net.NetworkInformation;
+using System.Windows;
 
 namespace FMRadioPro
 {
@@ -89,6 +90,23 @@ namespace FMRadioPro
                IsolatedStorageSettings.ApplicationSettings["isoCurrentFMFrequency2"] = value;
                IsolatedStorageSettings.ApplicationSettings.Save();
            }
+       }
+
+       public int GetSecleFactor()
+       {
+           int height=0;
+           switch (Application.Current.Host.Content.ScaleFactor)
+           {
+               case 100:
+               case 150:
+                   height = 854;
+                   break;
+               case 160:
+                   height = 800;
+                   break;
+              
+           }
+           return height;
        }
 
     }

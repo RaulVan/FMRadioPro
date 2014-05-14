@@ -140,6 +140,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\FMRadioTool.cs" />
     <Compile Include="Utilities\IntLoopingDataSource.cs" />
     <Compile Include="Utilities\LongListSelectorEx.cs" />
     <Compile Include="Utilities\LoopingDataSourceBase.cs" />

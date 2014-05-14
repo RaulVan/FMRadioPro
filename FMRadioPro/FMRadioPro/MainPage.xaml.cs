@@ -5,6 +5,7 @@
 
 using AudioPlaybackAgent;
 using FMRadioPro.Data;
+using FMRadioPro.Utilities;
 using Microsoft.Phone.BackgroundAudio;
 using Microsoft.Phone.Controls;
 using Microsoft.Xna.Framework;
@@ -433,14 +434,7 @@ namespace FMRadioPro
                             this.UpdateState(null, null);
                             Debug.WriteLine("Stop_Click Play:" + AppConfig.isoCurrentTrack);
 
-                            FrameworkDispatcher.Update();
-                            MediaPlayer.Stop();
-                            FrameworkDispatcher.Update();
-                            MediaPlayer.Play(Song.FromUri("Snooze It!", new Uri("Audio/Void.wav", UriKind.Relative)));
-                            FrameworkDispatcher.Update();
-
-                            MediaPlayer.Stop();
-                            FrameworkDispatcher.Update();
+                            FMRadioTool.StopRadioPlay();//停止播放
 
                             Application.Current.Terminate();//退出应用程序
                             break;
